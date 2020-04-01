@@ -1,63 +1,39 @@
 package gflwishes.testcases;
 
-import java.awt.Desktop.Action;
+import gflwishes.PageObjects.LandingPage;
+import gflwishes.PageObjects.LoginPage;
+import gflwishes.PageObjects.ServiceOrderPage;
+import gflwishes.base.EnhancedBaseClass;
+import org.apache.log4j.Logger;
+import org.testng.annotations.Test;
+
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+
 //import java.util.List;
 //import java.util.Random;
-import java.util.concurrent.TimeUnit;
-
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 //import org.openqa.selenium.*;
-import org.openqa.selenium.By;
-import org.openqa.selenium.By.ByXPath;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
-import org.testng.ITestResult;
-import org.testng.annotations.*;
-import org.testng.asserts.SoftAssert;
 
-import gflwishes.PageObjects.ServiceOrderPage;
-import gflwishes.PageObjects.LandingPageUpdated;
-import gflwishes.base.EnhancedBaseClass;
-import gflwishes.base.Generics;
-import gflwishes.PageObjects.LoginPageUpdated;
-public class ServiceOrder extends EnhancedBaseClass
-{
+public class ServiceOrder extends EnhancedBaseClass {
 
     public ServiceOrder() {
         log4j = Logger.getLogger("Service Order");
     }
 
 
-    public static int getRandomIntBetweenRange(int min, int max){
-        int x = (int) ((Math.random()*((max-min)+1))+min);
+    public static int getRandomIntBetweenRange(int min, int max) {
+        int x = (int) ((Math.random() * ((max - min) + 1)) + min);
         return x;
     }
 
     @Test
-    public void TC004_to_TC011_Verify_Create_Service_order_Functionality() throws IOException, InterruptedException
-    {
+    public void TC004_to_TC011_Verify_Create_Service_order_Functionality() throws IOException, InterruptedException {
 
         testCaseLog("TC0011_Verify_Create_Service_order_Functionality");
 
-        LoginPageUpdated login = new LoginPageUpdated(driver);
-        LandingPageUpdated lp = new LandingPageUpdated(driver);
-        ServiceOrderPage cp= new ServiceOrderPage(driver);//object creation for project page
-        int rows=cp.getRowsExcel();
+        LoginPage login = new LoginPage(driver);
+        LandingPage lp = new LandingPage(driver);
+        ServiceOrderPage cp = new ServiceOrderPage(driver);//object creation for project page
+        int rows = cp.getRowsExcel();
 
         login.loginAs(USER_NAME, PASSWORD);
 
@@ -66,95 +42,72 @@ public class ServiceOrder extends EnhancedBaseClass
         } else {
             failure("Failed to Login");
         }
-        
-        for(int i=1;i<rows-1;i++)
-        {
-        
-        	try
-        	{
-		        lp.OpenServiceOrder();
-		        
-		        
-		        if(cp.isServiceOrderPageOpen())
-		        {
-		        	success("Service Order page open successfully");
-		        }
-		        else
-		        {
-		        	failure("Service Order page not open");
-		        }
-		        cp.clickonTempServicebtn();
-		        if(cp.isPopupdisplayed())
-		        {
-		        	success("Popup displayed");
-		        }
-		        else
-		        {
-		        	failure("Popup not displayed");
-		        }
-		        cp.typeCustomername(i);
-		        cp.selectCustomer();
-		        cp.selectSite(i);
-		        
-		        if(cp.isSelectedCustomerOpen())
-		        {
-		        	success("Selected Customer Opens successfully");
-		        }
-		        else
-		        {
-		        	failure("Selected customer not opend");
-		        }
-		        
-		        cp.selectMaterial(i);
-		        cp.selectContainerSize(i);
-		        cp.selectHaulType(i);
-		        if(cp.isServiceSectionDisplayed())
-		        {
-		        	success("Services Details Section displayed on Haul Type selection");
-		        }
-		        else
-		        {
-		        	failure("Services detail section not displayed on Haul type selection");
-		        }
-		        cp.selectContainerType();
-		        //cp.selectRequiestedDate();
-		        cp.InsertUploadingTime();
-		        cp.selectDesposibleSite();
-		        cp.selectBillingCycle();
-		        cp.typeDemurageDay();
-		        cp.clickonGetPricing();
-		        if(cp.isServiceChargesectionDisplayed())
-		        {
-		        	success("Get Price button working and displayed service charges");
-		        }
-		        else
-		        {
-		        	failure("Get Price button not working or service charges not displayed");
-		        }
-		        cp.typeDispatchnote();
-		        cp.typeDrivernote();
-		        cp.clickonSaveServiceButton();
-		        if(cp.isServiceSaved())
-		        {
-		        	success("Save Service button is working");
-		        }
-		        else
-		        {
-		        	failure("Save Service button is not working");
-		        }
-		        cp.clickonApprovebutton();
-		        cp.typeApprovalReason();
-		        cp.clickonReasonApprovebutton();
-		        
-		        
-		        if(cp.isAllDetailsSavedCurreclty())
-		        {
-		        	success("Services saved with all details");
-		        }
-		        else
-		        {
-		        	failure("Services not saved with all details");
-		        }
+
+        for (int i = 1; i < rows - 1; i++) {
+
+            try {
+                lp.OpenServiceOrder();
+
+
+                if (cp.isServiceOrderPageOpen()) {
+                    success("Service Order page open successfully");
+                } else {
+                    failure("Service Order page not open");
+                }
+                cp.clickonTempServicebtn();
+                if (cp.isPopupdisplayed()) {
+                    success("Popup displayed");
+                } else {
+                    failure("Popup not displayed");
+                }
+                cp.typeCustomername(i);
+                cp.selectCustomer();
+                cp.selectSite(i);
+
+                if (cp.isSelectedCustomerOpen()) {
+                    success("Selected Customer Opens successfully");
+                } else {
+                    failure("Selected customer not opend");
+                }
+
+                cp.selectMaterial(i);
+                cp.selectContainerSize(i);
+                cp.selectHaulType(i);
+                if (cp.isServiceSectionDisplayed()) {
+                    success("Services Details Section displayed on Haul Type selection");
+                } else {
+                    failure("Services detail section not displayed on Haul type selection");
+                }
+                cp.selectContainerType();
+                //cp.selectRequiestedDate();
+                cp.InsertUploadingTime();
+                cp.selectDesposibleSite();
+                cp.selectBillingCycle();
+                cp.typeDemurageDay();
+                cp.clickonGetPricing();
+                if (cp.isServiceChargesectionDisplayed()) {
+                    success("Get Price button working and displayed service charges");
+                } else {
+                    failure("Get Price button not working or service charges not displayed");
+                }
+                cp.typeDispatchnote();
+                cp.typeDrivernote();
+                cp.clickonSaveServiceButton();
+                if (cp.isServiceSaved()) {
+                    success("Save Service button is working");
+                } else {
+                    failure("Save Service button is not working");
+                }
+                cp.clickonApprovebutton();
+                cp.typeApprovalReason();
+                cp.clickonReasonApprovebutton();
+
+
+                if (cp.isAllDetailsSavedCurreclty()) {
+                    success("Services saved with all details");
+                } else {
+                    failure("Services not saved with all details");
+                }
 		        /*
 		        cp.clickonAddServiceOrderButton();
 		        cp.selectHaulType(i);
@@ -168,30 +121,25 @@ public class ServiceOrder extends EnhancedBaseClass
 		        {
 		        	failure("New Service Order not saved");
 		        }*/
-		        cp.clickonPaynow();
-		        cp.SelectPaymentMethod();
-		        cp.typeCVV();
-		        cp.SelectAddress();
-		        cp.SelectConfirmationCheckbox();
-		        cp.UploadFile();
-		        //cp.zoomout();
-		        cp.ClickonPayAmount();
-		        if(cp.isPaymentDone())
-		        {
-		        	success("Paymenet Done successfully");
-		        }
-		        else
-		        {
-		        	failure("Payment not done successfully");
-		        }
-        	}
-        	catch(Exception e)
-        	{
-        		System.out.print("Service Order not created : " );
-        		continue;
-        	}
-       
-        } 
+                cp.clickonPaynow();
+                cp.SelectPaymentMethod();
+                cp.typeCVV();
+                cp.SelectAddress();
+                cp.SelectConfirmationCheckbox();
+                cp.UploadFile();
+                //cp.zoomout();
+                cp.ClickonPayAmount();
+                if (cp.isPaymentDone()) {
+                    success("Paymenet Done successfully");
+                } else {
+                    failure("Payment not done successfully");
+                }
+            } catch (Exception e) {
+                System.out.print("Service Order not created : ");
+                continue;
+            }
+
+        }
         sa.assertAll();
     }
     
@@ -367,13 +315,6 @@ public class ServiceOrder extends EnhancedBaseClass
         sa.assertAll();
     }
      */
-    
-    
-    
-    
-    
-    
-    
-   
-      
+
+
 }

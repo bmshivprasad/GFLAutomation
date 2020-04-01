@@ -18,6 +18,8 @@ public interface Configurations {
 
     String configurationPath = getProjectDir() + "/Configuration/config.properties";
 
+    String END_TO_END = "EndToEnd";
+
     String BASE_URL = getProperty("wishesURL");
     String FM_URL = getProperty("fleetMapperURL");
 

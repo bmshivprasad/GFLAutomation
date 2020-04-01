@@ -1,15 +1,14 @@
 package gflwishes.testcases;
 
 import gflwishes.PageObjects.DispatchPO;
-import gflwishes.PageObjects.LandingPageUpdated;
-import gflwishes.PageObjects.LoginPageUpdated;
+import gflwishes.PageObjects.LandingPage;
+import gflwishes.PageObjects.LoginPage;
 import gflwishes.PageObjects.ServiceOrderPage;
 import gflwishes.base.EnhancedBaseClass;
-
-import java.io.IOException;
-
 import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
+
+import java.io.IOException;
 
 public class Dispatch extends EnhancedBaseClass {
 
@@ -22,7 +21,7 @@ public class Dispatch extends EnhancedBaseClass {
 
         testCaseLog("Verify_User_can_complete_pickup_order");
 
-        LoginPageUpdated login = new LoginPageUpdated(driver);
+        LoginPage login = new LoginPage(driver);
         DispatchPO dispatchPO = new DispatchPO(driver);
 
         login.openFM();
@@ -68,8 +67,8 @@ public class Dispatch extends EnhancedBaseClass {
 
         testCaseLog("TC005_Verify_All_deatails_in_wishes_if_service_order_status_Change_from_FM");
 
-        LoginPageUpdated login = new LoginPageUpdated(driver);
-        LandingPageUpdated lp = new LandingPageUpdated(driver);
+        LoginPage login = new LoginPage(driver);
+        LandingPage lp = new LandingPage(driver);
         ServiceOrderPage cp = new ServiceOrderPage(driver);//object creation for project page
         int rows = cp.getRowsExcel();
         driver.get("https://wishes-qa.azurewebsites.net/");

@@ -133,7 +133,7 @@ public class ServiceOrderPage extends ServiceOrder {
     public void selectMaterial(int row) {
         generics.pause(5);
         generics.moveTo(dpMaterial);
-        String Material = excelUtils.getTestData(getClass().getSuperclass().getSimpleName(), row, 4);
+        String Material = excelUtils.getTestData(END_TO_END, row, 4);
         JavascriptExecutor js = (JavascriptExecutor) localDriver;
         js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
         generics.scrollToElement(dpMaterial);
@@ -150,7 +150,7 @@ public class ServiceOrderPage extends ServiceOrder {
 
     public void selectContainerSize(int row) {
         generics.clickOn(dpContainerSize);
-        String ContainerSize = excelUtils.getTestData(getClass().getSuperclass().getSimpleName(), row, 5);
+        String ContainerSize = excelUtils.getTestData(END_TO_END, row, 5);
         WebElement element = localDriver.findElement(By.xpath("//span[contains(text(),'" + ContainerSize + "')]"));
         element.click();
         testStepsLog("Container size selected : " + ContainerSize);
@@ -161,7 +161,7 @@ public class ServiceOrderPage extends ServiceOrder {
 
     public void selectHaulType(int row) {
         generics.clickOn(dpHaulType);
-        String HaulType = excelUtils.getTestData(getClass().getSuperclass().getSimpleName(), row, 6);
+        String HaulType = excelUtils.getTestData(END_TO_END, row, 6);
         WebElement element = localDriver.findElement(By.xpath("//span[contains(text(),'" + HaulType + "')]"));
         element.click();
         testStepsLog("Haul Type selected : " + HaulType);
@@ -981,7 +981,7 @@ public class ServiceOrderPage extends ServiceOrder {
 
     public boolean isProperStatusDisplayed(int row) {
         String status = generics.getText(txtStatus);
-        String st = excelUtils.getTestData(getClass().getSuperclass().getSimpleName(), row, 7);
+        String st = excelUtils.getTestData(END_TO_END, row, 7);
         if (status.equals(st)) {
             return true;
         } else {
@@ -996,7 +996,7 @@ public class ServiceOrderPage extends ServiceOrder {
         JavascriptExecutor js = (JavascriptExecutor) localDriver;
         js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
         String vehicle = generics.getText(txtVehicle);
-        String vc = excelUtils.getTestData(getClass().getSuperclass().getSimpleName(), row, 8);
+        String vc = excelUtils.getTestData(END_TO_END, row, 8);
         if (vehicle.equals(vc)) {
             return true;
         } else {
@@ -1010,7 +1010,7 @@ public class ServiceOrderPage extends ServiceOrder {
     public boolean isProperDispatcherDisplayed(int row) {
 
         String Dispatcher = generics.getText(txtDispatcher);
-        String ds = excelUtils.getTestData(getClass().getSuperclass().getSimpleName(), row, 9);
+        String ds = excelUtils.getTestData(END_TO_END, row, 9);
         if (Dispatcher.equals(ds)) {
             return true;
         } else {
@@ -1024,7 +1024,7 @@ public class ServiceOrderPage extends ServiceOrder {
     public boolean isProperDriverDisplayed(int row) {
 
         String Driver = generics.getText(txtDriver);
-        String dv = excelUtils.getTestData(getClass().getSuperclass().getSimpleName(), row, 11);
+        String dv = excelUtils.getTestData(END_TO_END, row, 11);
         if (Driver.equals(dv)) {
             return true;
         } else {
@@ -1038,7 +1038,7 @@ public class ServiceOrderPage extends ServiceOrder {
     public boolean isProperDispatcherNoteDisplayed(int row) {
 
         String Dispatchernote = generics.getText(txtDispatcherNote);
-        String dn = excelUtils.getTestData(getClass().getSuperclass().getSimpleName(), row, 10);
+        String dn = excelUtils.getTestData(END_TO_END, row, 10);
         if (Dispatchernote.equals(dn)) {
             return true;
         } else {
@@ -1052,7 +1052,7 @@ public class ServiceOrderPage extends ServiceOrder {
     public boolean isProperDriverNoteDisplayed(int row) {
 
         String Drivernote = generics.getText(txtDriverNote);
-        String dn = excelUtils.getTestData(getClass().getSuperclass().getSimpleName(), row, 12);
+        String dn = excelUtils.getTestData(END_TO_END, row, 12);
         if (Drivernote.equals(dn)) {
             return true;
         } else {

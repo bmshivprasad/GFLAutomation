@@ -1,56 +1,29 @@
 package gflwishes.PageObjects;
 
-import java.awt.Robot;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
-import java.awt.event.KeyEvent;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
-
-import javax.lang.model.element.Element;
-
-import org.openqa.selenium.support.ui.ExpectedConditions;
+import gflwishes.base.Generics;
+import gflwishes.testcases.Customer;
+import gflwishes.utilities.ExcelUtils;
 import org.apache.log4j.Logger;
-import org.apache.poi.ss.formula.ptg.DeletedRef3DPtg;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.CacheLookup;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import gflwishes.base.Generics;
-import gflwishes.testcases.Customer;
-
-import gflwishes.utilities.ExcelUtils;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 
 public class CustomerPage extends Customer {
-
-    public WebDriver ldriver;
 
     private WebDriver localDriver;
     private Generics generics;
@@ -145,7 +118,7 @@ public class CustomerPage extends Customer {
 
     public void selectBusinessUnit1(int row) {
 
-        String BU = excelUtils.getTestData(getClass().getSuperclass().getSimpleName(), row, 5);
+        String BU = excelUtils.getTestData(END_TO_END, row, 5);
         generics.clickOn(dpBusinessUnit1);
         generics.pause(2);
         WebElement element = localDriver.findElement(By.xpath("//mat-option/span[contains(text(),'" + BU + "')]"));
@@ -233,7 +206,7 @@ public class CustomerPage extends Customer {
     public WebElement txtPostalcode;
 
     public void typePostalcode(int row) {
-        String pc = excelUtils.getTestData(getClass().getSuperclass().getSimpleName(), row, 1);
+        String pc = excelUtils.getTestData(END_TO_END, row, 1);
         generics.type(txtPostalcode, Keys.CONTROL + "a" + Keys.DELETE);
         generics.clickOn(txtPostalcode);
         generics.type(txtPostalcode, pc);
@@ -414,7 +387,7 @@ public class CustomerPage extends Customer {
 
 
     public void selectAddressline1ofSite(int row) {
-        String Add = excelUtils.getTestData(getClass().getSuperclass().getSimpleName(), row, 0);
+        String Add = excelUtils.getTestData(END_TO_END, row, 0);
         testStepsLog("Address : " + Add);
         generics.moveTo(txtPostalcode);
         generics.clickOn(dpAddressLine1OfSite);

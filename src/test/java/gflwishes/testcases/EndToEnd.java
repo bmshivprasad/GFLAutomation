@@ -16,8 +16,8 @@ public class EndToEnd extends EnhancedBaseClass {
 
         testCaseLog("TC001_TC002_TC003_Verify_Create_new_Customer_Functionality");
 
-        LoginPageUpdated login = new LoginPageUpdated(driver);
-        LandingPageUpdated lp = new LandingPageUpdated(driver);
+        LoginPage login = new LoginPage(driver);
+        LandingPage lp = new LandingPage(driver);
         CustomerPage cp = new CustomerPage(driver);
         int rows = cp.getRowsExcel();
 
@@ -99,7 +99,7 @@ public class EndToEnd extends EnhancedBaseClass {
 
         testCaseLog("TC0011_Verify_Create_Service_order_Functionality");
 
-        LandingPageUpdated lp = new LandingPageUpdated(driver);
+        LandingPage lp = new LandingPage(driver);
         ServiceOrderPage cp = new ServiceOrderPage(driver);
         int rows = cp.getRowsExcel();
 
@@ -219,7 +219,7 @@ public class EndToEnd extends EnhancedBaseClass {
 
         testCaseLog("Verify_User_can_complete_pickup_order");
 
-        LoginPageUpdated login = new LoginPageUpdated(driver);
+        LoginPage login = new LoginPage(driver);
         DispatchPO dispatchPO = new DispatchPO(driver);
 
         login.selectSignIn(USER_NAME);
@@ -264,7 +264,7 @@ public class EndToEnd extends EnhancedBaseClass {
 
         testCaseLog("TC005_Verify_All_deatails_in_wishes_if_service_order_status_Change_from_FM");
 
-        LandingPageUpdated lp = new LandingPageUpdated(driver);
+        LandingPage lp = new LandingPage(driver);
         ServiceOrderPage cp = new ServiceOrderPage(driver);
         int rows = cp.getRowsExcel();
 
