@@ -92,19 +92,12 @@ public class DispatchPO extends Dispatch {
         return generics.isDisplay(lblToday) && generics.isDisplay(btnFilter);
     }
 
-    public void clickOnAnyPickUpOrder() {
-        lblPickUpOrderName = lstPickUpOrders.get(0).getText();
-        generics.clickOn(lstPickUpNewOrder.get(0));
-        testStepsLog("Order Number : " + generics.getText(lblOrderNumber));
-        testStepsLog("Order Detail : " + generics.getText(lstPickUpOrders.get(0)));
-    }
-
-    public void addTruckFromMap() {
+    public void addTruckFromMap(int count) {
         generics.pause(4);
         Actions act = new Actions(driver);
         generics.scrollToElement(truckDragAndDrop);
         testStepsLog("Drag and Drop Truck from the map to order.");
-        excelUtils.setTestData("ServiceOrder", 1, 18, firstempyTruck.getText());
+        excelUtils.setTestData(END_TO_END, count, 18, firstempyTruck.getText());
         act.dragAndDrop(firstempyTruck, truckDragAndDrop).build().perform();
         generics.pause(10);
     }
@@ -170,13 +163,13 @@ public class DispatchPO extends Dispatch {
     @FindAll(value = {@FindBy(xpath = "//span[@class='mat-option-text']")})
     List<WebElement> lstDrivers;
 
-    public void completeOrder() {
+    public void completeOrder(int count) {
         generics.scrollToElement(btnComplete);
         generics.clickOnJS(btnComplete);
         generics.pause(2);
         generics.clickOnJS(btnDriver);
-        excelUtils.setTestData("ServiceOrder", 1, 11, lstDrivers.get(0).getText());
-        excelUtils.setTestData("ServiceOrder", 1, 7, "COMPLETED");
+        excelUtils.setTestData(END_TO_END, count, 11, lstDrivers.get(0).getText());
+        excelUtils.setTestData(END_TO_END, count, 7, "COMPLETED");
         generics.clickOnJS(lstDrivers.get(0));
         generics.clickOnJS(btnProceed);
         generics.pause(5);
@@ -194,8 +187,8 @@ public class DispatchPO extends Dispatch {
     public static String SiteAddress;
     ExcelUtils excelUtils = new ExcelUtils();
 
-    public void searchAddress() {
-        SiteAddress = excelUtils.getTestData("ServiceOrder", 1, 0);
+    public void searchAddress(int count) {
+        SiteAddress = excelUtils.getTestData(END_TO_END, count, 0);
         new WebDriverWait(driver, 30).until(ExpectedConditions.invisibilityOfElementLocated(
                 By.xpath("//div[text()='Loading...']")));
         generics.clickOnJS(btnSearchOrder);
@@ -219,8 +212,8 @@ public class DispatchPO extends Dispatch {
 
     public static String SiteCustomer;
 
-    public boolean verifyDeliveryDetails() {
-        SiteCustomer = excelUtils.getTestData("ServiceOrder", 1, 2);
+    public boolean verifyDeliveryDetails(int count) {
+        SiteCustomer = excelUtils.getTestData(END_TO_END, count, 2);
         System.out.println(lblOrderType.getText());
         System.out.println(driver.findElement(By.xpath("//span[contains(text(),'" +
                 SiteAddress.split(",")[0] + "')]")).getText().
@@ -231,8 +224,8 @@ public class DispatchPO extends Dispatch {
                         SiteAddress.split(",")[0] + "')]")).
                         getText().replace("\n", "").trim().replaceAll("\\s", "").
                         equalsIgnoreCase(SiteAddress.replaceAll("\\s", ""))
-                && lblSiteContact.getText().equalsIgnoreCase(excelUtils.getTestData("ServiceOrder",
-                1, 3)) && lblCustomer.getText().equalsIgnoreCase(SiteCustomer);
+                && lblSiteContact.getText().equalsIgnoreCase(excelUtils.getTestData(END_TO_END,
+                count, 3)) && lblCustomer.getText().equalsIgnoreCase(SiteCustomer);
     }
 
     @FindBy(xpath = "//div[contains(text(),'EXPECTED TIME ON SITE')]//following-sibling::div//map-common-date-time-view//div")
@@ -294,22 +287,22 @@ public class DispatchPO extends Dispatch {
     @FindBy(xpath = "//form//mat-icon[text()='check']")
     WebElement btnSaveContainerName;
 
-    public void enterContainerName() {
+    public void enterPickUpContainerName() {
         generics.scrollToElement(btnEditContainer.get(0));
         generics.clickOnJS(btnEditContainer.get(0));
         generics.pause(2);
-        if (!lstRadios.get(1).getAttribute("class").contains("mat-radio-disabled")) {
+        if (!lstRadios.get(1).getAttribute("class").contains("mat-radio-disabled"))
             generics.type(txtContainerName, "Test_" + generics.getRandomBetween(100, 999));
-        }
         generics.clickOnJS(btnSaveContainerName);
         generics.pause(2);
-        enterTicketDetails();
+    }
+
+    public void enterDropOffContainerName() {
         generics.pause(2);
         generics.scrollToElement(btnEditContainer.get(1));
         generics.clickOnJS(btnEditContainer.get(1));
-        if (!lstRadios.get(1).getAttribute("class").contains("mat-radio-disabled")) {
+        if (!lstRadios.get(1).getAttribute("class").contains("mat-radio-disabled"))
             generics.type(txtContainerName, "Test_" + generics.getRandomBetween(100, 999));
-        }
         generics.clickOnJS(btnSaveContainerName);
         generics.pause(3);
     }
@@ -338,5 +331,19 @@ public class DispatchPO extends Dispatch {
         generics.type(txtWeight, generics.getRandomBetween(100, 999) + "");
         generics.clickOnJS(btnAcceptTickerDetails);
         generics.pause(3);
+    }
+
+    @FindBy(xpath = "//map-common-vehicle-order-detail//div[contains(@class,'_dispatch_order_bold')]")
+    WebElement lblOperationType;
+
+    public String getOperationType() {
+        return generics.getText(lblOperationType);
+    }
+
+    @FindBy(xpath = "(//map-common-vehicle-order-detail//mat-icon)[2]")
+    WebElement lblMatIcon;
+
+    public boolean isIconUpward() {
+        return generics.getText(lblMatIcon).equalsIgnoreCase("arrow_upward");
     }
 }

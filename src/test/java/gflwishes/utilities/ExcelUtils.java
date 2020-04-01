@@ -9,8 +9,22 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class ExcelUtils implements Configurations {
+
+    public static int getRowsExcel(String fileName) {
+        String fileLocation = TEST_DATA_LOCATION + File.separator + fileName + ".xlsx";
+        try {
+            FileInputStream file = new FileInputStream(fileLocation);
+            XSSFWorkbook workbook = new XSSFWorkbook(file);
+            XSSFSheet sheet = workbook.getSheet("Sheet1");
+            return sheet.getPhysicalNumberOfRows();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
 
     public String getTestData(String fileName, int req_row, int col) {
 

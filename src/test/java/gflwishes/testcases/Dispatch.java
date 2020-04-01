@@ -24,6 +24,8 @@ public class Dispatch extends EnhancedBaseClass {
         LoginPage login = new LoginPage(driver);
         DispatchPO dispatchPO = new DispatchPO(driver);
 
+        int count = 0;
+
         login.openFM();
         login.loginAs(USER_NAME, PASSWORD);
 
@@ -35,10 +37,10 @@ public class Dispatch extends EnhancedBaseClass {
             failure("ERROR : Dispatch page is not display.");
         }
 
-        dispatchPO.searchAddress();
+        dispatchPO.searchAddress(count);
         dispatchPO.selectOrder();
 
-        if (dispatchPO.verifyDeliveryDetails()) {
+        if (dispatchPO.verifyDeliveryDetails(count)) {
             success("User can see the dispatch oder details.");
         } else {
             failure("ERROR : Details are not display proper.");
@@ -48,17 +50,17 @@ public class Dispatch extends EnhancedBaseClass {
             dispatchPO.selectCurrentDate();
         }
 
-        dispatchPO.addTruckFromMap();
+        dispatchPO.addTruckFromMap(count);
 
         dispatchPO.openOrderFromVehiclePane();
 
         dispatchPO.startOrder();
 
-        dispatchPO.enterContainerName();
+        dispatchPO.enterPickUpContainerName();
 
         dispatchPO.enterTicketDetails();
 
-        dispatchPO.completeOrder();
+        dispatchPO.completeOrder(count);
 
     }
 

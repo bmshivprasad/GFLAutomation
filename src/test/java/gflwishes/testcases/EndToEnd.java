@@ -2,6 +2,7 @@ package gflwishes.testcases;
 
 import gflwishes.PageObjects.*;
 import gflwishes.base.EnhancedBaseClass;
+import gflwishes.utilities.ExcelUtils;
 import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
 
@@ -224,39 +225,83 @@ public class EndToEnd extends EnhancedBaseClass {
 
         login.selectSignIn(USER_NAME);
 
-        dispatchPO.openDispatcher();
+        for (int count = 0; count < ExcelUtils.getRowsExcel(getClass().getSimpleName()); count++) {
 
-        if (dispatchPO.verifyDispatchPage()) {
-            success("User can see the dispatch page.");
-        } else {
-            failure("ERROR : Dispatch page is not display.");
+            dispatchPO.openDispatcher();
+
+            if (dispatchPO.verifyDispatchPage()) {
+                success("User can see the dispatch page.");
+            } else {
+                failure("ERROR : Dispatch page is not display.");
+            }
+
+            dispatchPO.searchAddress(count);
+            dispatchPO.selectOrder();
+
+            if (dispatchPO.verifyDeliveryDetails(count)) {
+                success("User can see the dispatch oder details.");
+            } else {
+                failure("ERROR : Details are not display proper.");
+            }
+
+            if (dispatchPO.isOrderFromPast()) {
+                dispatchPO.selectCurrentDate();
+            }
+
+            dispatchPO.addTruckFromMap(count);
+
+            dispatchPO.openOrderFromVehiclePane();
+
+            switch (dispatchPO.getOperationType().toLowerCase()) {
+                case "pick up":
+                    dispatchPO.startOrder();
+                    dispatchPO.enterPickUpContainerName();
+                    dispatchPO.enterTicketDetails();
+                    dispatchPO.completeOrder(count);
+                    break;
+                case "delivery":
+                    dispatchPO.startOrder();
+                    dispatchPO.enterDropOffContainerName();
+                    dispatchPO.completeOrder(count);
+                    break;
+                case "exchange":
+                    if (dispatchPO.isIconUpward()) {
+                        dispatchPO.startOrder();
+                        dispatchPO.enterPickUpContainerName();
+                        dispatchPO.enterTicketDetails();
+                        dispatchPO.enterDropOffContainerName();
+                        dispatchPO.completeOrder(count);
+                    } else {
+                        dispatchPO.startOrder();
+                        dispatchPO.enterDropOffContainerName();
+                        dispatchPO.enterPickUpContainerName();
+                        dispatchPO.enterTicketDetails();
+                        dispatchPO.completeOrder(count);
+                    }
+                    break;
+                case "empty and return":
+                    dispatchPO.startOrder();
+                    dispatchPO.enterPickUpContainerName();
+                    dispatchPO.enterTicketDetails();
+                    dispatchPO.enterDropOffContainerName();
+                    dispatchPO.completeOrder(count);
+                    break;
+                case "move":
+                    dispatchPO.startOrder();
+                    dispatchPO.enterPickUpContainerName();
+                    dispatchPO.enterDropOffContainerName();
+                    dispatchPO.completeOrder(count);
+                    break;
+                case "pickup directive":
+                    dispatchPO.startOrder();
+                    dispatchPO.enterPickUpContainerName();
+                    break;
+                case "drop directive":
+                    dispatchPO.startOrder();
+                    dispatchPO.enterDropOffContainerName();
+                    break;
+            }
         }
-
-        dispatchPO.searchAddress();
-        dispatchPO.selectOrder();
-
-        if (dispatchPO.verifyDeliveryDetails()) {
-            success("User can see the dispatch oder details.");
-        } else {
-            failure("ERROR : Details are not display proper.");
-        }
-
-        if (dispatchPO.isOrderFromPast()) {
-            dispatchPO.selectCurrentDate();
-        }
-
-        dispatchPO.addTruckFromMap();
-
-        dispatchPO.openOrderFromVehiclePane();
-
-        dispatchPO.startOrder();
-
-        dispatchPO.enterContainerName();
-
-        dispatchPO.enterTicketDetails();
-
-        dispatchPO.completeOrder();
-
     }
 
     @Test
@@ -267,8 +312,6 @@ public class EndToEnd extends EnhancedBaseClass {
         LandingPage lp = new LandingPage(driver);
         ServiceOrderPage cp = new ServiceOrderPage(driver);
         int rows = cp.getRowsExcel();
-
-        //login.selectSignIn(USER_NAME);
 
         if (lp.isUserLoginSuccessful()) {
             success("User Login Successful");
