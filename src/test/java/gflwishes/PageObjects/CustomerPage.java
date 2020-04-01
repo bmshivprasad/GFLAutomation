@@ -118,7 +118,7 @@ public class CustomerPage extends Customer {
 
     public void selectBusinessUnit1(int row) {
 
-        String BU = excelUtils.getTestData(END_TO_END, row, 5);
+        String BU = excelUtils.getTestData(END_TO_END, row, 14);
         generics.clickOn(dpBusinessUnit1);
         generics.pause(2);
         WebElement element = localDriver.findElement(By.xpath("//mat-option/span[contains(text(),'" + BU + "')]"));
@@ -964,7 +964,7 @@ public class CustomerPage extends Customer {
     public void getCustomerID(int row) {
         cd = generics.getText(customerID);
         try {
-            SetTestData(cd, row, 4);
+            SetTestData(cd, row, 13);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -1061,7 +1061,7 @@ public class CustomerPage extends Customer {
     public static void SetTestData(String dta, int rowt, int colt) throws IOException {
 
         FileInputStream file = new FileInputStream(
-                System.getProperty("user.dir") + "/src/test//java//gfl//testData//Customer.xlsx");
+                System.getProperty("user.dir") + "/src/test//java//gfl//testData//EndToEnd.xlsx");
         XSSFWorkbook workbook = new XSSFWorkbook(file);
         XSSFSheet sheet = workbook.getSheet("Sheet1"); // workbook.getSheetAt(0)
 
@@ -1070,7 +1070,7 @@ public class CustomerPage extends Customer {
         XSSFCell cell = row.createCell(colt);
         cell.setCellValue(dta);
         FileOutputStream fo = new FileOutputStream(
-                System.getProperty("user.dir") + "/src/test//java//gfl//testData//Customer.xlsx");
+                System.getProperty("user.dir") + "/src/test//java//gfl//testData//EndToEnd.xlsx");
         workbook.write(fo);
         workbook.close();
         file.close();
