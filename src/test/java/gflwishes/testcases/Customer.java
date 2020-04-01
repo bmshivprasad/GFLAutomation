@@ -25,13 +25,13 @@ public class Customer extends EnhancedBaseClass {
     }
 
     @Test
-    public void TC001_TC002_TC003_Verify_Create_new_Customer_Functionality() throws IOException, InterruptedException {
+    public void TC001WS_Verify_Create_new_Customer_Functionality() {
 
         testCaseLog("TC001_TC002_TC003_Verify_Create_new_Customer_Functionality");
 
         LoginPage login = new LoginPage(driver);
         LandingPage lp = new LandingPage(driver);
-        CustomerPage cp = new CustomerPage(driver);//object creation for project page
+        CustomerPage cp = new CustomerPage(driver);
         int rows = cp.getRowsExcel();
 
         login.loginAs(USER_NAME, PASSWORD);
@@ -100,8 +100,7 @@ public class Customer extends EnhancedBaseClass {
                 }
                 cp.getCustomerID(i);
             } catch (Exception e) {
-                System.out.print("Customer not created : ");
-                continue;
+                e.printStackTrace();
             }
         }
 
