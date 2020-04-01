@@ -86,7 +86,7 @@ public class ServiceOrderPage extends ServiceOrder {
     public static String CustomerName;
 
     public void typeCustomername(int row) {
-        CustomerName = excelUtils.getTestData("Customer", row, 2);
+        CustomerName = excelUtils.getTestData(END_TO_END, row, 2);
         generics.clickOn(txtCustomerName);
         generics.type(txtCustomerName, CustomerName);
 
@@ -105,7 +105,7 @@ public class ServiceOrderPage extends ServiceOrder {
     public WebElement dpSelectSite;
 
     public void selectSite(int row) {
-        String St = excelUtils.getTestData("Customer", row, 3);
+        String St = excelUtils.getTestData(END_TO_END, row, 3);
         generics.clickOn(dpSelectSite);
         generics.pause(1);
 
@@ -447,7 +447,7 @@ public class ServiceOrderPage extends ServiceOrder {
     public WebElement chkSiteContactSameAsCompanyContact;
 
     public void selectAddressline1ofSite(int row) {
-        String Add = excelUtils.getTestData("Customer", row, 0);
+        String Add = excelUtils.getTestData(END_TO_END, row, 0);
         testStepsLog("Address : " + Add);
         generics.moveTo(txtPostalcode);
         generics.clickOn(dpAddressLine1OfSite);
@@ -966,7 +966,7 @@ public class ServiceOrderPage extends ServiceOrder {
     }
 
     public void getCustomerName(int row) {
-        CustomerName = excelUtils.getTestData("Customer", row, 2);
+        CustomerName = excelUtils.getTestData(END_TO_END, row, 2);
         testStepsLog("Checking details for customer : " + CustomerName);
     }
 
