@@ -60,7 +60,63 @@ public class vehiclePage extends vehicle {
     }
 
     @FindBy(xpath = "//a[contains(text(),'VEHICLES')]")
-    public WebElement dpBusinessUnit1;
+    public WebElement tabVehicle;
+
+    @FindBy(xpath = "//span[@dataname='ADD VEHICLE']")
+    public WebElement btnAddVehicle;
+
+    public void ClickonVehicleTab()
+    {
+        generics.clickOn(tabVehicle);
+        testStepsLog("Clicked on Vehicle tab");
+    }
+    public void clickonAddVehiclebutton()
+    {
+        generics.clickOn(btnAddVehicle);
+        testStepsLog("Clicked on add vehicle button");
+    }
+
+    @FindBy(xpath = "//input[@formcontrolname='vin']")
+    public WebElement txtVin;
+
+    public void typeVin()
+    {
+        String Vin= generics.getRandomCharacters(5);
+        generics.type(txtVin, Vin);
+        testStepsLog("Vin value inserted : " + Vin);
+    }
+    @FindBy(xpath = "//mat-select[@formcontrolname='serviceZoneCreateId']")
+    public WebElement dpServiceZone;
+
+    @FindBy(xpath = "//mat-option[2]")
+    public WebElement firstOption;
+
+    public void selectServiceZone()
+    {
+        generics.clickOn(dpServiceZone);
+        generics.clickOn(firstOption);
+        testStepsLog("Service Zone Selected");
+    }
+
+    @FindBy(xpath = "//mat-select[@formcontrolname='regionTruxVehicleTypeId']")
+    public WebElement dpVehicleType;
+
+    public void selectVehicleType()
+    {
+        generics.clickOn(dpVehicleType);
+        generics.clickOn(firstOption);
+        testStepsLog("Vehicle Type Selected");
+    }
+
+    @FindBy(xpath = "//div[text()='SAVE VEHICLE']")
+    public WebElement btnSaveVehicle;
+
+    public void clickonSaveButton()
+    {
+        generics.clickOn(btnSaveVehicle);
+        testStepsLog("Clicked on Save Vehicle Button");
+    }
+
 
 
 

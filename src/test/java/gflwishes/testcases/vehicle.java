@@ -36,8 +36,12 @@ public class vehicle extends EnhancedBaseClass {
 
         login.loginAs(USER_NAME, PASSWORD);
         vc.openVehicle();
-
-
+        vc.ClickonVehicleTab();
+        vc.clickonAddVehiclebutton();
+        vc.typeVin();
+        vc.selectServiceZone();
+        vc.selectVehicleType();
+        vc.clickonSaveButton();
 
 
     }
