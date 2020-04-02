@@ -38,10 +38,24 @@ public class vehicle extends EnhancedBaseClass {
         vc.openVehicle();
         vc.ClickonVehicleTab();
         vc.clickonAddVehiclebutton();
+        vc.selectBusinessUnit();
+        vc.typeVehicalname();
+
         vc.typeVin();
         vc.selectServiceZone();
         vc.selectVehicleType();
         vc.clickonSaveButton();
+        if(vc.isvehicleCreated())
+        {
+            success("Vehicle Created Successfully");
+        }
+        else
+        {
+            failure("Vehicle not created");
+        }
+        vc.copyVehicleInEndToEndExcel();
+
+
 
 
     }

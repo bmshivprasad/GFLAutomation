@@ -55,14 +55,14 @@ public class vehiclePage extends vehicle {
 
 
     public void openVehicle() {
-        localDriver.navigate().to("https://fleetmapper-qa.azurewebsites.net/admin/view-region/1/businessunits");
-        generics.pause(15);
+        localDriver.navigate().to("https://fleetmapper-10qa.azurewebsites.net/admin/view-region/1/vehicles");
+        generics.pause(7);
     }
 
     @FindBy(xpath = "//a[contains(text(),'VEHICLES')]")
     public WebElement tabVehicle;
 
-    @FindBy(xpath = "//span[@dataname='ADD VEHICLE']")
+    @FindBy(xpath = "//span[@dataname='ADD VEHICLE']//preceding-sibling::mat-icon[text()='add']")
     public WebElement btnAddVehicle;
 
     public void ClickonVehicleTab()
@@ -72,6 +72,7 @@ public class vehiclePage extends vehicle {
     }
     public void clickonAddVehiclebutton()
     {
+        generics.pause(2);
         generics.clickOn(btnAddVehicle);
         testStepsLog("Clicked on add vehicle button");
     }
@@ -85,6 +86,37 @@ public class vehiclePage extends vehicle {
         generics.type(txtVin, Vin);
         testStepsLog("Vin value inserted : " + Vin);
     }
+
+    @FindBy(xpath = "//input[@formcontrolname='vehiclename']")
+    public WebElement txtVehiclename;
+
+    public void typeVehicalname()
+    {
+        generics.pause(3);
+        VehicalName="V_" + generics.getRandomCharacters(8);
+        generics.type(txtVehiclename, VehicalName);
+        testStepsLog("Vehicle value inserted : " + VehicalName);
+    }
+
+    ExcelUtils excelUtils = new ExcelUtils();
+
+    @FindBy(xpath = "//mat-select[@formcontrolname='businessUnitCreateIds']")
+    public WebElement dpBusinessUnit;
+
+    public void selectBusinessUnit() {
+
+        generics.pause(3);
+        String BU = excelUtils.getTestData(END_TO_END, 1, 14);
+        generics.clickOn(dpBusinessUnit);
+        generics.pause(2);
+        WebElement element = localDriver.findElement(By.xpath("//mat-option/span[contains(text(),'"+BU+"')]"));
+        element.click();
+        testStepsLog("Site Business unit Selected : " + BU);
+        generics.pause(2);
+
+    }
+
+
     @FindBy(xpath = "//mat-select[@formcontrolname='serviceZoneCreateId']")
     public WebElement dpServiceZone;
 
@@ -98,11 +130,16 @@ public class vehiclePage extends vehicle {
         testStepsLog("Service Zone Selected");
     }
 
+    @FindBy(xpath = "//p[contains(text(),'Odometer Units')]")
+    public WebElement lblOdo;
+
+
     @FindBy(xpath = "//mat-select[@formcontrolname='regionTruxVehicleTypeId']")
     public WebElement dpVehicleType;
 
     public void selectVehicleType()
     {
+        generics.moveTo(lblOdo);
         generics.clickOn(dpVehicleType);
         generics.clickOn(firstOption);
         testStepsLog("Vehicle Type Selected");
@@ -113,8 +150,45 @@ public class vehiclePage extends vehicle {
 
     public void clickonSaveButton()
     {
+        generics.moveTo(btnSaveVehicle);
         generics.clickOn(btnSaveVehicle);
         testStepsLog("Clicked on Save Vehicle Button");
+
+        generics.pause(6);
+    }
+
+    public boolean isvehicleCreated()
+    {
+        String CVehical=VehicalName.toUpperCase();
+        List<WebElement> element=localDriver.findElements(By.xpath("//div[text()=' "+CVehical+" ']"));
+        if(element.size()>0)
+            return true;
+        else
+            return false;
+    }
+    public void copyVehicleInEndToEndExcel()
+    {
+        String CVehical=VehicalName.toUpperCase();
+        int row=getRowsExcel();
+        for(int i=1;i<row;i++)
+        {
+            excelUtils.setTestData("EndToEnd",i,8,CVehical);
+        }
+        testStepsLog("Vehicle entery done in EndToEnd.xlsx file");
+    }
+
+    public int getRowsExcel() {
+        FileInputStream file;
+        try {
+            file = new FileInputStream(
+                    System.getProperty("user.dir") + "/src/test//java//gfl//testData//EndToEnd.xlsx");
+            XSSFWorkbook workbook = new XSSFWorkbook(file);
+            XSSFSheet sheet = workbook.getSheet("Sheet1");
+            return sheet.getPhysicalNumberOfRows();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
 
