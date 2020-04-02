@@ -14,6 +14,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import gflwishes.testcases.Dispatch;
 import gflwishes.utilities.ExcelUtils;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -85,7 +86,7 @@ public class DispatchPO extends Dispatch {
 
     public void openDispatcher() {
         testStepsLog("Open Dispatcher");
-        driver.navigate().to("https://fleetmapper-qa.azurewebsites.net//dispatch");
+        driver.navigate().to(FM_URL + File.separator + "dispatch");
     }
 
     public boolean verifyDispatchPage() {

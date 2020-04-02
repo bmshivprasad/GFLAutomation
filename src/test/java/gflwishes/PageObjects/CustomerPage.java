@@ -50,6 +50,7 @@ public class CustomerPage extends Customer {
 
     public void clickonAddCustomerButton() {
         generics.pause(5);
+        generics.scrollToElement(btnAddCustomer);
         generics.clickOn(btnAddCustomer);
         testStepsLog("Clicked ON Add Customer button");
         generics.pause(2);
