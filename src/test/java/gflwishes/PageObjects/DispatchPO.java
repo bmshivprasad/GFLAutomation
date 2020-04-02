@@ -337,6 +337,7 @@ public class DispatchPO extends Dispatch {
     WebElement lblOperationType;
 
     public String getOperationType() {
+        System.out.println(generics.getText(lblOperationType));
         return generics.getText(lblOperationType);
     }
 

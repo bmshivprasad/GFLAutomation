@@ -95,7 +95,7 @@ public class EndToEnd extends EnhancedBaseClass {
         sa.assertAll();
     }
 
-    @Test(dependsOnMethods = {"TC001WS_Verify_Create_new_Customer_Functionality"})
+    @Test
     public void TC002WS_Verify_Create_Service_order_Functionality() {
 
         testCaseLog("TC0011_Verify_Create_Service_order_Functionality");
@@ -150,7 +150,7 @@ public class EndToEnd extends EnhancedBaseClass {
                 cp.selectContainerType();
                 //cp.selectRequiestedDate();
                 cp.InsertUploadingTime();
-                cp.selectDesposibleSite();
+                //cp.selectDesposibleSite();
                 cp.selectBillingCycle();
                 cp.typeDemurageDay();
                 cp.clickonGetPricing();
@@ -215,7 +215,7 @@ public class EndToEnd extends EnhancedBaseClass {
         sa.assertAll();
     }
 
-    @Test(dependsOnMethods = {"TC002WS_Verify_Create_Service_order_Functionality"})
+    @Test
     public void TC003FM_Verify_User_can_complete_pickup_order() {
 
         testCaseLog("Verify_User_can_complete_pickup_order");
@@ -225,7 +225,7 @@ public class EndToEnd extends EnhancedBaseClass {
 
         login.selectSignIn(USER_NAME);
 
-        for (int count = 0; count < ExcelUtils.getRowsExcel(getClass().getSimpleName()); count++) {
+        for (int count = 1; count < ExcelUtils.getRowsExcel(getClass().getSimpleName()) - 1; count++) {
 
             dispatchPO.openDispatcher();
 
@@ -279,7 +279,7 @@ public class EndToEnd extends EnhancedBaseClass {
                         dispatchPO.completeOrder(count);
                     }
                     break;
-                case "empty and return":
+                case "empty & return":
                     dispatchPO.startOrder();
                     dispatchPO.enterPickUpContainerName();
                     dispatchPO.enterTicketDetails();
@@ -304,7 +304,7 @@ public class EndToEnd extends EnhancedBaseClass {
         }
     }
 
-    @Test(dependsOnMethods = {"TC003FM_Verify_User_can_complete_pickup_order"})
+    @Test
     public void TC004WS_Verify_All_deatails_in_wishes_if_service_order_status_Change_from_FM() {
 
         testCaseLog("TC005_Verify_All_deatails_in_wishes_if_service_order_status_Change_from_FM");
