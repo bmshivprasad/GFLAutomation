@@ -1,6 +1,8 @@
 package gflwishes.PageObjects;
 
 import gflwishes.base.Generics;
+import gflwishes.testcases.Dispatch;
+import gflwishes.utilities.ExcelUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -11,8 +13,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import gflwishes.testcases.Dispatch;
-import gflwishes.utilities.ExcelUtils;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -63,7 +63,7 @@ public class DispatchPO extends Dispatch {
     WebElement truckDragAndDrop;
 
     @FindBy(xpath = "(//map-common-vehicle-list//mat-list-item//span[text()='This vehicle has no assignments'])[1]" +
-            "//ancestor::map-common-vehicle-item//map-common-vehicle-item-header//span[contains(@class,'vehicle_id')]")
+            "//ancestor::map-common-vehicle-item//map-common-vehicle-item-header//span[contains(text(),'')]")
     WebElement firstempyTruck;
 
     @FindBy(xpath = "(//span[contains(text(),'ORDERS')]//..//..//following-sibling::div//span)[2]")
@@ -99,7 +99,8 @@ public class DispatchPO extends Dispatch {
         generics.scrollToElement(truckDragAndDrop);
         testStepsLog("Drag and Drop Truck from the map to order.");
         excelUtils.setTestData(END_TO_END, count, 18, firstempyTruck.getText());
-        act.dragAndDrop(firstempyTruck, truckDragAndDrop).build().perform();
+        act.dragAndDrop(driver.findElement(By.xpath("//map-common-vehicle-item//span[contains(text(),'" +
+                excelUtils.getTestData("EndToEnd", count, 8) + "')]")), truckDragAndDrop).build().perform();
         generics.pause(10);
     }
 
