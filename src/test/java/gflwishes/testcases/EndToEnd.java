@@ -31,7 +31,7 @@ public class EndToEnd extends EnhancedBaseClass {
         }
 
         for (int i = 1; i < rows - 1; i++) {
-            try {
+
                 lp.OpenCustomer();
 
 
@@ -87,12 +87,10 @@ public class EndToEnd extends EnhancedBaseClass {
                     failure("Customer not Added successfully");
                 }
                 cp.getCustomerID(i);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
 
+        }
         sa.assertAll();
+
     }
 
     @Test
@@ -112,103 +110,98 @@ public class EndToEnd extends EnhancedBaseClass {
             failure("Failed to Login");
         }
 
-        for (int i = 1; i < rows - 1; i++) {
+        for (int i = 1; i < rows - 1; i++)
+        {
 
-            try {
-                lp.OpenServiceOrder();
+            lp.OpenServiceOrder();
+
+            if (cp.isServiceOrderPageOpen()) {
+                success("Service Order page open successfully");
+            } else {
+                failure("Service Order page not open");
+            }
+            cp.clickonTempServicebtn();
+            if (cp.isPopupdisplayed()) {
+                success("Popup displayed");
+            } else {
+                failure("Popup not displayed");
+            }
+            cp.typeCustomername(i);
+            cp.selectCustomer();
+            cp.selectSite(i);
+
+            if (cp.isSelectedCustomerOpen()) {
+                success("Selected Customer Opens successfully");
+            } else {
+                failure("Selected customer not opend");
+            }
+
+            cp.selectMaterial(i);
+            cp.selectContainerSize(i);
+            cp.selectHaulType(i);
+            if (cp.isServiceSectionDisplayed()) {
+                success("Services Details Section displayed on Haul Type selection");
+            } else {
+                failure("Services detail section not displayed on Haul type selection");
+            }
+            cp.selectContainerType();
+            //cp.selectRequiestedDate();
+            cp.InsertUploadingTime();
+            //cp.selectDesposibleSite();
+            cp.selectBillingCycle();
+            cp.typeDemurageDay();
+            cp.clickonGetPricing();
+            if (cp.isServiceChargesectionDisplayed()) {
+                success("Get Price button working and displayed service charges");
+            } else {
+                failure("Get Price button not working or service charges not displayed");
+            }
+            cp.typeDispatchnote();
+            cp.typeDrivernote();
+            cp.clickonSaveServiceButton();
+            if (cp.isServiceSaved()) {
+                success("Save Service button is working");
+            } else {
+                failure("Save Service button is not working");
+            }
+            if (cp.isApproveDisplay()) {
+                cp.clickonApprovebutton();
+                cp.typeApprovalReason();
+                cp.clickonReasonApprovebutton();
 
 
-                if (cp.isServiceOrderPageOpen()) {
-                    success("Service Order page open successfully");
+                if (cp.isAllDetailsSavedCurreclty()) {
+                    success("Services saved with all details");
                 } else {
-                    failure("Service Order page not open");
+                    failure("Services not saved with all details");
                 }
-                cp.clickonTempServicebtn();
-                if (cp.isPopupdisplayed()) {
-                    success("Popup displayed");
-                } else {
-                    failure("Popup not displayed");
-                }
-                cp.typeCustomername(i);
-                cp.selectCustomer();
-                cp.selectSite(i);
+            }
 
-                if (cp.isSelectedCustomerOpen()) {
-                    success("Selected Customer Opens successfully");
-                } else {
-                    failure("Selected customer not opend");
-                }
+            /*
+            cp.clickonAddServiceOrderButton();
+            cp.selectHaulType(i);
+            cp.clickonSavebtnOfServiceOrder();
 
-                cp.selectMaterial(i);
-                cp.selectContainerSize(i);
-                cp.selectHaulType(i);
-                if (cp.isServiceSectionDisplayed()) {
-                    success("Services Details Section displayed on Haul Type selection");
-                } else {
-                    failure("Services detail section not displayed on Haul type selection");
-                }
-                cp.selectContainerType();
-                //cp.selectRequiestedDate();
-                cp.InsertUploadingTime();
-                //cp.selectDesposibleSite();
-                cp.selectBillingCycle();
-                cp.typeDemurageDay();
-                cp.clickonGetPricing();
-                if (cp.isServiceChargesectionDisplayed()) {
-                    success("Get Price button working and displayed service charges");
-                } else {
-                    failure("Get Price button not working or service charges not displayed");
-                }
-                cp.typeDispatchnote();
-                cp.typeDrivernote();
-                cp.clickonSaveServiceButton();
-                if (cp.isServiceSaved()) {
-                    success("Save Service button is working");
-                } else {
-                    failure("Save Service button is not working");
-                }
-                if (cp.isApproveDisplay()) {
-                    cp.clickonApprovebutton();
-                    cp.typeApprovalReason();
-                    cp.clickonReasonApprovebutton();
-
-
-                    if (cp.isAllDetailsSavedCurreclty()) {
-                        success("Services saved with all details");
-                    } else {
-                        failure("Services not saved with all details");
-                    }
-                }
-
-		        /*
-		        cp.clickonAddServiceOrderButton();
-		        cp.selectHaulType(i);
-		        cp.clickonSavebtnOfServiceOrder();
-		        
-		        if(cp.isNewServiceOrderAddded())
-		        {
-		          	success("New Service order added successfully");
-		        }
-		        else
-		        {
-		        	failure("New Service Order not saved");
-		        }*/
-                cp.clickonPaynow();
-                cp.SelectPaymentMethod();
-                cp.typeCVV();
-                cp.SelectAddress();
-                cp.SelectConfirmationCheckbox();
-                cp.UploadFile();
-                //cp.zoomout();
-                cp.ClickonPayAmount();
-                if (cp.isPaymentDone()) {
-                    success("Paymenet Done successfully");
-                } else {
-                    failure("Payment not done successfully");
-                }
-            } catch (Exception e) {
-                System.out.print("Service Order not created : ");
-                e.printStackTrace();
+            if(cp.isNewServiceOrderAddded())
+            {
+                success("New Service order added successfully");
+            }
+            else
+            {
+                failure("New Service Order not saved");
+            }*/
+            cp.clickonPaynow();
+            cp.SelectPaymentMethod();
+            cp.typeCVV();
+            cp.SelectAddress();
+            cp.SelectConfirmationCheckbox();
+            cp.UploadFile();
+            //cp.zoomout();
+            cp.ClickonPayAmount();
+            if (cp.isPaymentDone()) {
+                success("Paymenet Done successfully");
+            } else {
+                failure("Payment not done successfully");
             }
 
         }
@@ -321,53 +314,49 @@ public class EndToEnd extends EnhancedBaseClass {
 
         for (int i = 1; i < rows - 1; i++) {
 
-            try {
-                lp.OpenServiceOrder();
-                cp.changepagesize();
-                cp.getCustomerName(i);
-                cp.openServiceOrder();
-                if (cp.isProperStatusDisplayed(i)) {
-                    success("Proper Status of service order displayed");
 
-                } else {
-                    failure("Proper status of service order not displayed");
-                }
-                if (cp.isProperVehicleDisplayed(i)) {
-                    success("Proper assigned Vehicle of service order displayed");
+            lp.OpenServiceOrder();
+            cp.changepagesize();
+            cp.getCustomerName(i);
+            cp.openServiceOrder();
+            if (cp.isProperStatusDisplayed(i)) {
+                success("Proper Status of service order displayed");
 
-                } else {
-                    failure("Proper Vehicle of service order not displayed");
-                }
-                if (cp.isProperDispatcherDisplayed(i)) {
-                    success("Proper Dispatcher value of service order displayed");
-
-                } else {
-                    failure("Proper Dispatcher of service order not displayed");
-                }
-
-                if (cp.isProperDispatcherNoteDisplayed(i)) {
-                    success("Proper Dispatcher note value of service order displayed");
-
-                } else {
-                    failure("Proper Dispatcher note value of service order not displayed");
-                }
-                if (cp.isProperDriverNoteDisplayed(i)) {
-                    success("Proper Driver note value of service order displayed");
-
-                } else {
-                    failure("Proper driver note value of service order not displayed");
-                }
-                if (cp.isProperDriverDisplayed(i)) {
-                    success("Proper Driver value of service order displayed");
-
-                } else {
-                    failure("Proper Driver value of service order not displayed");
-                }
-
-
-            } catch (Exception e) {
-                System.out.print("Service Order not created : ");
+            } else {
+                failure("Proper status of service order not displayed");
             }
+            if (cp.isProperVehicleDisplayed(i)) {
+                success("Proper assigned Vehicle of service order displayed");
+
+            } else {
+                failure("Proper Vehicle of service order not displayed");
+            }
+            if (cp.isProperDispatcherDisplayed(i)) {
+                success("Proper Dispatcher value of service order displayed");
+
+            } else {
+                failure("Proper Dispatcher of service order not displayed");
+            }
+
+            if (cp.isProperDispatcherNoteDisplayed(i)) {
+                success("Proper Dispatcher note value of service order displayed");
+
+            } else {
+                failure("Proper Dispatcher note value of service order not displayed");
+            }
+            if (cp.isProperDriverNoteDisplayed(i)) {
+                success("Proper Driver note value of service order displayed");
+
+            } else {
+                failure("Proper driver note value of service order not displayed");
+            }
+            if (cp.isProperDriverDisplayed(i)) {
+                success("Proper Driver value of service order displayed");
+
+            } else {
+                failure("Proper Driver value of service order not displayed");
+            }
+
 
         }
         sa.assertAll();

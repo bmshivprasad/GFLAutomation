@@ -982,7 +982,7 @@ public class ServiceOrderPage extends ServiceOrder {
     public boolean isProperStatusDisplayed(int row) {
         String status = generics.getText(txtStatus);
         String st = excelUtils.getTestData(END_TO_END, row, 7);
-        if (status.equals(st)) {
+        if (status.toLowerCase().equals(st.toLowerCase())) {
             return true;
         } else {
             return false;
@@ -997,7 +997,7 @@ public class ServiceOrderPage extends ServiceOrder {
         js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
         String vehicle = generics.getText(txtVehicle);
         String vc = excelUtils.getTestData(END_TO_END, row, 8);
-        if (vehicle.equals(vc)) {
+        if (vehicle.toLowerCase().equals(vc.toLowerCase())) {
             return true;
         } else {
             return false;
@@ -1011,7 +1011,7 @@ public class ServiceOrderPage extends ServiceOrder {
 
         String Dispatcher = generics.getText(txtDispatcher);
         String ds = excelUtils.getTestData(END_TO_END, row, 9);
-        if (Dispatcher.equals(ds)) {
+        if (Dispatcher.toLowerCase().equals(ds.toLowerCase())) {
             return true;
         } else {
             return false;
@@ -1025,7 +1025,7 @@ public class ServiceOrderPage extends ServiceOrder {
 
         String Driver = generics.getText(txtDriver);
         String dv = excelUtils.getTestData(END_TO_END, row, 11);
-        if (Driver.equals(dv)) {
+        if (Driver.toLowerCase().equals(dv.toLowerCase())) {
             return true;
         } else {
             return false;

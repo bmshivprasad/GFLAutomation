@@ -35,7 +35,8 @@ public class vehicle extends EnhancedBaseClass {
         vehiclePage vc = new vehiclePage(driver);//object creation for project page
 
         login.loginAs(USER_NAME, PASSWORD);
-        vc.openVehicle();
+        vc.getServiceZone();
+        vc.OpenRegion();
         vc.ClickonVehicleTab();
         vc.clickonAddVehiclebutton();
         vc.selectBusinessUnit();
