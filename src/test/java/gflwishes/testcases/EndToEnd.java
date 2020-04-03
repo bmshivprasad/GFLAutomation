@@ -32,68 +32,68 @@ public class EndToEnd extends EnhancedBaseClass {
 
         for (int i = 1; i < rows - 1; i++) {
 
-                lp.OpenCustomer();
+            lp.OpenCustomer();
 
 
-                if (cp.isCustomerPageOpen()) {
-                    success("Customers page open successfully");
-                } else {
-                    failure("Customers page not open");
-                }
-                cp.clickonAddCustomerButton();
-                if (cp.isPopupdisplayed()) {
-                    success("Popup displayed");
-                } else {
-                    failure("Popup not displayed");
-                }
-                cp.typeCustomername(i);
-                cp.clickonCreateNewCustomerlnk();
-                if (cp.isEnteredCustomerDisplayed()) {
-                    success("Entered customer name displayed as companyname");
-                } else {
-                    failure("Entered customer name not displayed as companyname");
-                }
-                cp.selectBusinessUnit1(i);
-                cp.selectJurisdiction();
-                cp.selectcustomertype();
-                cp.selectAddressline1();
-                //cp.selectcountry();
-                //cp.selectState();
-                //cp.typeCity();
+            if (cp.isCustomerPageOpen()) {
+                success("Customers page open successfully");
+            } else {
+                failure("Customers page not open");
+            }
+            cp.clickonAddCustomerButton();
+            if (cp.isPopupdisplayed()) {
+                success("Popup displayed");
+            } else {
+                failure("Popup not displayed");
+            }
+            cp.typeCustomername(i);
+            cp.clickonCreateNewCustomerlnk();
+            if (cp.isEnteredCustomerDisplayed()) {
+                success("Entered customer name displayed as companyname");
+            } else {
+                failure("Entered customer name not displayed as companyname");
+            }
+            cp.selectBusinessUnit1(i);
+            cp.selectJurisdiction();
+            cp.selectcustomertype();
+            cp.selectAddressline1();
+            //cp.selectcountry();
+            //cp.selectState();
+            //cp.typeCity();
 
-                cp.selectBillingAddAsCompanyAdd();
-                cp.typeContact();
-                cp.typeEmail();
-                cp.typeContactPosition();
-                cp.typePhoneNumber();
-                cp.typeExtention();
-                cp.typeSiteName(i);
-                cp.selectBusinessUnit();
-                cp.selectBusinessType();
-                cp.typePoNumber();
-                cp.DeSelectsiteAddressesSameAsCompanyAddresses();
-                cp.selectAddressline1ofSite(i);
-                cp.typePostalcode(i);
-                cp.SelectbillToCustomerBillingAddress();
-                cp.clickonbtnSaveCustomer();
-                if (cp.isSuccessMessageDisplayed()) {
-                    success("Success Message displayed");
-                } else {
-                    failure("Success message not displayed");
-                }
-                if (cp.isCustomerAdded()) {
-                    success("Customer Added successfully");
-                } else {
-                    failure("Customer not Added successfully");
-                }
-                cp.getCustomerID(i);
+            cp.selectBillingAddAsCompanyAdd();
+            cp.typeContact();
+            cp.typeEmail();
+            cp.typeContactPosition();
+            cp.typePhoneNumber();
+            cp.typeExtention();
+            cp.typeSiteName(i);
+            cp.selectBusinessUnit();
+            cp.selectBusinessType();
+            cp.typePoNumber();
+            cp.DeSelectsiteAddressesSameAsCompanyAddresses();
+            cp.selectAddressline1ofSite(i);
+            cp.typePostalcode(i);
+            cp.SelectbillToCustomerBillingAddress();
+            cp.clickonbtnSaveCustomer();
+            if (cp.isSuccessMessageDisplayed()) {
+                success("Success Message displayed");
+            } else {
+                failure("Success message not displayed");
+            }
+            if (cp.isCustomerAdded()) {
+                success("Customer Added successfully");
+            } else {
+                failure("Customer not Added successfully");
+            }
+            cp.getCustomerID(i);
 
         }
         sa.assertAll();
 
     }
 
-    @Test
+    @Test(dependsOnMethods = "TC001WS_Verify_Create_new_Customer_Functionality")
     public void TC002WS_Verify_Create_Service_order_Functionality() {
 
         testCaseLog("TC0011_Verify_Create_Service_order_Functionality");
@@ -110,8 +110,7 @@ public class EndToEnd extends EnhancedBaseClass {
             failure("Failed to Login");
         }
 
-        for (int i = 1; i < rows - 1; i++)
-        {
+        for (int i = 1; i < rows - 1; i++) {
 
             lp.OpenServiceOrder();
 
@@ -208,7 +207,7 @@ public class EndToEnd extends EnhancedBaseClass {
         sa.assertAll();
     }
 
-    @Test
+    @Test(dependsOnMethods = "TC002WS_Verify_Create_Service_order_Functionality")
     public void TC003FM_Verify_User_can_complete_pickup_order() {
 
         testCaseLog("Verify_User_can_complete_pickup_order");
@@ -297,7 +296,7 @@ public class EndToEnd extends EnhancedBaseClass {
         }
     }
 
-    @Test
+    @Test(dependsOnMethods = "TC003FM_Verify_User_can_complete_pickup_order")
     public void TC004WS_Verify_All_deatails_in_wishes_if_service_order_status_Change_from_FM() {
 
         testCaseLog("TC005_Verify_All_deatails_in_wishes_if_service_order_status_Change_from_FM");
