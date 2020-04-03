@@ -37,8 +37,20 @@ public class vehiclePage extends vehicle {
         this.localDriver = baseDriver;
         PageFactory.initElements(localDriver, this);
         generics = new Generics(localDriver);
-        log4j = Logger.getLogger("Service Order");
+        log4j = Logger.getLogger("Vehicle");
     }
+
+    @FindBy(xpath = "(//div[text()='REGIONS']/following-sibling::div//div[@class='card_title'])")
+    WebElement regions;
+
+    public void OpenRegion()
+    {
+        generics.clickOn(regions);
+        testStepsLog("Open selected regions");
+        generics.pause(3);
+    }
+
+
 
     @FindBy(xpath = "//span[@class='date_string']")
     WebElement lblToday;
@@ -55,9 +67,33 @@ public class vehiclePage extends vehicle {
 
 
     public void openVehicle() {
+
         localDriver.navigate().to("https://fleetmapper-10qa.azurewebsites.net/admin/view-region/1/vehicles");
         generics.pause(7);
     }
+
+    @FindBy(xpath = "//mat-icon[text()='chevron_right']")
+    public WebElement sidepanel;
+
+    @FindBy(xpath = "//mat-icon[text()='keyboard_arrow_left']")
+    public WebElement leftarrow;
+
+    @FindBy(xpath = "(//h3[text()='Logged into:']/following-sibling::div/p)[1]")
+    public WebElement servicezone;
+
+    public static String  Zone;
+    public void getServiceZone()
+    {
+       generics.clickOn(sidepanel);
+       String z=generics.getText(servicezone);
+
+       Zone=(z.split("-")[1]).trim();
+       testStepsLog("Service zone : " + Zone);
+       generics.clickOn(leftarrow);
+    }
+
+
+
 
     @FindBy(xpath = "//a[contains(text(),'VEHICLES')]")
     public WebElement tabVehicle;
@@ -72,9 +108,12 @@ public class vehiclePage extends vehicle {
     }
     public void clickonAddVehiclebutton()
     {
+
         generics.pause(2);
+
         generics.clickOn(btnAddVehicle);
         testStepsLog("Clicked on add vehicle button");
+        generics.waitForElementVisible(txtVin);
     }
 
     @FindBy(xpath = "//input[@formcontrolname='vin']")
@@ -105,7 +144,7 @@ public class vehiclePage extends vehicle {
 
     public void selectBusinessUnit() {
 
-        generics.pause(3);
+        generics.pause(5);
         String BU = excelUtils.getTestData(END_TO_END, 1, 14);
         generics.clickOn(dpBusinessUnit);
         generics.pause(2);
@@ -126,8 +165,9 @@ public class vehiclePage extends vehicle {
     public void selectServiceZone()
     {
         generics.clickOn(dpServiceZone);
-        generics.clickOn(firstOption);
-        testStepsLog("Service Zone Selected");
+        WebElement element=localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+Zone+"')]"));
+        element.click();
+        testStepsLog("Service Zone Selected : " + Zone);
     }
 
     @FindBy(xpath = "//p[contains(text(),'Odometer Units')]")
