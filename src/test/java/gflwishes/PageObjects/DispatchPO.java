@@ -5,6 +5,7 @@ import gflwishes.testcases.Dispatch;
 import gflwishes.utilities.ExcelUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -168,11 +169,12 @@ public class DispatchPO extends Dispatch {
     List<WebElement> lstDrivers;
 
     public void completeOrder(int count) {
-        generics.pause(5);
+        new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(btnComplete));
         generics.scrollToElement(btnComplete);
         generics.clickOnJS(btnComplete);
         generics.pause(2);
-        generics.clickOn(btnDriver);
+        ((JavascriptExecutor) driver).executeScript("document.evaluate('//div[@class='mat-form-field-infix']'," +
+                " document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click();");
         excelUtils.setTestData(END_TO_END, count, 11, lstDrivers.get(0).getText());
         excelUtils.setTestData(END_TO_END, count, 7, "COMPLETED");
         generics.clickOnJS(lstDrivers.get(0));
