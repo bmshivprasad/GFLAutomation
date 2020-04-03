@@ -75,7 +75,7 @@ public class DispatchPO extends Dispatch {
     @FindBy(xpath = "//button//mat-icon[text()='play_circle_outline']")
     WebElement btnStart;
 
-    @FindBy(xpath = "//button//mat-icon[text()='check']")
+    @FindBy(xpath = "//button[@title='']//mat-icon[text()='check']")
     WebElement btnComplete;
 
     @FindBy(xpath = "//div[@class='mat-form-field-infix']")
@@ -158,18 +158,21 @@ public class DispatchPO extends Dispatch {
     }
 
     public void startOrder() {
+        generics.pause(3);
         testStepsLog("Click on Start button to start order.");
         generics.clickOnJS(btnStart);
+        generics.pause(2);
     }
 
     @FindAll(value = {@FindBy(xpath = "//span[@class='mat-option-text']")})
     List<WebElement> lstDrivers;
 
     public void completeOrder(int count) {
+        generics.pause(5);
         generics.scrollToElement(btnComplete);
         generics.clickOnJS(btnComplete);
         generics.pause(2);
-        generics.clickOnJS(btnDriver);
+        generics.clickOn(btnDriver);
         excelUtils.setTestData(END_TO_END, count, 11, lstDrivers.get(0).getText());
         excelUtils.setTestData(END_TO_END, count, 7, "COMPLETED");
         generics.clickOnJS(lstDrivers.get(0));
@@ -258,6 +261,7 @@ public class DispatchPO extends Dispatch {
             System.out.println(e.getText());
             if (e.getText().contains(SiteAddress.split(",")[0])) {
                 generics.clickOnJS(e);
+                generics.pause(2);
                 break;
             }
         }
@@ -290,6 +294,7 @@ public class DispatchPO extends Dispatch {
     WebElement btnSaveContainerName;
 
     public void enterPickUpContainerName() {
+        generics.pause(1);
         generics.scrollToElement(btnEditContainer.get(0));
         generics.clickOnJS(btnEditContainer.get(0));
         generics.pause(2);
@@ -328,6 +333,7 @@ public class DispatchPO extends Dispatch {
     WebElement btnAcceptTickerDetails;
 
     public void enterTicketDetails() {
+        generics.pause(2);
         generics.clickOnJS(btnScaleTicket);
         generics.type(txtScaleTicket, generics.getRandomBetween(100, 999) + "");
         generics.type(txtWeight, generics.getRandomBetween(100, 999) + "");

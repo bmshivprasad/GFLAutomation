@@ -256,7 +256,7 @@ public class EndToEnd extends EnhancedBaseClass {
                 case "pick up":
                     dispatchPO.startOrder();
                     dispatchPO.enterPickUpContainerName();
-                    dispatchPO.enterTicketDetails();
+                    // dispatchPO.enterTicketDetails();
                     dispatchPO.completeOrder(count);
                     break;
                 case "delivery":
