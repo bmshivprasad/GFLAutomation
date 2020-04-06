@@ -4,6 +4,7 @@ import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 import gflwishes.utilities.Configurations;
+import gflwishes.utilities.ExcelUtils;
 import gflwishes.utilities.ExtentInitializer;
 import gflwishes.utilities.ZipUtils;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -36,6 +37,7 @@ public class EnhancedBaseClass extends ExtentInitializer implements Configuratio
     public WebDriver driver;
     public static Logger log4j = Logger.getLogger("EnhancedBaseClass");
     public SoftAssert sa;
+    public ExcelUtils excelUtils = new ExcelUtils();
 
     @BeforeSuite(alwaysRun = true)
     public void startReport(ITestContext testContext) {

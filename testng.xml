@@ -4,6 +4,7 @@
 
     <test thread-count="5" name="Wishes - FM">
         <classes>
+        <class name ="gflwishes.testcases.vehicle"/>
             <class name="gflwishes.testcases.EndToEnd">
                 <methods>
                     <include name="TC001WS_Verify_Create_new_Customer_Functionality"/>

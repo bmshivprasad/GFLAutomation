@@ -10,6 +10,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 
 public class ExcelUtils implements Configurations {
 
@@ -114,6 +117,40 @@ public class ExcelUtils implements Configurations {
             fo.close();
         } catch (Exception e) {
             System.out.println("Failed to load file " + fileLocation);
+        }
+    }
+
+    // Temporary utility method created as there is no TRUX integration for QA Env in Wishes.
+    // This method updates the ExternalID in the Site table to 1.
+    // With this update, the site creation will work as expected.
+    public void UpdateExternalSiteID() {
+        ExcelUtils excelUtils = new ExcelUtils();
+        Connection connection = null;
+        Statement statement = null;
+        String dbURL = "jdbc:sqlserver://gfldev.database.windows.net;databaseName=Wishes-QA;user=wishes_qa;password=W1sh3sd3v";
+        {
+            try {
+                connection = DriverManager.getConnection(dbURL);
+                statement = connection.createStatement();
+                String customerId = excelUtils.getTestData("EndToEnd", 1, 13).split(" ")[1];
+                System.out.println(customerId);
+                String updateExtIDQuery = "UPDATE dbo.Site set ExternalId = 1 WHERE CustomerId = " + customerId;
+                System.out.println(updateExtIDQuery);
+                /*
+                 * ResultSet resultSet = statement.executeQuery(SQL);
+                 * System.out.println(resultSet.getFetchSize()); while (resultSet.next()) {
+                 * System.out.println(resultSet.getString(7)); }
+                 */
+                statement.executeUpdate(updateExtIDQuery);
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (connection != null)
+                    try {
+                        connection.close();
+                    } catch (Exception e) {
+                    }
+            }
         }
     }
 }
