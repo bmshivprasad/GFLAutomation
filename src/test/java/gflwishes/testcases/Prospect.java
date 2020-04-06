@@ -3,11 +3,12 @@ package gflwishes.testcases;
 import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
 
-import gflwishes.PageObjects.CustomerPage;
+
 import gflwishes.PageObjects.LandingPage;
 import gflwishes.PageObjects.LoginPage;
 import gflwishes.PageObjects.ProspectPage;
 import gflwishes.base.EnhancedBaseClass;
+import gflwishes.base.Generics;
 
 public class Prospect extends EnhancedBaseClass {
 
@@ -63,10 +64,29 @@ public class Prospect extends EnhancedBaseClass {
             } else {
                 failure("Entered Prosepect name not displayed as companyname");
             }
+	        pp.typeWebsite();
+	        pp.selectBillingCurrency();
+	        pp.selectSalesRep();
 	        pp.selectBusinessUnit1(i);
-	        pp.selectJurisdiction();
 	        pp.selectcustomertype();
+	        pp.selectJurisdiction();
 	        pp.selectAddressline1();
+	        pp.selectBillingAddAsCompanyAdd();
+	        pp.typeContact();
+	        pp.typeEmail();
+	        pp.typeContactPosition();
+	        pp.typePhoneNumber();
+	        pp.typeExtention(); 
+	        pp.typeSiteName(i);
+	        pp.selectBusinessUnit(); 
+	        pp.selectBusinessType();
+	        
+	        pp.selectAddressline1ofSite(i);
+	        pp.typePostalcode(i);
+	        pp.SelectbillToCustomerBillingAddress();
+	        pp.SelectSitecontactsameasprimarycontact();
+	        pp.clickonbtnSaveCustomer();
+	        
 	            } catch (Exception e) {
 	                e.printStackTrace();
 	            }
