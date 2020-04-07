@@ -514,7 +514,7 @@ public class ProspectPage extends Prospect {
         
     }
 
-    //====================================CK Code for Add Service==================================
+    //====================================CK Code for Add Service====================================
 
     @FindBy(xpath = "//button[contains(text(),'CREATE QUOTE')]")
     public WebElement btnCreateQuote;

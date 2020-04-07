@@ -27,7 +27,7 @@ public class Customer extends EnhancedBaseClass {
     @Test
     public void TC001WS_Verify_Create_new_Customer_Functionality() {
 
-        testCaseLog("TC001_TC002_TC003_Verify_Create_new_Customer_Functionality");
+        testCaseLog("TC001_TC002_TC003_Verify_Create_new_Customer_Functionality ");
 
         LoginPage login = new LoginPage(driver);
         LandingPage lp = new LandingPage(driver);
