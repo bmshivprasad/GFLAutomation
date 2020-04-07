@@ -40,6 +40,9 @@ public class CustomerPage extends Customer {
     @FindBy(xpath = "//button[contains(text(),'CUSTOMER')]/i")
     public WebElement btnAddCustomer;
 
+    @FindBy(xpath = "//mat-option[13]")
+    public WebElement tempCustomer;
+
 
     public boolean isCustomerPageOpen() {
         return generics.isPresent(btnAddCustomer);
@@ -142,7 +145,7 @@ public class CustomerPage extends Customer {
 
     public void selectcustomertype() {
         generics.clickOn(dpcustomertype);
-        generics.clickOn(firstOption);
+        generics.clickOn(tempCustomer);
         testStepsLog("Customer type selected");
     }
 
@@ -979,8 +982,7 @@ public class CustomerPage extends Customer {
     @FindBy(xpath = "//button[contains(text(),'CREATE QUOTE')]")
     public WebElement btnCreateQuote;
 
-    public void clickonCreateQuote()
-    {
+    public void clickonCreateQuote() {
         generics.clickOn(btnCreateQuote);
         testStepsLog("Clicked on Create Quote button");
     }
@@ -996,8 +998,10 @@ public class CustomerPage extends Customer {
         testStepsLog("Clicked On Next Button");
         generics.pause(3);
     }
+
     @FindBy(xpath = "//button[contains(text(),'ADD SERVICE')]")
     public WebElement btnAddServices;
+
     public void clickonAddServiceButton() {
 
         JavascriptExecutor js = (JavascriptExecutor) localDriver;
@@ -1014,8 +1018,7 @@ public class CustomerPage extends Customer {
     public WebElement optionRollOff;
 
 
-    public void selectServiceType()
-    {
+    public void selectServiceType() {
         generics.clickOn(dpServiceType);
         generics.clickOn(optionRollOff);
         testStepsLog("Service type selected");
@@ -1027,22 +1030,20 @@ public class CustomerPage extends Customer {
     @FindBy(xpath = "//div[text()='DISPOSAL']")
     public WebElement titleDisposal;
 
-    public void typeContainerCount(int row)
-    {
+    public void typeContainerCount(int row) {
         generics.moveTo(titleDisposal);
-        String CC=excelUtils.getTestData("Prospect", row, 5);
-        generics.type(txtContainerCount,CC);
+        String CC = excelUtils.getTestData("Prospect", row, 5);
+        generics.type(txtContainerCount, CC);
         testStepsLog("Container Count : " + CC);
     }
 
     @FindBy(xpath = "//mat-select[@formcontrolname='containerTypeId']")
     public WebElement dpContainerType;
 
-    public void SelectContainerType(int row)
-    {
-        String CT=excelUtils.getTestData("Prospect", row, 6);
+    public void SelectContainerType(int row) {
+        String CT = excelUtils.getTestData("Prospect", row, 6);
         generics.clickOn(dpContainerType);
-        WebElement element=localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+CT+"')]"));
+        WebElement element = localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'" + CT + "')]"));
         element.click();
         testStepsLog("Container Type Selected : " + CT);
     }
@@ -1050,21 +1051,19 @@ public class CustomerPage extends Customer {
     @FindBy(xpath = "//input[@formcontrolname='containerRentalFee']")
     public WebElement txtContainerFee;
 
-    public void typeContainerFee(int row)
-    {
-        String CF=excelUtils.getTestData("Prospect", row, 7);
-        generics.type(txtContainerFee,CF);
+    public void typeContainerFee(int row) {
+        String CF = excelUtils.getTestData("Prospect", row, 7);
+        generics.type(txtContainerFee, CF);
         testStepsLog("Container Fee : " + CF);
     }
 
     @FindBy(xpath = "//mat-select[@formcontrolname='containerSizeId']")
     public WebElement dpContainerSize;
 
-    public void SelectContainerSize(int row)
-    {
-        String CS=excelUtils.getTestData("Prospect", row, 8);
+    public void SelectContainerSize(int row) {
+        String CS = excelUtils.getTestData("Prospect", row, 8);
         generics.clickOn(dpContainerSize);
-        WebElement element=localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+CS+"')]"));
+        WebElement element = localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'" + CS + "')]"));
         element.click();
         testStepsLog("Container Size Selected : " + CS);
     }
@@ -1072,11 +1071,10 @@ public class CustomerPage extends Customer {
     @FindBy(xpath = "//mat-select[@formcontrolname='serviceFrequencyId']")
     public WebElement dpFrequency;
 
-    public void SelectFreuency(int row)
-    {
-        String F=excelUtils.getTestData("Prospect", row, 9);
+    public void SelectFreuency(int row) {
+        String F = excelUtils.getTestData("Prospect", row, 9);
         generics.clickOn(dpFrequency);
-        WebElement element=localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+F+"')]"));
+        WebElement element = localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'" + F + "')]"));
         element.click();
         testStepsLog("Frequency selected : " + F);
     }
@@ -1090,17 +1088,15 @@ public class CustomerPage extends Customer {
     @FindBy(xpath = "//input[@formcontrolname='maximumWeight']")
     public WebElement txtmaxweight;
 
-    public void SelectChargeType(int row)
-    {
-        String CT=excelUtils.getTestData("Prospect", row, 10);
+    public void SelectChargeType(int row) {
+        String CT = excelUtils.getTestData("Prospect", row, 10);
         generics.clickOn(dpChargeType);
-        WebElement element=localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+CT+"')]"));
+        WebElement element = localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'" + CT + "')]"));
         element.click();
         testStepsLog("Charge Type selected : " + CT);
-        if(CT.equals("MT / haul"))
-        {
-            generics.type(txtminweight,String.valueOf(generics.getRandomBetween(1,5)));
-            generics.type(txtmaxweight,String.valueOf(generics.getRandomBetween(6,9)));
+        if (CT.equals("MT / haul")) {
+            generics.type(txtminweight, String.valueOf(generics.getRandomBetween(1, 5)));
+            generics.type(txtmaxweight, String.valueOf(generics.getRandomBetween(6, 9)));
             testStepsLog("Min/max weight inserted");
         }
     }
@@ -1108,11 +1104,10 @@ public class CustomerPage extends Customer {
     @FindBy(xpath = "//mat-select[@formcontrolname='haulTypeId']")
     public WebElement dpHaultype;
 
-    public void SelectHaulType(int row)
-    {
-        String HT=excelUtils.getTestData("Prospect", row, 11);
+    public void SelectHaulType(int row) {
+        String HT = excelUtils.getTestData("Prospect", row, 11);
         generics.clickOn(dpHaultype);
-        WebElement element=localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+HT+"')]"));
+        WebElement element = localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'" + HT + "')]"));
         element.click();
         testStepsLog("Frequency selected : " + HT);
     }
