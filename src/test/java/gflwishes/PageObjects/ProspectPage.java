@@ -100,7 +100,7 @@ public class ProspectPage extends Prospect {
 
     public void typeProspectname(int row) {
         // CustomerName = generics.getRandomCharacters(10);
-    	ProspectName = generics.getRandomCharacters(5) + "_" + LocalDate.now().format(DateTimeFormatter.ofPattern("ddMM"))
+    	ProspectName = "AutoCust"+generics.getRandomCharacters(5) + "_" + LocalDate.now().format(DateTimeFormatter.ofPattern("ddMM"))
                 + "" + getRandomIntBetweenRange(100, 999);
         ;
         generics.clickOn(txtProspectName);
@@ -164,7 +164,7 @@ public class ProspectPage extends Prospect {
     
     public void selectBusinessUnit1(int row) {
     	generics.pause(5);
-        String BU = excelUtils.getTestData(END_TO_END, row, 14);
+        String BU = excelUtils.getTestData(Prospect, row, 14);
         generics.pause(5);
 
         generics.clickOn(dpBusinessUnit1);
@@ -205,7 +205,7 @@ public class ProspectPage extends Prospect {
     @FindBy(xpath = "//span[contains(text(),'CapexTest Approver')]")
     public WebElement dpSalesRep;
     
-    @FindBy(xpath = "//mat-option[3]")
+    @FindBy(xpath = "//mat-option[2]")
     public WebElement ThirdOption1;
     
     public void selectSalesRep() {
@@ -297,11 +297,15 @@ public class ProspectPage extends Prospect {
 
     public void typeEmail() {
         Email = generics.getRandomCharacters(10) + "@gmail.com";
-
+        
+       
+        
         generics.moveTo(txtEmail);
         generics.type(txtEmail, Email);
 
         testStepsLog("Email inserted");
+        
+     
     }
     
     @FindBy(xpath = "(//input[@formcontrolname='position'])[1]")
@@ -352,6 +356,9 @@ public class ProspectPage extends Prospect {
         generics.moveTo(txtExt);
         generics.type(txtExt, String.valueOf(extension));
         testStepsLog("extension inserted");
+        
+        JavascriptExecutor je = (JavascriptExecutor) localDriver;
+        je.executeScript("arguments[0].scrollIntoView(true);",txtEmail);
     }
     
     
@@ -362,10 +369,6 @@ public class ProspectPage extends Prospect {
 
     public void typeSiteName(int row) {
         SiteName = generics.getRandomCharacters(10);
-        
-        JavascriptExecutor je = (JavascriptExecutor) localDriver;
-        je.executeScript("arguments[0].scrollIntoView(true);",txtSiteName);
-        
         generics.moveTo(txtSiteName);
         generics.type(txtSiteName, String.valueOf(SiteName));
         generics.pause(5);
@@ -414,6 +417,9 @@ public class ProspectPage extends Prospect {
         generics.clickOn(firstOption);
         generics.pause(2);
         testStepsLog("Site Business Type Selected");
+        
+        JavascriptExecutor je = (JavascriptExecutor) localDriver;
+        je.executeScript("arguments[0].scrollIntoView(true);",dpBusinessUnit);
     }
     
     @FindBy(xpath = "//mat-select[@id='mat-select-18']")
@@ -432,7 +438,13 @@ public class ProspectPage extends Prospect {
         generics.clickOn(firstOption);
         generics.pause(2);
         testStepsLog("Site Business Sales Rep Selected");
+        
+        
     }
+    
+    //@FindBy(xpath = "(//mat-checkbox[@formcontrolname='addressAsCustomerAddress']//div[contains(@class,'mat-checkbox-inner-container')]")
+   // public WebElement chkbx;
+
     
     @FindBy(xpath = "(//ng-select[@placeholder='Address Line 1'])[3]")
     public WebElement dpAddressLine1OfSite;
@@ -444,7 +456,7 @@ public class ProspectPage extends Prospect {
     public WebElement txtPostalcode;
 
     public void selectAddressline1ofSite(int row) {
-        String Add = excelUtils.getTestData(END_TO_END, row, 0);
+        String Add = excelUtils.getTestData(Prospect, row, 0);
         testStepsLog("Address : " + Add);
         
         
@@ -461,7 +473,7 @@ public class ProspectPage extends Prospect {
     }
     
     public void typePostalcode(int row) {
-        String pc = excelUtils.getTestData(END_TO_END, row, 1);
+        String pc = excelUtils.getTestData(Prospect, row, 1);
         generics.type(txtPostalcode, Keys.CONTROL + "a" + Keys.DELETE);
         generics.clickOn(txtPostalcode);
         generics.type(txtPostalcode, pc);
@@ -494,7 +506,15 @@ public class ProspectPage extends Prospect {
 
     public void clickonbtnSaveCustomer() {
         generics.clickOn(btnSave);
-        generics.pause(5);
+       
         testStepsLog("Clicked on Save Customer button");
+    }
+    
+    @FindBy(xpath = "//div[contains(text(),'Prospect has been created successfully!')]")
+    public WebElement Prospectsuccessmsg;
+    
+    public boolean isProspectCreatedSuccessful() {
+        return generics.isPresent(Prospectsuccessmsg);
+        
     }
 }
