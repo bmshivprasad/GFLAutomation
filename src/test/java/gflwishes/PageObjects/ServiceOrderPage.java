@@ -852,6 +852,8 @@ public class ServiceOrderPage extends ServiceOrder {
 
     public void ClickonPayAmount() {
         generics.scrollToElement(btnPayAmount);
+        JavascriptExecutor js = (JavascriptExecutor) localDriver;
+        js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
         generics.clickOn(btnPayAmount);
         testStepsLog("Clicked on PayAmount button");
         generics.pause(10);
@@ -877,6 +879,7 @@ public class ServiceOrderPage extends ServiceOrder {
             robot.keyRelease(KeyEvent.VK_ENTER);
             testStepsLog("Clicked on File Upload");
             generics.pause(10);
+
         } catch (Exception e) {
             testStepsLog("File Not uploaded");
         }

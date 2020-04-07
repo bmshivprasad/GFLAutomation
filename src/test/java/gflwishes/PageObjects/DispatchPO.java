@@ -173,8 +173,8 @@ public class DispatchPO extends Dispatch {
         generics.scrollToElement(btnComplete);
         generics.clickOnJS(btnComplete);
         generics.pause(2);
-        ((JavascriptExecutor) driver).executeScript("document.evaluate('//div[@class='mat-form-field-infix']'," +
-                " document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click();");
+        ((JavascriptExecutor) driver).executeScript("document.evaluate('//div[@class=\"mat-form-field-infix\"]'," +
+                "   document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click();");
         excelUtils.setTestData(END_TO_END, count, 11, lstDrivers.get(0).getText());
         excelUtils.setTestData(END_TO_END, count, 7, "COMPLETED");
         generics.clickOnJS(lstDrivers.get(0));

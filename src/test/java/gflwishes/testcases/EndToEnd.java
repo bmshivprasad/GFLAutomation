@@ -195,7 +195,7 @@ public class EndToEnd extends EnhancedBaseClass {
             cp.SelectAddress();
             cp.SelectConfirmationCheckbox();
             cp.UploadFile();
-            cp.ClickonPayAmount();
+            // cp.ClickonPayAmount();
             if (cp.isPaymentDone()) {
                 success("Paymenet Done successfully");
             } else {
@@ -214,7 +214,7 @@ public class EndToEnd extends EnhancedBaseClass {
         LoginPage login = new LoginPage(driver);
         DispatchPO dispatchPO = new DispatchPO(driver);
 
-        login.selectSignIn(USER_NAME);
+        login.loginAs(USER_NAME, PASSWORD);
 
         for (int count = 1; count < ExcelUtils.getRowsExcel(getClass().getSimpleName()) - 1; count++) {
 
