@@ -87,6 +87,12 @@ public class Prospect extends EnhancedBaseClass {
 	        pp.SelectSitecontactsameasprimarycontact();
 	        pp.clickonbtnSaveCustomer();
 	        
+	        if (pp.isProspectCreatedSuccessful()) {
+                success("Prospect created successfull message validation.");
+            } else {
+                failure("Prospect not created.");
+            }
+	        
 	            } catch (Exception e) {
 	                e.printStackTrace();
 	            }
