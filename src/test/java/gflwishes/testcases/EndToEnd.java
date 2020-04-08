@@ -93,7 +93,7 @@ public class EndToEnd extends EnhancedBaseClass {
         excelUtils.UpdateExternalSiteID();
     }
 
-    @Test(dependsOnMethods = "TC001WS_Verify_Create_new_Customer_Functionality")
+    @Test
     public void TC002WS_Verify_Create_Service_order_Functionality() {
 
         testCaseLog("TC0011_Verify_Create_Service_order_Functionality");
@@ -102,7 +102,7 @@ public class EndToEnd extends EnhancedBaseClass {
         ServiceOrderPage cp = new ServiceOrderPage(driver);
         int rows = cp.getRowsExcel();
 
-        //  new LoginPageUpdated(driver).loginAs(USER_NAME, PASSWORD);
+        new LoginPage(driver).loginAs(USER_NAME, PASSWORD);
 
         if (lp.isUserLoginSuccessful()) {
             success("User Login Successful");
@@ -195,8 +195,7 @@ public class EndToEnd extends EnhancedBaseClass {
             cp.SelectAddress();
             cp.SelectConfirmationCheckbox();
             cp.UploadFile();
-            //cp.zoomout();
-            cp.ClickonPayAmount();
+            // cp.ClickonPayAmount();
             if (cp.isPaymentDone()) {
                 success("Paymenet Done successfully");
             } else {
@@ -207,7 +206,7 @@ public class EndToEnd extends EnhancedBaseClass {
         sa.assertAll();
     }
 
-    @Test(dependsOnMethods = "TC002WS_Verify_Create_Service_order_Functionality")
+    @Test
     public void TC003FM_Verify_User_can_complete_pickup_order() {
 
         testCaseLog("Verify_User_can_complete_pickup_order");
@@ -215,7 +214,7 @@ public class EndToEnd extends EnhancedBaseClass {
         LoginPage login = new LoginPage(driver);
         DispatchPO dispatchPO = new DispatchPO(driver);
 
-        login.selectSignIn(USER_NAME);
+        login.loginAs(USER_NAME, PASSWORD);
 
         for (int count = 1; count < ExcelUtils.getRowsExcel(getClass().getSimpleName()) - 1; count++) {
 
@@ -296,7 +295,7 @@ public class EndToEnd extends EnhancedBaseClass {
         }
     }
 
-    @Test(dependsOnMethods = "TC003FM_Verify_User_can_complete_pickup_order")
+    @Test
     public void TC004WS_Verify_All_deatails_in_wishes_if_service_order_status_Change_from_FM() {
 
         testCaseLog("TC005_Verify_All_deatails_in_wishes_if_service_order_status_Change_from_FM");
