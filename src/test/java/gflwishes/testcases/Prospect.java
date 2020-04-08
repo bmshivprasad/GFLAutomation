@@ -25,7 +25,7 @@ public class Prospect extends EnhancedBaseClass {
 	    @Test
 	    public void TC001WS_Verify_Create_new_Prospect_Functionality() {
 
-	        testCaseLog("TC001_TC002_TC003_Verify_Create_new_Prospect_Functionality");
+	        testCaseLog("TC001_TC002_TC003_Verify_Create_new_Prospect_Functionality ");
 
 	        LoginPage login = new LoginPage(driver);
 	        LandingPage lp = new LandingPage(driver);
@@ -41,7 +41,7 @@ public class Prospect extends EnhancedBaseClass {
 	        }
 
 	        for (int i = 1; i < rows - 1; i++) {
-	            try {
+
 	        lp.OpenProspect();
 	         
 	        if (pp.isProspectPageOpen()) {
@@ -92,10 +92,48 @@ public class Prospect extends EnhancedBaseClass {
             } else {
                 failure("Prospect not created.");
             }
-	        
-	            } catch (Exception e) {
-	                e.printStackTrace();
-	            }
+//============CK's code=============
+			pp.clickonCreateQuote();
+	        pp.clickonCreateQuote();
+			pp.clickonNextButton();
+			//pp.clickonNextButton();
+			pp.clickonAddServiceButton();
+			pp.selectServiceType();
+			pp.typeContainerCount(i);
+			pp.SelectContainerType(i);
+			pp.typeContainerFee(i);
+			pp.SelectContainerSize(i);
+			pp.SelectFreuency(i);
+			pp.SelectChargeType(i);
+			pp.SelectHaulType(i);
+			pp.SelectMaterial(i);
+			pp.selectDisposibleSite();
+			pp.typeEstTime(i);
+			pp.typeLocationType(i);
+			pp.clickonCalculate();
+			pp.typenote();
+			pp.clickonAddService();
+			pp.clickonUpdateAgreement();
+			if(pp.isAggreementUpdated())
+			{
+				success("Aggreeement updpated successfully ");
+			}
+			else
+			{
+				failure("Aggreeement not updated successfully");
+			}
+
+			pp.clickonSaveAndSubmitCSA();
+			pp.clickonSubmitButton();
+			if(pp.isCSASaved())
+			{
+				success("CSA Saved successfully");
+			}
+			else
+			{
+				failure("CSA not Saved successfully");
+			}
+
 	        }
 	       
 	        sa.assertAll();

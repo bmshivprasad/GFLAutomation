@@ -40,9 +40,6 @@ public class CustomerPage extends Customer {
     @FindBy(xpath = "//button[contains(text(),'CUSTOMER')]/i")
     public WebElement btnAddCustomer;
 
-    @FindBy(xpath = "//mat-option[13]")
-    public WebElement tempCustomer;
-
 
     public boolean isCustomerPageOpen() {
         return generics.isPresent(btnAddCustomer);
@@ -121,6 +118,7 @@ public class CustomerPage extends Customer {
     @FindBy(xpath = "(//mat-select[@formcontrolname='businessUnitId'])[1]")
     public WebElement dpBusinessUnit1;
 
+
     public void selectBusinessUnit1(int row) {
 
         String BU = excelUtils.getTestData(END_TO_END, row, 14);
@@ -145,7 +143,7 @@ public class CustomerPage extends Customer {
 
     public void selectcustomertype() {
         generics.clickOn(dpcustomertype);
-        generics.clickOn(tempCustomer);
+        generics.clickOn(firstOption);
         testStepsLog("Customer type selected");
     }
 
@@ -982,7 +980,8 @@ public class CustomerPage extends Customer {
     @FindBy(xpath = "//button[contains(text(),'CREATE QUOTE')]")
     public WebElement btnCreateQuote;
 
-    public void clickonCreateQuote() {
+    public void clickonCreateQuote()
+    {
         generics.clickOn(btnCreateQuote);
         testStepsLog("Clicked on Create Quote button");
     }
@@ -998,10 +997,8 @@ public class CustomerPage extends Customer {
         testStepsLog("Clicked On Next Button");
         generics.pause(3);
     }
-
     @FindBy(xpath = "//button[contains(text(),'ADD SERVICE')]")
     public WebElement btnAddServices;
-
     public void clickonAddServiceButton() {
 
         JavascriptExecutor js = (JavascriptExecutor) localDriver;
@@ -1018,7 +1015,8 @@ public class CustomerPage extends Customer {
     public WebElement optionRollOff;
 
 
-    public void selectServiceType() {
+    public void selectServiceType()
+    {
         generics.clickOn(dpServiceType);
         generics.clickOn(optionRollOff);
         testStepsLog("Service type selected");
@@ -1030,20 +1028,22 @@ public class CustomerPage extends Customer {
     @FindBy(xpath = "//div[text()='DISPOSAL']")
     public WebElement titleDisposal;
 
-    public void typeContainerCount(int row) {
+    public void typeContainerCount(int row)
+    {
         generics.moveTo(titleDisposal);
-        String CC = excelUtils.getTestData("Prospect", row, 5);
-        generics.type(txtContainerCount, CC);
+        String CC=excelUtils.getTestData("Prospect", row, 5);
+        generics.type(txtContainerCount,CC);
         testStepsLog("Container Count : " + CC);
     }
 
     @FindBy(xpath = "//mat-select[@formcontrolname='containerTypeId']")
     public WebElement dpContainerType;
 
-    public void SelectContainerType(int row) {
-        String CT = excelUtils.getTestData("Prospect", row, 6);
+    public void SelectContainerType(int row)
+    {
+        String CT=excelUtils.getTestData("Prospect", row, 6);
         generics.clickOn(dpContainerType);
-        WebElement element = localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'" + CT + "')]"));
+        WebElement element=localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+CT+"')]"));
         element.click();
         testStepsLog("Container Type Selected : " + CT);
     }
@@ -1051,19 +1051,21 @@ public class CustomerPage extends Customer {
     @FindBy(xpath = "//input[@formcontrolname='containerRentalFee']")
     public WebElement txtContainerFee;
 
-    public void typeContainerFee(int row) {
-        String CF = excelUtils.getTestData("Prospect", row, 7);
-        generics.type(txtContainerFee, CF);
+    public void typeContainerFee(int row)
+    {
+        String CF=excelUtils.getTestData("Prospect", row, 7);
+        generics.type(txtContainerFee,CF);
         testStepsLog("Container Fee : " + CF);
     }
 
     @FindBy(xpath = "//mat-select[@formcontrolname='containerSizeId']")
     public WebElement dpContainerSize;
 
-    public void SelectContainerSize(int row) {
-        String CS = excelUtils.getTestData("Prospect", row, 8);
+    public void SelectContainerSize(int row)
+    {
+        String CS=excelUtils.getTestData("Prospect", row, 8);
         generics.clickOn(dpContainerSize);
-        WebElement element = localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'" + CS + "')]"));
+        WebElement element=localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+CS+"')]"));
         element.click();
         testStepsLog("Container Size Selected : " + CS);
     }
@@ -1071,12 +1073,19 @@ public class CustomerPage extends Customer {
     @FindBy(xpath = "//mat-select[@formcontrolname='serviceFrequencyId']")
     public WebElement dpFrequency;
 
-    public void SelectFreuency(int row) {
-        String F = excelUtils.getTestData("Prospect", row, 9);
+    @FindBy(xpath = "//mat-chip[contains(text(),'W')]")
+    public WebElement Wednesday;
+
+
+    public void SelectFreuency(int row)
+    {
+        String F=excelUtils.getTestData("Prospect", row, 9);
         generics.clickOn(dpFrequency);
-        WebElement element = localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'" + F + "')]"));
+        WebElement element=localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+F+"')]"));
         element.click();
         testStepsLog("Frequency selected : " + F);
+        generics.clickOn(Wednesday);
+        testStepsLog("Preffered service day selected");
     }
 
     @FindBy(xpath = "//mat-select[@formcontrolname='disposalChargeTypeId']")
@@ -1088,15 +1097,18 @@ public class CustomerPage extends Customer {
     @FindBy(xpath = "//input[@formcontrolname='maximumWeight']")
     public WebElement txtmaxweight;
 
-    public void SelectChargeType(int row) {
-        String CT = excelUtils.getTestData("Prospect", row, 10);
+    public void SelectChargeType(int row)
+    {
+        generics.moveTo(btnCalculate);
+        String CT=excelUtils.getTestData("Prospect", row, 10);
         generics.clickOn(dpChargeType);
-        WebElement element = localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'" + CT + "')]"));
+        WebElement element=localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+CT+"')]"));
         element.click();
         testStepsLog("Charge Type selected : " + CT);
-        if (CT.equals("MT / haul")) {
-            generics.type(txtminweight, String.valueOf(generics.getRandomBetween(1, 5)));
-            generics.type(txtmaxweight, String.valueOf(generics.getRandomBetween(6, 9)));
+        if(CT.equals("MT / haul"))
+        {
+            generics.type(txtminweight,String.valueOf(generics.getRandomBetween(1,5)));
+            generics.type(txtmaxweight,String.valueOf(generics.getRandomBetween(6,9)));
             testStepsLog("Min/max weight inserted");
         }
     }
@@ -1104,13 +1116,142 @@ public class CustomerPage extends Customer {
     @FindBy(xpath = "//mat-select[@formcontrolname='haulTypeId']")
     public WebElement dpHaultype;
 
-    public void SelectHaulType(int row) {
-        String HT = excelUtils.getTestData("Prospect", row, 11);
+    public void SelectHaulType(int row)
+    {
+        String HT=excelUtils.getTestData("Prospect", row, 11);
         generics.clickOn(dpHaultype);
-        WebElement element = localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'" + HT + "')]"));
+        WebElement element=localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+HT+"')]"));
         element.click();
         testStepsLog("Frequency selected : " + HT);
     }
+    @FindBy(xpath = "//mat-select[@formcontrolname='serviceTypeMaterialId']")
+    public WebElement dpserviceTypeMeterial;
+
+    public void SelectMaterial(int row)
+    {
+        String M=excelUtils.getTestData("Prospect", row, 12);
+        generics.clickOn(dpserviceTypeMeterial);
+        WebElement element=localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+M+"')]"));
+        element.click();
+        testStepsLog("Material selected : " + M);
+    }
+    @FindBy(xpath = "//mat-select[@formcontrolname='disposalSiteId']")
+    public WebElement dpdiposibleSite;
+
+    public void selectDisposibleSite()
+    {
+        //String M=excelUtils.getTestData("Prospect", row, 12);
+        generics.clickOn(dpdiposibleSite);
+        generics.clickOn(firstOption);
+
+        testStepsLog("Disposible site selected : ");
+    }
+
+    @FindBy(xpath = "//button[contains(text(),'Calculate')]")
+    public WebElement btnCalculate;
+
+    public void clickonCalculate()
+    {
+        generics.clickOn(btnCalculate);
+        testStepsLog("Clicked ON calculate button");
+        generics.pause(6);
+    }
+
+
+
+
+    @FindBy(xpath = "//input[@formcontrolname='timeAtDisposalSite']")
+    public WebElement txtEstTime;
+
+    public void typeEstTime(int row)
+    {
+        String ET=excelUtils.getTestData("Prospect", row, 13);
+        generics.type(txtEstTime,ET);
+        testStepsLog("Estimated time entered in min : " + ET);
+    }
+
+
+
+
+
+    @FindBy(xpath = "//textarea[@formcontrolname='notes']")
+    public WebElement txtnote;
+
+    public void typenote()
+    {
+        JavascriptExecutor js = (JavascriptExecutor) localDriver;
+        js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+        String note=generics.getRandomCharacters(10);
+        generics.type(txtnote,note);
+        testStepsLog("Additional note : " + note);
+    }
+
+    @FindBy(xpath = "//input[@formcontrolname='customerBusinessType']")
+    public WebElement txtLocationType;
+
+    public void typeLocationType(int row)
+    {
+        String LT=excelUtils.getTestData("Prospect", row, 14);
+        generics.type(txtLocationType,LT);
+        testStepsLog("Location Type : " + LT);
+    }
+
+    @FindBy(xpath = "//button[contains(text(),'ADD SERVICE')]")
+    public WebElement AddService;
+
+    public void clickonAddService()
+    {
+        generics.clickOn(AddService);
+        testStepsLog("Clicked on Add Service button");
+    }
+
+    @FindBy(xpath = "//button[contains(text(),'Update Agreement')]")
+    public WebElement UpdateAgreement;
+
+    public void clickonUpdateAgreement()
+    {
+        generics.clickOn(UpdateAgreement);
+        testStepsLog("Clicked on UpdateAgreement button");
+    }
+
+    @FindBy(xpath = "//button[contains(text(),'SAVE & SUBMIT CSA')]")
+    public WebElement btnSaveAndSubmitCSA;
+
+    public void clickonSaveAndSubmitCSA()
+    {
+        generics.clickOn(btnSaveAndSubmitCSA);
+        testStepsLog("Clicked on Save And Submit CSA button");
+    }
+
+    @FindBy(xpath = "//button[contains(text(),'Submit')]")
+    public WebElement btnSubmitted;
+
+    public void clickonSubmitButton()
+    {
+        generics.clickOn(btnSubmitted);
+        testStepsLog("Clicked on SubmitButton CSA button");
+        generics.pause(5);
+    }
+
+
+    @FindBy(xpath = "//div[contains(text(),'Agreement has been updated successfully!')]")
+    public WebElement AggreementUpdatedSuccessfully;
+
+    public boolean isAggreementUpdated()
+    {
+        generics.pause(5);
+        return generics.isPresent(AggreementUpdatedSuccessfully);
+    }
+
+    @FindBy(xpath = "//div[contains(text(),'CSA has been submitted successfully!\n')]")
+    public WebElement CSASuccess;
+
+    public boolean isCSASaved()
+    {
+        generics.pause(5);
+        return generics.isPresent(CSASuccess);
+    }
+
 
     public boolean searching(String keywords, int column) {
         String xpath = "//table[contains(@class,'MuiTable-root')]/tr";

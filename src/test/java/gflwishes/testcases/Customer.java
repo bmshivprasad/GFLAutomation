@@ -27,7 +27,7 @@ public class Customer extends EnhancedBaseClass {
     @Test
     public void TC001WS_Verify_Create_new_Customer_Functionality() {
 
-        testCaseLog("TC001_TC002_TC003_Verify_Create_new_Customer_Functionality");
+        testCaseLog("TC001_TC002_TC003_Verify_Create_new_Customer_Functionality ");
 
         LoginPage login = new LoginPage(driver);
         LandingPage lp = new LandingPage(driver);
@@ -135,8 +135,36 @@ public class Customer extends EnhancedBaseClass {
                 cp.SelectContainerType(i);
                 cp.typeContainerFee(i);
                 cp.SelectContainerSize(i);
+                cp.SelectFreuency(i);
                 cp.SelectChargeType(i);
                 cp.SelectHaulType(i);
+                cp.SelectMaterial(i);
+                cp.selectDisposibleSite();
+                cp.typeEstTime(i);
+                cp.typeLocationType(i);
+                cp.clickonCalculate();
+                cp.typenote();
+                cp.clickonAddService();
+                cp.clickonUpdateAgreement();
+                if(cp.isAggreementUpdated())
+                {
+                    success("Aggreeement updpated successfully");
+                }
+                else
+                {
+                    failure("Aggreeement not updated successfully");
+                }
+
+                cp.clickonSaveAndSubmitCSA();
+                cp.clickonSubmitButton();
+                if(cp.isCSASaved())
+                {
+                    success("CSA Saved successfully");
+                }
+                else
+                {
+                    failure("CSA not Saved successfully");
+                }
 
                 if (cp.isCustomerPageOpen()) {
                     success("Customers page open successfully");
