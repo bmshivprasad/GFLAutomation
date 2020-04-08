@@ -102,7 +102,7 @@ public class EndToEnd extends EnhancedBaseClass {
         ServiceOrderPage cp = new ServiceOrderPage(driver);
         int rows = cp.getRowsExcel();
 
-        new LoginPage(driver).loginAs(USER_NAME, PASSWORD);
+        //  new LoginPage(driver).loginAs(USER_NAME, PASSWORD);
 
         if (lp.isUserLoginSuccessful()) {
             success("User Login Successful");
@@ -214,7 +214,7 @@ public class EndToEnd extends EnhancedBaseClass {
         LoginPage login = new LoginPage(driver);
         DispatchPO dispatchPO = new DispatchPO(driver);
 
-        login.loginAs(USER_NAME, PASSWORD);
+        login.selectSignIn(USER_NAME);
 
         for (int count = 1; count < ExcelUtils.getRowsExcel(getClass().getSimpleName()) - 1; count++) {
 

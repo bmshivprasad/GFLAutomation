@@ -58,7 +58,7 @@ public class Dispatch extends EnhancedBaseClass {
 
         dispatchPO.enterPickUpContainerName();
 
-        dispatchPO.enterTicketDetails();
+        dispatchPO.enterTicketDetails(count);
 
         dispatchPO.completeOrder(count);
 
