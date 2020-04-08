@@ -116,7 +116,7 @@ public class Prospect extends EnhancedBaseClass {
 			pp.clickonUpdateAgreement();
 			if(pp.isAggreementUpdated())
 			{
-				success("Aggreeement updpated successfully");
+				success("Aggreeement updpated successfully ");
 			}
 			else
 			{
