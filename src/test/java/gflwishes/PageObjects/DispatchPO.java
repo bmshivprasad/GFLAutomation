@@ -85,6 +85,9 @@ public class DispatchPO extends Dispatch {
     @FindAll(value = {@FindBy(xpath = "//mat-option")})
     List<WebElement> lstOption;
 
+    @FindBy(xpath = "//mat-sidenav//mat-card-title")
+    WebElement lblDispatcher;
+
     public void openDispatcher() {
         testStepsLog("Open Dispatcher");
         driver.navigate().to(FM_URL + File.separator + "dispatch");
@@ -334,11 +337,15 @@ public class DispatchPO extends Dispatch {
     @FindBy(xpath = "//map-common-disposal-site-info//mat-icon[text()='check']")
     WebElement btnAcceptTickerDetails;
 
-    public void enterTicketDetails() {
+    public void enterTicketDetails(int count) {
+        int scaleTicket = generics.getRandomBetween(100, 999);
+        int weight = generics.getRandomBetween(100, 999);
         generics.pause(2);
         generics.clickOnJS(btnScaleTicket);
-        generics.type(txtScaleTicket, generics.getRandomBetween(100, 999) + "");
-        generics.type(txtWeight, generics.getRandomBetween(100, 999) + "");
+        generics.type(txtScaleTicket, String.valueOf(scaleTicket));
+        generics.type(txtWeight, String.valueOf(weight));
+        excelUtils.setTestData(END_TO_END, count, 15, String.valueOf(scaleTicket));
+        excelUtils.setTestData(END_TO_END, count, 16, String.valueOf(weight));
         generics.clickOnJS(btnAcceptTickerDetails);
         generics.pause(3);
     }

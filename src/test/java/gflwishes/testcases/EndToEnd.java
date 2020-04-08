@@ -259,21 +259,21 @@ public class EndToEnd extends EnhancedBaseClass {
                     if (dispatchPO.isIconUpward()) {
                         dispatchPO.startOrder();
                         dispatchPO.enterPickUpContainerName();
-                        dispatchPO.enterTicketDetails();
+                        dispatchPO.enterTicketDetails(count);
                         dispatchPO.enterDropOffContainerName();
                         dispatchPO.completeOrder(count);
                     } else {
                         dispatchPO.startOrder();
                         dispatchPO.enterDropOffContainerName();
                         dispatchPO.enterPickUpContainerName();
-                        dispatchPO.enterTicketDetails();
+                        dispatchPO.enterTicketDetails(count);
                         dispatchPO.completeOrder(count);
                     }
                     break;
                 case "empty & return":
                     dispatchPO.startOrder();
                     dispatchPO.enterPickUpContainerName();
-                    dispatchPO.enterTicketDetails();
+                    dispatchPO.enterTicketDetails(count);
                     dispatchPO.enterDropOffContainerName();
                     dispatchPO.completeOrder(count);
                     break;
