@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 public class EndToEnd extends EnhancedBaseClass {
 
     public EndToEnd() {
-        log4j = Logger.getLogger("Service Order");
+        log4j = Logger.getLogger("EndToEnd");
     }
 
     @Test
@@ -218,7 +218,7 @@ public class EndToEnd extends EnhancedBaseClass {
 
         for (int count = 1; count < ExcelUtils.getRowsExcel(getClass().getSimpleName()) - 1; count++) {
 
-            dispatchPO.openDispatcher();
+            dispatchPO.openDispatcher(count);
 
             if (dispatchPO.verifyDispatchPage()) {
                 success("User can see the dispatch page.");
@@ -248,11 +248,13 @@ public class EndToEnd extends EnhancedBaseClass {
                     dispatchPO.startOrder();
                     dispatchPO.enterPickUpContainerName();
                     // dispatchPO.enterTicketDetails();
+                    dispatchPO.enterDriverNotes(count);
                     dispatchPO.completeOrder(count);
                     break;
                 case "delivery":
                     dispatchPO.startOrder();
                     dispatchPO.enterDropOffContainerName();
+                    dispatchPO.enterDriverNotes(count);
                     dispatchPO.completeOrder(count);
                     break;
                 case "exchange":
@@ -261,12 +263,14 @@ public class EndToEnd extends EnhancedBaseClass {
                         dispatchPO.enterPickUpContainerName();
                         dispatchPO.enterTicketDetails(count);
                         dispatchPO.enterDropOffContainerName();
+                        dispatchPO.enterDriverNotes(count);
                         dispatchPO.completeOrder(count);
                     } else {
                         dispatchPO.startOrder();
                         dispatchPO.enterDropOffContainerName();
                         dispatchPO.enterPickUpContainerName();
                         dispatchPO.enterTicketDetails(count);
+                        dispatchPO.enterDriverNotes(count);
                         dispatchPO.completeOrder(count);
                     }
                     break;
@@ -275,12 +279,14 @@ public class EndToEnd extends EnhancedBaseClass {
                     dispatchPO.enterPickUpContainerName();
                     dispatchPO.enterTicketDetails(count);
                     dispatchPO.enterDropOffContainerName();
+                    dispatchPO.enterDriverNotes(count);
                     dispatchPO.completeOrder(count);
                     break;
                 case "move":
                     dispatchPO.startOrder();
                     dispatchPO.enterPickUpContainerName();
                     dispatchPO.enterDropOffContainerName();
+                    dispatchPO.enterDriverNotes(count);
                     dispatchPO.completeOrder(count);
                     break;
                 case "pickup directive":
@@ -292,6 +298,7 @@ public class EndToEnd extends EnhancedBaseClass {
                     dispatchPO.enterDropOffContainerName();
                     break;
             }
+
         }
     }
 
@@ -359,178 +366,5 @@ public class EndToEnd extends EnhancedBaseClass {
         }
         sa.assertAll();
     }
-    
-    /*
-    @Test
-    public void TC012_Assign_service_order_to_Vehical_and_Complete_Dispatching() throws IOException, InterruptedException
-    {
-
-        testCaseLog("TC012_Assign_service_order_to_Vehical_and_Complete_Dispatching");
-
-        
-        LoginPageUpdated login = new LoginPageUpdated(driver);
-        LandingPageUpdated lp = new LandingPageUpdated(driver);
-        ServiceOrderPage cp= new ServiceOrderPage(driver);//object creation for project page
-        int rows=cp.getRowsExcel();
-        driver.get("https://fleetmapper-qa.azurewebsites.net");
-        
-        login.loginAs(USER_NAME, PASSWORD);
-        cp.openDispatcher();
-        testStepsLog("Dispatcher page open");
-                
-        //cp.changeOrderDate();
-        //cp.changeDate();
-        cp.getEmptyVehicalname();
-        cp.dragDeliveryOrderToTruck();
-        cp.openVehicalDetail();
-        cp.startOrder();
-        
-        
-        //cp.openOrdersList();
-        testStepsLog("Opening new tab");
-        for(int i=1;i<rows-1;i++)
-        {
-        	
-        
-        	try
-        	{
-        		//WebElement body = driver.findElement(By.tagName("body"));
-                //body.sendKeys(Keys.CONTROL + "t");
-                
-                ((JavascriptExecutor) driver).executeScript("window.open()");
-                ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
-                driver.switchTo().window(tabs.get(1));
-                
-                
-        		driver.get("https://wishes-qa.azurewebsites.net");
-        		driver.switchTo().window(tabs.get(0));
-        		testStepsLog("back to first window");
-        		driver.switchTo().window(tabs.get(1));
-        		login.loginAs(USER_NAME, PASSWORD);
-		        lp.OpenServiceOrder();
-		        cp.changepagesize();
-		        cp.getCustomerName(i);
-		        cp.openServiceOrder();
-		        if(cp.isProperStatusDisplayed(i))
-		        {
-		        	success("Proper Status of service order displayed");
-		        	
-		        }
-		        else
-		        {
-		        	failure("Proper status of service order not displayed");
-		        }
-		        
-		        
-		        
-        	}
-        	catch(Exception e)
-        	{
-        		System.out.print("Service Order not created : " );
-        		continue;
-        	}
-       
-        } 
-        sa.assertAll();
-    }
-    
-    
-    
-    @Test
-    public void TC005_Verify_All_deatails_in_wishes_if_service_order_status_Change_from_FM() throws IOException, InterruptedException
-    {
-
-        testCaseLog("TC005_Verify_All_deatails_in_wishes_if_service_order_status_Change_from_FM");
-
-        LoginPageUpdated login = new LoginPageUpdated(driver);
-        LandingPageUpdated lp = new LandingPageUpdated(driver);
-        ServiceOrderPage cp= new ServiceOrderPage(driver);//object creation for project page
-        int rows=cp.getRowsExcel();
-
-        login.loginAs(USER_NAME, PASSWORD);
-
-        if (lp.isUserLoginSuccessful()) {
-            success("User Login Successful");
-        } else {
-            failure("Failed to Login");
-        }
-        
-        for(int i=1;i<rows-1;i++)
-        {
-        
-        	try
-        	{
-		        lp.OpenServiceOrder();
-		        cp.changepagesize();
-		        cp.getCustomerName(i);
-		        cp.openServiceOrder();
-		        if(cp.isProperStatusDisplayed(i))
-		        {
-		        	success("Proper Status of service order displayed");
-		        	
-		        }
-		        else
-		        {
-		        	failure("Proper status of service order not displayed");
-		        }
-		        if(cp.isProperVehicleDisplayed(i))
-		        {
-		        	success("Proper assigned Vehicle of service order displayed");
-		        	
-		        }
-		        else
-		        {
-		        	failure("Proper Vehicle of service order not displayed");
-		        }
-		        if(cp.isProperDispatcherDisplayed(i))
-		        {
-		        	success("Proper Dispatcher value of service order displayed");
-		        	
-		        }
-		        else
-		        {
-		        	failure("Proper Dispatcher of service order not displayed");
-		        }
-		       
-		        if(cp.isProperDispatcherNoteDisplayed(i))
-		        {
-		        	success("Proper Dispatcher note value of service order displayed");
-		        	
-		        }
-		        else
-		        {
-		        	failure("Proper Dispatcher note value of service order not displayed");
-		        }
-		        if(cp.isProperDriverNoteDisplayed(i))
-		        {
-		        	success("Proper Driver note value of service order displayed");
-		        	
-		        }
-		        else
-		        {
-		        	failure("Proper driver note value of service order not displayed");
-		        }
-		        if(cp.isProperDriverDisplayed(i))
-		        {
-		        	success("Proper Driver value of service order displayed");
-		        	
-		        }
-		        else
-		        {
-		        	failure("Proper Driver value of service order not displayed");
-		        }
-		        
-		        
-        	}
-        	catch(Exception e)
-        	{
-        		System.out.print("Service Order not created : " );
-        		continue;
-        	}
-       
-        } 
-        sa.assertAll();
-    }
-     */
 
 }

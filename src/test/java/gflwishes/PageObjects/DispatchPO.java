@@ -2,6 +2,7 @@ package gflwishes.PageObjects;
 
 import gflwishes.base.Generics;
 import gflwishes.testcases.Dispatch;
+import gflwishes.utilities.ExcelColumns;
 import gflwishes.utilities.ExcelUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -20,12 +21,15 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class DispatchPO extends Dispatch {
+public class DispatchPO extends Dispatch implements ExcelColumns {
 
     private WebDriver driver;
     private Generics generics;
 
-    private static String lblPickUpOrderName;
+    public static String SiteAddress;
+    ExcelUtils excelUtils = new ExcelUtils();
+
+    public static String lblPickUpOrderName;
 
     public DispatchPO(WebDriver baseDriver) {
         this.driver = baseDriver;
@@ -88,9 +92,11 @@ public class DispatchPO extends Dispatch {
     @FindBy(xpath = "//mat-sidenav//mat-card-title")
     WebElement lblDispatcher;
 
-    public void openDispatcher() {
+    public void openDispatcher(int count) {
         testStepsLog("Open Dispatcher");
         driver.navigate().to(FM_URL + File.separator + "dispatch");
+        excelUtils.setTestData(END_TO_END, count, DISPATCHER, driver.findElement(By.xpath("//mat-sidenav//mat-card-title")).
+                getAttribute("innerHTML"));
     }
 
     public boolean verifyDispatchPage() {
@@ -102,9 +108,8 @@ public class DispatchPO extends Dispatch {
         Actions act = new Actions(driver);
         generics.scrollToElement(truckDragAndDrop);
         testStepsLog("Drag and Drop Truck from the map to order.");
-        excelUtils.setTestData(END_TO_END, count, 18, firstempyTruck.getText());
         act.dragAndDrop(driver.findElement(By.xpath("//map-common-vehicle-item//span[contains(text(),'" +
-                excelUtils.getTestData("EndToEnd", count, 8) + "')]")), truckDragAndDrop).build().perform();
+                excelUtils.getTestData("EndToEnd", count, VEHICLE_NAME) + "')]")), truckDragAndDrop).build().perform();
         generics.pause(10);
     }
 
@@ -178,8 +183,8 @@ public class DispatchPO extends Dispatch {
         generics.pause(2);
         ((JavascriptExecutor) driver).executeScript("document.evaluate('//div[@class=\"mat-form-field-infix\"]'," +
                 "   document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click();");
-        excelUtils.setTestData(END_TO_END, count, 11, lstDrivers.get(0).getText());
-        excelUtils.setTestData(END_TO_END, count, 7, "COMPLETED");
+        excelUtils.setTestData(END_TO_END, count, DRIVER, lstDrivers.get(0).getText());
+        excelUtils.setTestData(END_TO_END, count, STATUS, "COMPLETED");
         generics.clickOnJS(lstDrivers.get(0));
         generics.clickOnJS(btnProceed);
         generics.pause(5);
@@ -193,9 +198,6 @@ public class DispatchPO extends Dispatch {
 
     @FindBy(xpath = "//button[@id='orderSearchButton']//following-sibling::input")
     WebElement txtSearch;
-
-    public static String SiteAddress;
-    ExcelUtils excelUtils = new ExcelUtils();
 
     public void searchAddress(int count) {
         SiteAddress = excelUtils.getTestData(END_TO_END, count, 0);
@@ -223,7 +225,7 @@ public class DispatchPO extends Dispatch {
     public static String SiteCustomer;
 
     public boolean verifyDeliveryDetails(int count) {
-        SiteCustomer = excelUtils.getTestData(END_TO_END, count, 2);
+        SiteCustomer = excelUtils.getTestData(END_TO_END, count, CUSTOMER_NAME);
         System.out.println(lblOrderType.getText());
         System.out.println(driver.findElement(By.xpath("//span[contains(text(),'" +
                 SiteAddress.split(",")[0] + "')]")).getText().
@@ -235,7 +237,7 @@ public class DispatchPO extends Dispatch {
                         getText().replace("\n", "").trim().replaceAll("\\s", "").
                         equalsIgnoreCase(SiteAddress.replaceAll("\\s", ""))
                 && lblSiteContact.getText().equalsIgnoreCase(excelUtils.getTestData(END_TO_END,
-                count, 3)) && lblCustomer.getText().equalsIgnoreCase(SiteCustomer);
+                count, SITE_NAME)) && lblCustomer.getText().equalsIgnoreCase(SiteCustomer);
     }
 
     @FindBy(xpath = "//div[contains(text(),'EXPECTED TIME ON SITE')]//following-sibling::div//map-common-date-time-view//div")
@@ -344,8 +346,8 @@ public class DispatchPO extends Dispatch {
         generics.clickOnJS(btnScaleTicket);
         generics.type(txtScaleTicket, String.valueOf(scaleTicket));
         generics.type(txtWeight, String.valueOf(weight));
-        excelUtils.setTestData(END_TO_END, count, 15, String.valueOf(scaleTicket));
-        excelUtils.setTestData(END_TO_END, count, 16, String.valueOf(weight));
+        excelUtils.setTestData(END_TO_END, count, SCALE_TICKET, String.valueOf(scaleTicket));
+        excelUtils.setTestData(END_TO_END, count, WEIGHT, String.valueOf(weight));
         generics.clickOnJS(btnAcceptTickerDetails);
         generics.pause(3);
     }
@@ -363,5 +365,30 @@ public class DispatchPO extends Dispatch {
 
     public boolean isIconUpward() {
         return generics.getText(lblMatIcon).equalsIgnoreCase("arrow_upward");
+    }
+
+    @FindBy(xpath = "//mat-tab-header//div[text()='FOR DRIVER']")
+    WebElement btnDriverNotes;
+
+    @FindBy(xpath = "//mat-tab-body//mat-icon[text()='add ']")
+    WebElement btnAddDriverNote;
+
+    @FindBy(xpath = "//textarea[@formcontrolname='note']")
+    WebElement txtDriverNotes;
+
+    @FindBy(xpath = "//form//mat-icon[text()='check']")
+    WebElement btnAddNote;
+
+    public void enterDriverNotes(int count) {
+        String driverNote = generics.getRandomCharacters(10);
+        generics.clickOn(btnDriverNotes);
+        generics.pause(1);
+        generics.clickOn(btnAddDriverNote);
+        generics.pause(1);
+        generics.type(txtDriverNotes, driverNote);
+        driverNote = excelUtils.getTestData(END_TO_END, count, DRIVER_NOTES) + "," + driverNote;
+        excelUtils.setTestData(END_TO_END, count, DRIVER_NOTES, driverNote);
+        generics.clickOn(btnAddNote);
+        generics.pause(5);
     }
 }

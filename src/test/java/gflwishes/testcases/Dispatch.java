@@ -29,7 +29,7 @@ public class Dispatch extends EnhancedBaseClass {
         login.openFM();
         login.loginAs(USER_NAME, PASSWORD);
 
-        dispatchPO.openDispatcher();
+        dispatchPO.openDispatcher(count);
 
         if (dispatchPO.verifyDispatchPage()) {
             success("User can see the dispatch page.");
