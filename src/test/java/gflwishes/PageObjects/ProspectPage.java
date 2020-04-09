@@ -654,6 +654,7 @@ public class ProspectPage extends Prospect {
     public void SelectChargeType(int row)
     {
         generics.moveTo(btnCalculate);
+        generics.pause(2);
         String CT=excelUtils.getTestData("Prospect", row, 10);
         generics.clickOn(dpChargeType);
         WebElement element=localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+CT+"')]"));
