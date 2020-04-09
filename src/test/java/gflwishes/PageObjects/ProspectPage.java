@@ -203,13 +203,15 @@ public class ProspectPage extends Prospect {
     @FindBy(xpath = "//span[contains(text(),'CapexTest Approver')]")
     public WebElement dpSalesRep;
     
+   // @FindBy(xpath = "//mat-option[contains(.,'CapexTest Approver')]")
     @FindBy(xpath = "//mat-option[2]")
-    public WebElement ThirdOption1;
+    
+    public WebElement dpRepOption;
     
     public void selectSalesRep() {
         generics.clickOn(dpSalesRep);
-        generics.clickOn(ThirdOption1);
-        testStepsLog("BillingCurrency selected");
+        generics.clickOn(dpRepOption);
+        testStepsLog("Sales Rep selected");
         generics.pause(3);
     }
   
@@ -221,7 +223,6 @@ public class ProspectPage extends Prospect {
     
     public void selectJurisdiction() {
         generics.clickOn(dpJurisdiction);
-
         generics.clickOn(SecondOption);
         testStepsLog("Jurisdiction selected");
         generics.pause(3);
@@ -490,7 +491,7 @@ public class ProspectPage extends Prospect {
     @FindBy(xpath = "//mat-checkbox[@formcontrolname='isSiteContactSameAsPrimaryContact']")
     public WebElement chkbSitecontactsameasprimarycontact;
 
-    public void SelectSitecontactsameasprimarycontact() {
+    public void SelectSiteContactSameAsPrimaryContact() {
         generics.scrollToElement(chkbSitecontactsameasprimarycontact);
         generics.clickOn(chkbSitecontactsameasprimarycontact);
         testStepsLog("Select Site contact same as primary contact checkbox");
@@ -502,7 +503,7 @@ public class ProspectPage extends Prospect {
 
     public void clickonbtnSaveCustomer() {
         generics.clickOn(btnSave);
-       
+        generics.pause(4);
         testStepsLog("Clicked on Save Customer button");
     }
     
@@ -510,6 +511,7 @@ public class ProspectPage extends Prospect {
     public WebElement Prospectsuccessmsg;
     
     public boolean isProspectCreatedSuccessful() {
+    	
         return generics.isPresent(Prospectsuccessmsg);
         
     }
@@ -523,6 +525,7 @@ public class ProspectPage extends Prospect {
     {
         generics.pause(4);
         generics.clickOn(btnCreateQuote);
+        generics.pause(4);
         testStepsLog("Clicked on Create Quote button");
     }
 
@@ -531,12 +534,14 @@ public class ProspectPage extends Prospect {
 
     public void clickonNextButton() {
 
-        generics.pause(2);
+        generics.pause(4);
         JavascriptExecutor js = (JavascriptExecutor) localDriver;
         js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+        generics.pause(4);
         generics.clickOn(btnNext);
+        generics.pause(2);
         testStepsLog("Clicked On Next Button");
-        generics.pause(3);
+        
     }
     @FindBy(xpath = "//button[contains(text(),'ADD SERVICE')]")
     public WebElement btnAddServices;
@@ -556,6 +561,13 @@ public class ProspectPage extends Prospect {
     @FindBy(xpath = "//mat-option//span[text()=' Roll Off ']")
     public WebElement optionRollOff;
 
+    @FindBy(xpath = "//button[contains(text(),'CREATE QUOTE')]")
+    public WebElement btnCreatequote;
+
+    public boolean isAgreementsPageOpen() {
+        return generics.isPresent(btnCreatequote);
+    }
+  
 
     public void selectServiceType()
     {
@@ -683,7 +695,7 @@ public class ProspectPage extends Prospect {
     public void selectDisposibleSite()
     {
         //String M=excelUtils.getTestData("Prospect", row, 12);
-        generics.pause(10);
+        generics.pause(5);
         generics.clickOn(dpdiposibleSite);
         generics.clickOn(firstOption);
 
@@ -796,5 +808,238 @@ public class ProspectPage extends Prospect {
     @FindBy(xpath = "//*[text()='AGREEMENT TERMS AND CONDITIONS']")
     public WebElement Aggreement;
 
+    
+    @FindBy(xpath = "//td[contains(text(),'Test342')]/../td[contains(.,'Approved')]/..//a")
+    
+    public WebElement AgreementsNo;
+    
+    public void clickonAgreementsNo() {
+    	generics.moveTo(AgreementsNo);
+        generics.clickOn(AgreementsNo);
+        generics.pause(5);
+        testStepsLog("Clicked on Agreements No.");
+    }
+  
+ @FindBy(xpath = "//a[contains(text(),' 4 ')]")
+    
+    public WebElement Pageno;
+    
+    public void clickonPageNo() {
+    	
+    	JavascriptExecutor je = (JavascriptExecutor) localDriver;
+        je.executeScript("arguments[0].scrollIntoView(true);",Pageno);
+        generics.clickOn(Pageno);
+        generics.pause(3);
+        testStepsLog("Clicked on PageNo.");
+    }
+  
+    @FindBy(xpath = "//button[contains(text(),' CUSTOMER COPY')]")
+    public WebElement btnCustomercopy;
+    
+    public void clickonCustomerCopy() {
+        generics.clickOn(btnCustomercopy);
+        generics.pause(3);
+        testStepsLog("Clicked on CUSTOMER COPY.");
+    }
+    
+   // @FindBy(xpath = "//div[@class='mat-checkbox-inner-container   Hover']")
+    
+    @FindBy(xpath = "//span[contains(text(),'THIS IS A LEGALLY BINDING CONTRACT')]")
+    public WebElement chkAgreementTC;
+    
+    public void clickonChkAgreementTearmsAndCondition() {
+    	//generics.moveTo(chkAgreementTC);
+    	JavascriptExecutor je = (JavascriptExecutor) localDriver;
+        je.executeScript("arguments[0].scrollIntoView(true);",chkAgreementTC);
+    	generics.pause(3);
+        generics.clickOn(chkAgreementTC);
+        generics.pause(3);
+        testStepsLog("Clicked on Tearms and Condition.");
+    }
+ 
+    @FindBy(xpath = "//button[contains(text(),'MARK AS SIGNED')]")
+    public WebElement btnMarkassigned;
+    
+    public void clickonMarkAsSigned() {
+        generics.clickOn(btnMarkassigned);
+        generics.pause(3);
+        testStepsLog("Clicked on MARK AS SIGNED.");
+    }
+    
+    @FindBy(xpath = "//input[@id='file']")
+    public WebElement btnUpload;
+    public static String Uploadpath;
+    public void clickonDropFileHereorClicktoUpload() {
+    	Uploadpath = "C:\\Users\\Automation\\Desktop\\Test1.PNG";     
+        btnUpload.sendKeys(Uploadpath); 
+        generics.pause(3);
+        testStepsLog("Clicked on Drop Files here or Click to Upload.");
+    }
+    
+    @FindBy(xpath = "//strong[contains(text(),'I confirm that this CSA has been signed')]")
+    public WebElement chkCSASigned;
+    
+    public void SelectIconfirmthatthisCSAhasbeensigned() {
+        generics.clickOn(chkCSASigned);
+        generics.pause(3);
+        JavascriptExecutor je = (JavascriptExecutor) localDriver;
+        je.executeScript("arguments[0].scrollIntoView(true);",btnUpload);
+        testStepsLog("Clicked I confirm that this CSA has been signed.");
+    }
+    
+    @FindBy(xpath = "//button[contains(text(),' Submit Document ')]")
+    public WebElement btnSubmitDocument;
+    
+    public void clickonSubmitDocument() {
+        generics.clickOn(btnSubmitDocument);
+        generics.pause(3);
+        testStepsLog("Clicked on Submit Document.");
+    }
+    
+    @FindBy(xpath = "//button[contains(text(),'SUBMIT TO CDE')]")
+    public WebElement btnSubmittoCDE; 
+    public void clickonSubmitCDE() {
+        generics.clickOn(btnSubmittoCDE);
+        generics.pause(3);
+        testStepsLog("Clicked on SUBMIT TO CDEt.");
+    }
+    
+    @FindBy(xpath = "//h2[contains(text(),' Are you sure you want to Submit this CSA to CDE ? ')]")
+    public WebElement txtConfirmamMSG;
+    public boolean isPopupdisplayedCSAtoCDE() {
+        return generics.isPresent(txtConfirmamMSG);
+    }
+    
+    @FindBy(xpath = "//button[@id='btnProceed']")
+    public WebElement btnSubmit;
+    
+    public void clickonSubmit() {
+        generics.clickOn(btnSubmit);
+        generics.pause(3);
+        testStepsLog("Clicked on SUBMIT.");
+    }
+    
+    @FindBy(xpath = "//button[contains(text(),'SUBMIT TO CDE')]")
+    public WebElement btnSubmittocde;
+    
+    public void clickonSubmittoCDE() {
+        generics.clickOn(btnSubmittocde);
+        generics.pause(3);
+        testStepsLog("Clicked on SUBMIT TO CDE.");
+    }
+    
+    @FindBy(xpath = "//button[contains(text(),' CLONE ')]")
+    public WebElement btnCLONE;
+    
+    public void clickonCLONE() {
+        generics.clickOn(btnCLONE);
+       
+        testStepsLog("Clicked on CLONE.");
+    }
+    
+    @FindBy(xpath = "//div[contains(text(),'Unassigned')]")
+    public WebElement btnUnassigned;
+    
+    public void ClickonUnassigned() {
+        generics.clickOn(btnUnassigned);
+        generics.pause(3);
+        testStepsLog("Clicked on Unassigned.");
+    }
+    
+    @FindBy(xpath = "//div[contains(text(),'TICKET DETAILS')]')]")
+    public WebElement Ticketdetailspage;
+    
+    @FindBy(xpath = "//h3[contains(text(),'ORDER FORM NOTES')]")
+    public WebElement Orderformnotes;
+    
+    public boolean isTicketDetailsOpen() {
+    	
+    	JavascriptExecutor je = (JavascriptExecutor) localDriver;
+        je.executeScript("arguments[0].scrollIntoView(true);",Orderformnotes);
+        
+    	generics.pause(3);
+        return generics.isPresent(Ticketdetailspage);
+            
+    }
+    
+    @FindBy(xpath ="//input[@formcontrolname=\"erpId\"]")
+    public WebElement txtServicelineitem;
+    public static String Servicelineitem;
 
+    public void typeServiceLineItem() {
+    	Servicelineitem = "123";
+        generics.clickOn(txtServicelineitem);
+        generics.type(txtServicelineitem, Servicelineitem);
+        testStepsLog("Service Line Item inserted.");
+    }
+    
+    @FindBy(xpath ="//input[@id=\"mat-checkbox-86-input\"]")
+    public WebElement chkAgreement;
+
+    public void SelectDocumentsReviewed() {
+        generics.clickOn(chkAgreement);
+        generics.pause(3);
+        testStepsLog("Agreement checkbox selected.");
+    }
+    
+    @FindBy(xpath ="//textarea[@formcontrolname=\"leaveANote\"]")
+    public WebElement txtLeavecomment;
+    public static String Leavecomment;
+
+    public void typeLeaveAComment() {
+    	Leavecomment = generics.getRandomCharacters(10);
+        generics.clickOn(txtLeavecomment);
+        generics.type(txtLeavecomment, Leavecomment);
+        testStepsLog("Leave a Comment inserted.");
+    }
+    
+    @FindBy(xpath = "//button[contains(text(),' Complete ')]")
+    public WebElement btnComplete;
+    
+    public void ClickonComplete() {
+        generics.clickOn(btnComplete);
+        generics.pause(4);
+        testStepsLog("Clicked on COMPLETE.");
+    }
+    
+    @FindBy(xpath = "//H2[contains(text(),' Are you sure you want to complete this ticket? ')]")
+    public WebElement Completettickeheading;
+    
+    public boolean isCpmpleteTicketpopup() { 
+    	generics.pause(3);
+        return generics.isPresent(Completettickeheading);        
+    }
+    
+    @FindBy(xpath = "//button[@id=\"btnProceed\"]")
+    public WebElement btncomplete;
+    
+    public void Clickoncomplete() {
+        generics.clickOn(btncomplete);
+        generics.pause(4);
+        testStepsLog("Clicked on COMPLETE.");
+    }
+    
+    @FindBy(xpath ="//input[@formcontrolname=\"customerErpId\"]")
+    public WebElement txtTruxcustomerno;
+    public static String Truxcustomerno;
+
+    public void typeTruxCustomerNo() {
+    	Truxcustomerno = "12";
+        generics.clickOn(txtTruxcustomerno);
+        generics.type(txtTruxcustomerno, Truxcustomerno);
+        testStepsLog("Trux Customer No. inserted.");
+    }
+    
+    @FindBy(xpath ="//input[@formcontrolname=\"siteErpId\"]")
+    public WebElement txtSiteNo;
+    public static String Siteno;
+
+    public void typeSiteNo() {
+    	Siteno = "10";
+        generics.clickOn(txtSiteNo);
+        generics.type(txtSiteNo, Siteno);
+        testStepsLog("Site No. inserted.");
+    }
+    
+    
 }

@@ -96,6 +96,12 @@ public class LandingPage extends EnhancedBaseClass {
     
     @FindBy(xpath = "//div[contains(text(),'PROSPECTS ')]")
     public WebElement Prospect;
+    
+    @FindBy(xpath = "//div[contains(text(),'AGREEMENTS ')]")
+    public WebElement Agreements;
+    
+    @FindBy(xpath = "//div[contains(text(),'CDE DASHBOARD ')]")
+    public WebElement CDEdashboard;
 
     @FindBy(xpath = "(//div[contains(text(),'SERVICE ORDERS')])[1]/i")
     public WebElement ServiceOrder;
@@ -141,6 +147,20 @@ public class LandingPage extends EnhancedBaseClass {
         generics.clickOn(Prospect);
         testStepsLog("Click on Prospect link ");
         generics.pause(2);
+    }
+
+    public void OpenAgreements() {
+        generics.pause(1);
+        generics.clickOn(Agreements);
+        testStepsLog("Click on Agreements link ");
+        generics.pause(2);
+    }
+    
+    public void OpenCDEDashboard() {
+        generics.pause(1);
+        generics.clickOn(CDEdashboard);
+        testStepsLog("Click on CDE Dashboard link ");
+        generics.pause(3);
     }
 
     public void OpenServiceOrder() {
