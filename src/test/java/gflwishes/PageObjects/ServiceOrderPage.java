@@ -305,6 +305,19 @@ public class ServiceOrderPage extends ServiceOrder {
         }
     }
 
+    public int getRowsCustomerCreation() {
+        try {
+            FileInputStream file = new FileInputStream(
+                    System.getProperty("user.dir") + "/src/test//java//gfl//testData//ServiceOrder.xlsx");
+            XSSFWorkbook workbook = new XSSFWorkbook(file);
+            XSSFSheet sheet = workbook.getSheet("Sheet1");
+            return sheet.getPhysicalNumberOfRows();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
     @FindBy(xpath = "//div[text()='CONTACT DETAILS']")
     public WebElement SectionContractDetails;
 
@@ -689,13 +702,13 @@ public class ServiceOrderPage extends ServiceOrder {
 
     public static String note;
 
-    public void typeDispatchnote() {
+    public void typeDispatchnote(int i) {
         note = generics.getRandomCharacters(10);
         JavascriptExecutor js = (JavascriptExecutor) localDriver;
         js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
         generics.clickOn(txtDispatchnote);
         generics.type(txtDispatchnote, note);
-
+        excelUtils.setTestData(END_TO_END,i, 10,note);
         testStepsLog("Dispatch note inserted " + note);
     }
 
@@ -707,12 +720,12 @@ public class ServiceOrderPage extends ServiceOrder {
 
     public static String Drivernote;
 
-    public void typeDrivernote() {
+    public void typeDrivernote(int i) {
         Drivernote = generics.getRandomCharacters(10);
         generics.clickOn(tabdriver);
         generics.clickOn(txtDrivernote);
         generics.type(txtDrivernote, Drivernote);
-
+        excelUtils.setTestData(END_TO_END,i, 10,note);
         testStepsLog("Driver note inserted " + Drivernote);
     }
 
@@ -1021,6 +1034,28 @@ public class ServiceOrderPage extends ServiceOrder {
     @FindBy(xpath = "//p[text()='Driver']/following-sibling::p")
     public WebElement txtDriver;
 
+    public boolean isProperScaleDisplayed(int row) {
+
+        String scale = generics.getText(scaleticket);
+        String s = excelUtils.getTestData(END_TO_END, row, 15);
+        if (scale.equals(s)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isProperweightDisplayed(int row) {
+
+        String Weight = generics.getText(weight);
+        String w = excelUtils.getTestData(END_TO_END, row, 16);
+        if (Weight.equals(w)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public boolean isProperDriverDisplayed(int row) {
 
         String Driver = generics.getText(txtDriver);
@@ -1039,11 +1074,15 @@ public class ServiceOrderPage extends ServiceOrder {
 
         String Dispatchernote = generics.getText(txtDispatcherNote);
         String dn = excelUtils.getTestData(END_TO_END, row, 10);
-        if (Dispatchernote.equals(dn)) {
-            return true;
-        } else {
-            return false;
+        String[] dis= dn.split(",");
+        for(int i=0;i<dis.length;i++) {
+            if (Dispatchernote.contains(dis[i])) {
+                continue;
+            } else {
+                return false;
+            }
         }
+        return true;
     }
 
     @FindBy(xpath = "//p[text()='Driver Notes']/following-sibling::div/p")
@@ -1181,6 +1220,26 @@ public class ServiceOrderPage extends ServiceOrder {
         testStepsLog("Click on Start button to start order.");
         generics.clickOnJS(btnStart);
         testStepsLog("Order started and change status to in progress");
+    }
+
+    @FindBy(xpath = "//p[text()='Scale Ticket No.']/following-sibling::p")
+    WebElement scaleticket;
+
+    @FindBy(xpath = "//p[text()='Weight']/following-sibling::p")
+    WebElement weight;
+
+    public String getCustomerIDStatus(int row) {
+
+        String Cust= excelUtils.getTestData(END_TO_END, row, 13);
+        return Cust;
+
+    }
+    public void UpdateStatus(int row) {
+
+        excelUtils.setTestData(END_TO_END,row,17,"Pass");
+        testStepsLog("Status updated in excel");
+
+
     }
 
 

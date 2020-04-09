@@ -975,6 +975,8 @@ public class CustomerPage extends Customer {
         testStepsLog("Customer Created ID : " + cd);
     }
 
+
+
 //----------------------------------------------------------------
 
     @FindBy(xpath = "//button[contains(text(),'CREATE QUOTE')]")

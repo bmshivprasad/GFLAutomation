@@ -27,7 +27,7 @@ public class Customer extends EnhancedBaseClass {
     @Test
     public void TC001WS_Verify_Create_new_Customer_Functionality() {
 
-        testCaseLog("TC001_TC002_TC003_Verify_Create_new_Customer_Functionality ");
+        testCaseLog("TC001_TC002_TC003_Verify_Create_new_Customer_Functionality");
 
         LoginPage login = new LoginPage(driver);
         LandingPage lp = new LandingPage(driver);
@@ -44,6 +44,7 @@ public class Customer extends EnhancedBaseClass {
 
         for (int i = 1; i < rows - 1; i++) {
             try {
+
                 lp.OpenCustomer();
 
 
@@ -99,12 +100,17 @@ public class Customer extends EnhancedBaseClass {
                     failure("Customer not Added successfully");
                 }
                 cp.getCustomerID(i);
-            } catch (Exception e) {
-                e.printStackTrace();
             }
-        }
+            catch (Exception e)
+            {
+                testStepsLog("Customer not created : " + String.valueOf(i) );
+                continue;
+            }
 
+        }
         sa.assertAll();
+        excelUtils.UpdateExternalSiteID();
+
     }
 
     @Test

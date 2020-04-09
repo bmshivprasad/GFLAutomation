@@ -90,8 +90,8 @@ public class ServiceOrder extends EnhancedBaseClass {
                 } else {
                     failure("Get Price button not working or service charges not displayed");
                 }
-                cp.typeDispatchnote();
-                cp.typeDrivernote();
+                cp.typeDispatchnote(i);
+                cp.typeDrivernote(i);
                 cp.clickonSaveServiceButton();
                 if (cp.isServiceSaved()) {
                     success("Save Service button is working");
@@ -142,7 +142,83 @@ public class ServiceOrder extends EnhancedBaseClass {
         }
         sa.assertAll();
     }
-    
+
+    @Test
+    public void TC004WS_Verify_All_deatails_in_wishes_if_service_order_status_Change_from_FM() {
+
+        testCaseLog("TC005_Verify_All_deatails_in_wishes_if_service_order_status_Change_from_FM");
+
+        LandingPage lp = new LandingPage(driver);
+        ServiceOrderPage cp = new ServiceOrderPage(driver);
+        int rows = cp.getRowsExcel();
+
+        if (lp.isUserLoginSuccessful()) {
+            success("User Login Successful");
+        } else {
+            failure("Failed to Login");
+        }
+
+        for (int i = 1; i < rows - 1; i++) {
+
+
+            lp.OpenServiceOrder();
+            cp.changepagesize();
+            cp.getCustomerName(i);
+            cp.openServiceOrder();
+            if (cp.isProperStatusDisplayed(i)) {
+                success("Proper Status of service order displayed");
+
+            } else {
+                failure("Proper status of service order not displayed");
+            }
+            if (cp.isProperVehicleDisplayed(i)) {
+                success("Proper assigned Vehicle of service order displayed");
+
+            } else {
+                failure("Proper Vehicle of service order not displayed");
+            }
+            if (cp.isProperDispatcherDisplayed(i)) {
+                success("Proper Dispatcher value of service order displayed");
+
+            } else {
+                failure("Proper Dispatcher of service order not displayed");
+            }
+
+            if (cp.isProperDispatcherNoteDisplayed(i)) {
+                success("Proper Dispatcher note value of service order displayed");
+
+            } else {
+                failure("Proper Dispatcher note value of service order not displayed");
+            }
+            if (cp.isProperDriverNoteDisplayed(i)) {
+                success("Proper Driver note value of service order displayed");
+
+            } else {
+                failure("Proper driver note value of service order not displayed");
+            }
+            if (cp.isProperDriverDisplayed(i)) {
+                success("Proper Driver value of service order displayed");
+
+            } else {
+                failure("Proper Driver value of service order not displayed");
+            }
+            if (cp.isProperScaleDisplayed(i)) {
+                success("Proper Driver note value of service order displayed");
+
+            } else {
+                failure("Proper driver note value of service order not displayed");
+            }
+            if (cp.isProperweightDisplayed(i)) {
+                success("Proper Driver value of service order displayed");
+
+            } else {
+                failure("Proper Driver value of service order not displayed");
+            }
+
+
+        }
+        sa.assertAll();
+    }
     /*
     @Test
     public void TC012_Assign_service_order_to_Vehical_and_Complete_Dispatching() throws IOException, InterruptedException
