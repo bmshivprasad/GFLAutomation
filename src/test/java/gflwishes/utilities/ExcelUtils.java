@@ -120,14 +120,17 @@ public class ExcelUtils implements Configurations {
         }
     }
 
-    // Temporary utility method created as there is no TRUX integration for QA Env in Wishes.
-    // This method updates the ExternalID in the Site table to 1.
-    // With this update, the site creation will work as expected.
+    /*Temporary utility method created as there is no TRUX integration for QA Env in Wishes.
+    This method updates the ExternalID in the Site table to 1.
+     With this update, the site creation will work as expected. */
     public void UpdateExternalSiteID() {
+
         ExcelUtils excelUtils = new ExcelUtils();
         Connection connection = null;
-        Statement statement = null;
+        Statement statement;
+
         String dbURL = "jdbc:sqlserver://gfldev.database.windows.net;databaseName=Wishes-QA;user=wishes_qa;password=W1sh3sd3v";
+
         {
             try {
                 connection = DriverManager.getConnection(dbURL);
@@ -148,7 +151,7 @@ public class ExcelUtils implements Configurations {
                 if (connection != null)
                     try {
                         connection.close();
-                    } catch (Exception e) {
+                    } catch (Exception ignored) {
                     }
             }
         }

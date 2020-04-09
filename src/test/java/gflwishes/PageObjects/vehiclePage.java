@@ -169,13 +169,11 @@ public class vehiclePage extends vehicle {
     @FindBy(xpath = "//mat-select[@formcontrolname='regionTruxVehicleTypeId']")
     public WebElement dpVehicleType;
 
-    @FindBy(xpath = "//mat-option//span[text()=' ROLLOFF ']")
-    WebElement btnRollOff;
-
     public void selectVehicleType() {
+        String vehicleType = "ROLL OFF";
         generics.moveTo(lblOdo);
         generics.clickOn(dpVehicleType);
-        generics.clickOn(btnRollOff);
+        generics.clickOn(driver.findElement(By.xpath("//mat-option//span[contains(text(),'" + vehicleType + "')]")));
         testStepsLog("Vehicle Type Selected");
     }
 
