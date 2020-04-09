@@ -13,6 +13,35 @@ public class EndToEnd extends EnhancedBaseClass {
     }
 
     @Test
+    public void TC03FM_Create_Vehicle_Functionality() {
+
+        testCaseLog("TC03_Create_Vehicle_Functionality");
+
+        LoginPage login = new LoginPage(driver);
+        vehiclePage vc = new vehiclePage(driver);
+
+        login.loginAs(USER_NAME, PASSWORD);
+
+        vc.getServiceZone();
+        vc.OpenRegion();
+        vc.ClickonVehicleTab();
+        vc.clickonAddVehiclebutton();
+        vc.selectBusinessUnit();
+        vc.typeVehicalname();
+
+        vc.typeVin();
+        vc.selectServiceZone();
+        vc.selectVehicleType();
+        vc.clickonSaveButton();
+        if (vc.isvehicleCreated()) {
+            success("Vehicle Created Successfully");
+        } else {
+            failure("Vehicle not created");
+        }
+        vc.copyVehicleInEndToEndExcel();
+    }
+
+    @Test
     public void TC001WS_Verify_Create_new_Customer_Functionality() {
 
         testCaseLog("TC001_TC002_TC003_Verify_Create_new_Customer_Functionality");
@@ -22,7 +51,8 @@ public class EndToEnd extends EnhancedBaseClass {
         CustomerPage cp = new CustomerPage(driver);
         int rows = cp.getRowsExcel();
 
-        login.loginAs(USER_NAME, PASSWORD);
+        // login.loginAs(USER_NAME, PASSWORD);
+        login.selectSignIn(USER_NAME);
 
         if (lp.isUserLoginSuccessful()) {
             success("User Login Successful");
@@ -87,9 +117,7 @@ public class EndToEnd extends EnhancedBaseClass {
                     failure("Customer not Added successfully");
                 }
                 cp.getCustomerID(i);
-            }
-            catch(Exception e)
-            {
+            } catch (Exception e) {
                 testStepsLog("Customer not created for " + String.valueOf(i));
                 continue;
             }
@@ -200,14 +228,10 @@ public class EndToEnd extends EnhancedBaseClass {
                         failure("Payment not done successfully");
                     }
 
-                }
-                else
-                {
+                } else {
                     continue;
                 }
-            }
-            catch(Exception e)
-            {
+            } catch (Exception e) {
                 testStepsLog("Service order not Created : " + String.valueOf(i));
                 continue;
             }
@@ -225,89 +249,97 @@ public class EndToEnd extends EnhancedBaseClass {
 
         login.selectSignIn(USER_NAME);
 
+        dispatchPO.openDispatcher();
+
+        if (dispatchPO.verifyDispatchPage()) {
+            success("User can see the dispatch page.");
+        } else {
+            failure("ERROR : Dispatch page is not display.");
+        }
+
         for (int count = 1; count < ExcelUtils.getRowsExcel(getClass().getSimpleName()) - 1; count++) {
 
-            dispatchPO.openDispatcher(count);
+            try {
+                if (dispatchPO.isPaymentDone(count)) {
 
-            if (dispatchPO.verifyDispatchPage()) {
-                success("User can see the dispatch page.");
-            } else {
-                failure("ERROR : Dispatch page is not display.");
-            }
+                    dispatchPO.getDispatcherName(count);
 
-            dispatchPO.searchAddress(count);
-            dispatchPO.selectOrder();
+                    dispatchPO.searchAddress(count);
+                    dispatchPO.selectOrder();
 
-            if (dispatchPO.verifyDeliveryDetails(count)) {
-                success("User can see the dispatch oder details.");
-            } else {
-                failure("ERROR : Details are not display proper.");
-            }
-
-            if (dispatchPO.isOrderFromPast()) {
-                dispatchPO.selectCurrentDate();
-            }
-
-            dispatchPO.addTruckFromMap(count);
-
-            dispatchPO.openOrderFromVehiclePane();
-
-            switch (dispatchPO.getOperationType().toLowerCase()) {
-                case "pick up":
-                    dispatchPO.startOrder();
-                    dispatchPO.enterPickUpContainerName();
-                    // dispatchPO.enterTicketDetails();
-                    dispatchPO.enterDriverNotes(count);
-                    dispatchPO.completeOrder(count);
-                    break;
-                case "delivery":
-                    dispatchPO.startOrder();
-                    dispatchPO.enterDropOffContainerName();
-                    dispatchPO.enterDriverNotes(count);
-                    dispatchPO.completeOrder(count);
-                    break;
-                case "exchange":
-                    if (dispatchPO.isIconUpward()) {
-                        dispatchPO.startOrder();
-                        dispatchPO.enterPickUpContainerName();
-                        dispatchPO.enterTicketDetails(count);
-                        dispatchPO.enterDropOffContainerName();
-                        dispatchPO.enterDriverNotes(count);
-                        dispatchPO.completeOrder(count);
+                    if (dispatchPO.verifyDeliveryDetails(count)) {
+                        success("User can see the dispatch oder details.");
                     } else {
-                        dispatchPO.startOrder();
-                        dispatchPO.enterDropOffContainerName();
-                        dispatchPO.enterPickUpContainerName();
-                        dispatchPO.enterTicketDetails(count);
-                        dispatchPO.enterDriverNotes(count);
-                        dispatchPO.completeOrder(count);
+                        failure("ERROR : Details are not display proper.");
                     }
-                    break;
-                case "empty & return":
-                    dispatchPO.startOrder();
-                    dispatchPO.enterPickUpContainerName();
-                    dispatchPO.enterTicketDetails(count);
-                    dispatchPO.enterDropOffContainerName();
-                    dispatchPO.enterDriverNotes(count);
-                    dispatchPO.completeOrder(count);
-                    break;
-                case "move":
-                    dispatchPO.startOrder();
-                    dispatchPO.enterPickUpContainerName();
-                    dispatchPO.enterDropOffContainerName();
-                    dispatchPO.enterDriverNotes(count);
-                    dispatchPO.completeOrder(count);
-                    break;
-                case "pickup directive":
-                    dispatchPO.startOrder();
-                    dispatchPO.enterPickUpContainerName();
-                    break;
-                case "drop directive":
-                    dispatchPO.startOrder();
-                    dispatchPO.enterDropOffContainerName();
-                    break;
-            }
 
+                    if (dispatchPO.isOrderFromPast()) {
+                        dispatchPO.selectCurrentDate();
+                    }
+
+                    dispatchPO.addTruckFromMap(count);
+
+                    dispatchPO.openOrderFromVehiclePane();
+
+                    switch (dispatchPO.getOperationType().toLowerCase()) {
+                        case "pick up":
+                            dispatchPO.startOrder();
+                            dispatchPO.enterPickUpContainerName();
+                            dispatchPO.enterDriverNotes(count);
+                            dispatchPO.completeOrder(count);
+                            break;
+                        case "delivery":
+                            dispatchPO.startOrder();
+                            dispatchPO.enterDropOffContainerName();
+                            dispatchPO.enterDriverNotes(count);
+                            dispatchPO.completeOrder(count);
+                            break;
+                        case "exchange":
+                            if (dispatchPO.isIconUpward()) {
+                                dispatchPO.startOrder();
+                                dispatchPO.enterPickUpContainerName();
+                                dispatchPO.enterTicketDetails(count);
+                                dispatchPO.enterDropOffContainerName();
+                                dispatchPO.enterDriverNotes(count);
+                                dispatchPO.completeOrder(count);
+                            } else {
+                                dispatchPO.startOrder();
+                                dispatchPO.enterDropOffContainerName();
+                                dispatchPO.enterPickUpContainerName();
+                                dispatchPO.enterTicketDetails(count);
+                                dispatchPO.enterDriverNotes(count);
+                                dispatchPO.completeOrder(count);
+                            }
+                            break;
+                        case "empty & return":
+                            dispatchPO.startOrder();
+                            dispatchPO.enterPickUpContainerName();
+                            dispatchPO.enterTicketDetails(count);
+                            dispatchPO.enterDropOffContainerName();
+                            dispatchPO.enterDriverNotes(count);
+                            dispatchPO.completeOrder(count);
+                            break;
+                        case "move":
+                            dispatchPO.startOrder();
+                            dispatchPO.enterPickUpContainerName();
+                            dispatchPO.enterDropOffContainerName();
+                            dispatchPO.enterDriverNotes(count);
+                            dispatchPO.completeOrder(count);
+                            break;
+                        case "pickup directive":
+                            dispatchPO.startOrder();
+                            dispatchPO.enterPickUpContainerName();
+                            break;
+                        case "drop directive":
+                            dispatchPO.startOrder();
+                            dispatchPO.enterDropOffContainerName();
+                            break;
+                    }
+                    dispatchPO.setFlag(count, true);
+                }
+            } catch (Exception ignored) {
+                dispatchPO.setFlag(count, false);
+            }
         }
     }
 

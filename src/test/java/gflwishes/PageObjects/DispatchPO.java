@@ -92,9 +92,12 @@ public class DispatchPO extends Dispatch implements ExcelColumns {
     @FindBy(xpath = "//mat-sidenav//mat-card-title")
     WebElement lblDispatcher;
 
-    public void openDispatcher(int count) {
+    public void openDispatcher() {
         testStepsLog("Open Dispatcher");
         driver.navigate().to(FM_URL + File.separator + "dispatch");
+    }
+
+    public void getDispatcherName(int count) {
         excelUtils.setTestData(END_TO_END, count, DISPATCHER, driver.findElement(By.xpath("//mat-sidenav//mat-card-title")).
                 getAttribute("innerHTML"));
     }
@@ -183,9 +186,9 @@ public class DispatchPO extends Dispatch implements ExcelColumns {
         generics.pause(2);
         ((JavascriptExecutor) driver).executeScript("document.evaluate('//div[@class=\"mat-form-field-infix\"]'," +
                 "   document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click();");
-        excelUtils.setTestData(END_TO_END, count, DRIVER, lstDrivers.get(0).getText());
         excelUtils.setTestData(END_TO_END, count, STATUS, "COMPLETED");
-        generics.clickOnJS(lstDrivers.get(0));
+        String driverName = excelUtils.getTestData(END_TO_END, count, DRIVER);
+        generics.clickOnJS(driver.findElement(By.xpath("//span[@class='mat-option-text' and text()='" + driverName + "']")));
         generics.clickOnJS(btnProceed);
         generics.pause(5);
     }
@@ -390,5 +393,13 @@ public class DispatchPO extends Dispatch implements ExcelColumns {
         excelUtils.setTestData(END_TO_END, count, DRIVER_NOTES, driverNote);
         generics.clickOn(btnAddNote);
         generics.pause(5);
+    }
+
+    public boolean isPaymentDone(int count) {
+        return !excelUtils.getTestData(END_TO_END, count, PAYMENT).isEmpty();
+    }
+
+    public void setFlag(int count, boolean flag) {
+        if (flag) excelUtils.setTestData(END_TO_END, count, STATUS, "INCOMPLETE");
     }
 }
