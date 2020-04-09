@@ -2,6 +2,7 @@ package gflwishes.PageObjects;
 
 import gflwishes.base.Generics;
 import gflwishes.testcases.ServiceOrder;
+import gflwishes.utilities.ExcelColumns;
 import gflwishes.utilities.ExcelUtils;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.DataFormatter;
@@ -28,7 +29,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 
-public class ServiceOrderPage extends ServiceOrder {
+public class ServiceOrderPage extends ServiceOrder implements ExcelColumns {
 
     private WebDriver localDriver;
     private Generics generics;
@@ -86,7 +87,7 @@ public class ServiceOrderPage extends ServiceOrder {
     public static String CustomerName;
 
     public void typeCustomername(int row) {
-        CustomerName = excelUtils.getTestData(END_TO_END, row, 2);
+        CustomerName = excelUtils.getTestData(END_TO_END, row, CUSTOMER_NAME);
         generics.clickOn(txtCustomerName);
         generics.type(txtCustomerName, CustomerName);
 
@@ -105,7 +106,7 @@ public class ServiceOrderPage extends ServiceOrder {
     public WebElement dpSelectSite;
 
     public void selectSite(int row) {
-        String St = excelUtils.getTestData(END_TO_END, row, 3);
+        String St = excelUtils.getTestData(END_TO_END, row, SITE_NAME);
         generics.clickOn(dpSelectSite);
         generics.pause(1);
 
@@ -133,7 +134,7 @@ public class ServiceOrderPage extends ServiceOrder {
     public void selectMaterial(int row) {
         generics.pause(5);
         generics.moveTo(dpMaterial);
-        String Material = excelUtils.getTestData(END_TO_END, row, 4);
+        String Material = excelUtils.getTestData(END_TO_END, row, MATERIAL);
         JavascriptExecutor js = (JavascriptExecutor) localDriver;
         js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
         generics.scrollToElement(dpMaterial);
@@ -150,7 +151,7 @@ public class ServiceOrderPage extends ServiceOrder {
 
     public void selectContainerSize(int row) {
         generics.clickOn(dpContainerSize);
-        String ContainerSize = excelUtils.getTestData(END_TO_END, row, 5);
+        String ContainerSize = excelUtils.getTestData(END_TO_END, row, CONTAINER_SIZE);
         WebElement element = localDriver.findElement(By.xpath("//span[contains(text(),'" + ContainerSize + "')]"));
         element.click();
         testStepsLog("Container size selected : " + ContainerSize);
@@ -161,7 +162,7 @@ public class ServiceOrderPage extends ServiceOrder {
 
     public void selectHaulType(int row) {
         generics.clickOn(dpHaulType);
-        String HaulType = excelUtils.getTestData(END_TO_END, row, 6);
+        String HaulType = excelUtils.getTestData(END_TO_END, row, TYPE_OF_HAUL);
         WebElement element = localDriver.findElement(By.xpath("//span[contains(text(),'" + HaulType + "')]"));
         element.click();
         testStepsLog("Haul Type selected : " + HaulType);
@@ -400,7 +401,7 @@ public class ServiceOrderPage extends ServiceOrder {
         generics.moveTo(txtSiteName);
         generics.type(txtSiteName, String.valueOf(SiteName));
         try {
-            SetTestData(SiteName, row, 2);
+            SetTestData(SiteName, row, CUSTOMER_NAME);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -460,7 +461,7 @@ public class ServiceOrderPage extends ServiceOrder {
     public WebElement chkSiteContactSameAsCompanyContact;
 
     public void selectAddressline1ofSite(int row) {
-        String Add = excelUtils.getTestData(END_TO_END, row, 0);
+        String Add = excelUtils.getTestData(END_TO_END, row, SITE_ADDRESS);
         testStepsLog("Address : " + Add);
         generics.moveTo(txtPostalcode);
         generics.clickOn(dpAddressLine1OfSite);
@@ -708,7 +709,7 @@ public class ServiceOrderPage extends ServiceOrder {
         js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
         generics.clickOn(txtDispatchnote);
         generics.type(txtDispatchnote, note);
-        excelUtils.setTestData(END_TO_END,i, 10,note);
+        excelUtils.setTestData(END_TO_END,i, DISPATCHER_NOTES,note);
         testStepsLog("Dispatch note inserted " + note);
     }
 
@@ -725,7 +726,7 @@ public class ServiceOrderPage extends ServiceOrder {
         generics.clickOn(tabdriver);
         generics.clickOn(txtDrivernote);
         generics.type(txtDrivernote, Drivernote);
-        excelUtils.setTestData(END_TO_END,i, 10,note);
+        excelUtils.setTestData(END_TO_END,i, DRIVER_NOTES,note);
         testStepsLog("Driver note inserted " + Drivernote);
     }
 
@@ -932,7 +933,7 @@ public class ServiceOrderPage extends ServiceOrder {
     public void getCustomerID(int row) {
         cd = generics.getText(customerID);
         try {
-            SetTestData(cd, row, 3);
+            SetTestData(cd, row, SITE_NAME);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -979,7 +980,7 @@ public class ServiceOrderPage extends ServiceOrder {
     }
 
     public void getCustomerName(int row) {
-        CustomerName = excelUtils.getTestData(END_TO_END, row, 2);
+        CustomerName = excelUtils.getTestData(END_TO_END, row, CUSTOMER_NAME);
         testStepsLog("Checking details for customer : " + CustomerName);
     }
 
@@ -1009,7 +1010,7 @@ public class ServiceOrderPage extends ServiceOrder {
         JavascriptExecutor js = (JavascriptExecutor) localDriver;
         js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
         String vehicle = generics.getText(txtVehicle);
-        String vc = excelUtils.getTestData(END_TO_END, row, 8);
+        String vc = excelUtils.getTestData(END_TO_END, row, VEHICLE_NAME);
         if (vehicle.toLowerCase().equals(vc.toLowerCase())) {
             return true;
         } else {
@@ -1023,7 +1024,7 @@ public class ServiceOrderPage extends ServiceOrder {
     public boolean isProperDispatcherDisplayed(int row) {
 
         String Dispatcher = generics.getText(txtDispatcher);
-        String ds = excelUtils.getTestData(END_TO_END, row, 9);
+        String ds = excelUtils.getTestData(END_TO_END, row, DISPATCHER);
         if (Dispatcher.toLowerCase().equals(ds.toLowerCase())) {
             return true;
         } else {
@@ -1037,7 +1038,7 @@ public class ServiceOrderPage extends ServiceOrder {
     public boolean isProperScaleDisplayed(int row) {
 
         String scale = generics.getText(scaleticket);
-        String s = excelUtils.getTestData(END_TO_END, row, 15);
+        String s = excelUtils.getTestData(END_TO_END, row, SCALE_TICKET);
         if (scale.equals(s)) {
             return true;
         } else {
@@ -1048,7 +1049,7 @@ public class ServiceOrderPage extends ServiceOrder {
     public boolean isProperweightDisplayed(int row) {
 
         String Weight = generics.getText(weight);
-        String w = excelUtils.getTestData(END_TO_END, row, 16);
+        String w = excelUtils.getTestData(END_TO_END, row, WEIGHT);
         if (Weight.equals(w)) {
             return true;
         } else {
@@ -1059,7 +1060,7 @@ public class ServiceOrderPage extends ServiceOrder {
     public boolean isProperDriverDisplayed(int row) {
 
         String Driver = generics.getText(txtDriver);
-        String dv = excelUtils.getTestData(END_TO_END, row, 11);
+        String dv = excelUtils.getTestData(END_TO_END, row, DRIVER);
         if (Driver.toLowerCase().equals(dv.toLowerCase())) {
             return true;
         } else {
@@ -1073,7 +1074,7 @@ public class ServiceOrderPage extends ServiceOrder {
     public boolean isProperDispatcherNoteDisplayed(int row) {
 
         String Dispatchernote = generics.getText(txtDispatcherNote);
-        String dn = excelUtils.getTestData(END_TO_END, row, 10);
+        String dn = excelUtils.getTestData(END_TO_END, row, DISPATCHER_NOTES);
         String[] dis= dn.split(",");
         for(int i=0;i<dis.length;i++) {
             if (Dispatchernote.contains(dis[i])) {
@@ -1091,7 +1092,7 @@ public class ServiceOrderPage extends ServiceOrder {
     public boolean isProperDriverNoteDisplayed(int row) {
 
         String Drivernote = generics.getText(txtDriverNote);
-        String dn = excelUtils.getTestData(END_TO_END, row, 12);
+        String dn = excelUtils.getTestData(END_TO_END, row, DRIVER_NOTES);
         if (Drivernote.equals(dn)) {
             return true;
         } else {
@@ -1230,18 +1231,21 @@ public class ServiceOrderPage extends ServiceOrder {
 
     public String getCustomerIDStatus(int row) {
 
-        String Cust= excelUtils.getTestData(END_TO_END, row, 13);
+        String Cust= excelUtils.getTestData(END_TO_END, row, CUSTOMER_ID);
         return Cust;
 
     }
     public void UpdateStatus(int row) {
 
-        excelUtils.setTestData(END_TO_END,row,17,"Pass");
+        excelUtils.setTestData(END_TO_END,row,PAYMENT,"Pass");
         testStepsLog("Status updated in excel");
 
 
     }
 
+    public boolean isFMCompleted(int count) {
+        return !excelUtils.getTestData(END_TO_END, count, PAYMENT).isEmpty();
+    }
 
     public boolean searching(String keywords, int column) {
         String xpath = "//table[contains(@class,'MuiTable-root')]/tr";

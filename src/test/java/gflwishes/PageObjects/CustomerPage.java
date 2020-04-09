@@ -3,6 +3,7 @@ package gflwishes.PageObjects;
 import gflwishes.base.Generics;
 import gflwishes.testcases.Customer;
 import gflwishes.testcases.Prospect;
+import gflwishes.utilities.ExcelColumns;
 import gflwishes.utilities.ExcelUtils;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.DataFormatter;
@@ -24,7 +25,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 
-public class CustomerPage extends Customer {
+public class CustomerPage extends Customer implements ExcelColumns {
 
     private WebDriver localDriver;
     private Generics generics;
@@ -74,7 +75,7 @@ public class CustomerPage extends Customer {
         generics.clickOn(txtCustomerName);
         generics.type(txtCustomerName, CustomerName);
         try {
-            SetTestData(CustomerName, row, 2);
+            SetTestData(CustomerName, row, CUSTOMER_NAME);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -121,7 +122,7 @@ public class CustomerPage extends Customer {
 
     public void selectBusinessUnit1(int row) {
 
-        String BU = excelUtils.getTestData(END_TO_END, row, 14);
+        String BU = excelUtils.getTestData(END_TO_END, row, BRANCH_BU);
         generics.clickOn(dpBusinessUnit1);
         generics.pause(2);
         WebElement element = localDriver.findElement(By.xpath("//mat-option/span[contains(text(),'" + BU + "')]"));
@@ -209,7 +210,7 @@ public class CustomerPage extends Customer {
     public WebElement txtPostalcode;
 
     public void typePostalcode(int row) {
-        String pc = excelUtils.getTestData(END_TO_END, row, 1);
+        String pc = excelUtils.getTestData(END_TO_END, row, POSTAL_CODE);
         generics.type(txtPostalcode, Keys.CONTROL + "a" + Keys.DELETE);
         generics.clickOn(txtPostalcode);
         generics.type(txtPostalcode, pc);
@@ -304,7 +305,7 @@ public class CustomerPage extends Customer {
         generics.moveTo(txtSiteName);
         generics.type(txtSiteName, String.valueOf(SiteName));
         try {
-            SetTestData(SiteName, row, 3);
+            SetTestData(SiteName, row, SITE_NAME);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -390,7 +391,7 @@ public class CustomerPage extends Customer {
 
 
     public void selectAddressline1ofSite(int row) {
-        String Add = excelUtils.getTestData(END_TO_END, row, 0);
+        String Add = excelUtils.getTestData(END_TO_END, row, SITE_ADDRESS);
         testStepsLog("Address : " + Add);
         generics.moveTo(txtPostalcode);
         generics.clickOn(dpAddressLine1OfSite);
@@ -453,461 +454,7 @@ public class CustomerPage extends Customer {
         }
     }
 
-    /*@FindBy(xpath = "//span[text()='SITES' and contains(@class,'stepper')]")
-    public WebElement tabSite;
-    
-    @FindBy(xpath = "//li[contains(text(),'SERVICES')]/mat-icon")
-    public WebElement tabServices;
-    
-    @FindBy(xpath = "//span[text()='schedule event']")
-    public WebElement btnscheduleEvent;
-  
-    
-    public void clickonSitetab()
-    {
-    	generics.clickOn(tabSite);
-    	testStepsLog("CLicked ON Site tab after customer creation");
-    }
-    public void clickonServicestab()
-    {
-    	generics.pause(3);
-    	generics.moveTo(btnscheduleEvent);
-    	generics.clickOn(tabServices);
-    	testStepsLog("CLicked ON Services tab after customer creation");
-    }
-    
-    @FindBy(xpath = "//button[contains(text(),'TEMP SERVICE')]")
-    public WebElement btntempServices;
-    
-    public void clickonTempServiceButton()
-    {
-    	generics.moveTo(btntempServices);
-    	generics.clickOn(btntempServices);
-    	testStepsLog("Clickon Temp Serivce button");
-    }
-    
-    @FindBy(xpath = "//h5[text()='Create Service']")
-    public WebElement titleCreateService;
-    
-    @FindBy(xpath = "//h5[text()='Service Addresses']")
-    public WebElement titleServiceAddress;
-    
-    public boolean isCreateServiceSectionDisplayed()
-    {
-    	generics.pause(3);
-    	return generics.isPresent(titleCreateService);
-    }
-  
-    
-    @FindBy(xpath = "//mat-select[@formcontrolname='materialId']")
-    public WebElement dpMaterial;
-    
-    public void selectMaterial()
-    {
-    	generics.pause(6);
-    	generics.moveTo(dpMaterial);
-    	JavascriptExecutor js = (JavascriptExecutor) localDriver;
-        js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
-     
-    	generics.clickOn(dpMaterial);
-    	try {
-			SetTestData(generics.getText(firstOption), 14, 2);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	generics.clickOn(firstOption);
-    	
-    	testStepsLog("Material selected");
-    }
-    
-    @FindBy(xpath = "//mat-select[@formcontrolname='containerSizeId']")
-    public WebElement dpContainerSize;
-    
-    public void selectContainerSize()
-    {
-    	generics.clickOn(dpContainerSize);
-    	try {
-			SetTestData(generics.getText(firstOption), 15, 2);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	generics.clickOn(firstOption);
-    	
-    	testStepsLog("Container size selected");
-    }
-    
-    @FindBy(xpath = "//mat-select[@formcontrolname='haulTypeId']")
-    public WebElement dpHaulType;
-    
-    public void selectHaulType()
-    {
-    	generics.clickOn(dpHaulType);
-    	try {
-			SetTestData(generics.getText(firstOption), 16, 2);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	generics.clickOn(firstOption);
-    	
-    	testStepsLog("Haul Type selected");
-    }
-  
-    @FindBy(xpath = "//h5[text()='Service Details']")
-    public WebElement titleServiceDetails;
-    
-    public boolean isServiceSectionDisplayed()
-    {
-    	generics.pause(3);
-    	return generics.isPresent(titleServiceDetails);
-    }
-    
-    @FindBy(xpath = "//mat-select[@formcontrolname='containerTypeId']")
-    public WebElement dpContainerType;
-    
-    public void selectContainerType()
-    {
-    	generics.moveTo(titleServiceAddress);
-    	generics.clickOn(dpContainerType);
-    	try {
-			SetTestData(generics.getText(firstOption), 17, 2);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	generics.clickOn(firstOption);
-    	
-    	testStepsLog("Container Type selected");
-    }
-    
-    @FindBy(xpath = "//h6[text()='Requested Date']/following-sibling::mat-form-field//button[@aria-label='Open calendar']")
-    public WebElement btnRequestedDate;
-    
-    @FindBy(xpath = "//div[contains(@class,'mat-calendar-body-today')]/parent::td/following-sibling::td[1]/div")
-    public WebElement btnNextDay;
-    
-    @FindBy(xpath = "//div[contains(@class,'mat-calendar-body-today')]/ancestor::tr/following-sibling::tr[1]//td[1]/div")
-    public WebElement btnNextDayofNextWeek;
-  
-    
-    public void selectRequiestedDate()
-    {
-    	generics.moveTo(txtUploadingTime);
-    	generics.clickOn(btnRequestedDate);
-    	if(generics.isPresent(btnNextDay))
-    	{
-    		generics.clickOn(btnNextDay);
-    	}
-    	else
-    	{
-    		generics.clickOn(btnNextDayofNextWeek);
-    	}
-    	
-    }
-    
-  
-    
-    @FindBy(xpath = "//input[@formcontrolname='unloadingTime']")
-    public WebElement txtUploadingTime;
-    
-    public static String UploadTime;
-    public void InsertUploadingTime()
-    {
-    	UploadTime=String.valueOf(generics.getRandomBetween(1, 9));
-    	generics.moveTo(btnGetPricing);
-    	generics.type(txtUploadingTime,UploadTime);
-    	try {
-			SetTestData(UploadTime, 19, 2);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	testStepsLog("Uploading Time Inserted "+ UploadTime );
-    	
-    }
-    
-    @FindBy(xpath = "//button[contains(text(),'Get Pricing')]")
-    public WebElement btnGetPricing;
-  
-  
-  
-    @FindBy(xpath = "//mat-select[@formcontrolname='billingCycleErpCode']")
-    public WebElement dpBillingCycle;
-    
-    public void selectBillingCycle()
-    {
-    	
-    	generics.clickOn(dpBillingCycle);
-    	try {
-			SetTestData(generics.getText(firstOption), 21, 2);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	generics.clickOn(firstOption);
-    	
-    	testStepsLog("Billing Cycle selected");
-    }
-    
-    @FindBy(xpath = "//input[@formcontrolname='demurrageDays']")
-    public WebElement txtDemurrageDays;
-    
-    public static String DMDay;
-    public void typeDemurageDay()
-    {
-    	DMDay=String.valueOf(generics.getRandomBetween(1, 9));
-    	generics.moveTo(lblExtraFees);
-    	generics.type(txtDemurrageDays,DMDay);
-    	try {
-			SetTestData(DMDay, 22, 2);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	testStepsLog("Demmurage Day Inserted " +DMDay);
-    	
-    }
-    
-    
-    @FindBy(xpath = "//div[text()='EXTRA FEES']")
-    public WebElement lblExtraFees;
-    
-    
-    public void clickonGetPricing()
-    {
-    	generics.mouseHover(lblExtraFees);
-    	generics.clickOn(btnGetPricing);
-    	testStepsLog("Clicked on button get Pricing");
-    	generics.pause(5);
-    }
-    
-    @FindBy(xpath = "//h2[text()='SERVICE CHARGES']")
-    public WebElement lblServiceCharge;
-    
-    public boolean isServiceChargesectionDisplayed()
-    {
-    	return generics.isPresent(lblServiceCharge);
-    	
-    }
-    
-    
-    
-    @FindBy(xpath = "//textarea[@formcontrolname='dispatcherNotes']")
-    public WebElement txtDispatchnote;
-    
-    public static String note;
-    public void typeDispatchnote()
-    {
-    	note=generics.getRandomCharacters(10);
-    	JavascriptExecutor js = (JavascriptExecutor) localDriver;
-        js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
-        generics.clickOn(txtDispatchnote);
-        generics.type(txtDispatchnote, note);
-        try {
-			SetTestData(note, 23, 2);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        testStepsLog("Dispatch note inserted " + note);
-    }
-    
-    @FindBy(xpath = "//div[contains(text(),'Driver')]")
-    public WebElement tabdriver;
-    
-    @FindBy(xpath = "//textarea[@formcontrolname='driverNotes']")
-    public WebElement txtDrivernote;
-  
-    public static String Drivernote;
-    public void typeDrivernote()
-    {
-    	Drivernote=generics.getRandomCharacters(10);
-    	generics.clickOn(tabdriver);
-        generics.clickOn(txtDrivernote);
-        generics.type(txtDrivernote, Drivernote);
-        try {
-			SetTestData(Drivernote, 24, 2);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        testStepsLog("Driver note inserted " + Drivernote);
-    }
-    
-    @FindBy(xpath = "//button[contains(text(),'Save Service')]")
-    public WebElement btnSaveService;
-    
-    public void clickonSaveServiceButton()
-    {
-    	generics.clickOn(btnSaveService);
-    	generics.pause(10);
-    }
-  
-    @FindBy(xpath = "//div[contains(text(),'Service has been created successfully !')]")
-    public WebElement SuccessMessageofSaveService;
-    
-    public boolean isServiceSaved()
-    {
-    	return generics.isPresent(SuccessMessageofSaveService);
-    }
-    
-    public boolean isAllDetailsSavedCurreclty()
-    {
-    	List<WebElement> dn=localDriver.findElements(By.xpath("//p[text()='"+note+"']"));
-    	List<WebElement> drn=localDriver.findElements(By.xpath("//p[text()='"+Drivernote+"']"));
-    	List<WebElement> cn=localDriver.findElements(By.xpath("//span[text()='"+CustomerName+"']"));
-    	List<WebElement> sn=localDriver.findElements(By.xpath("//p[text()='"+SiteName+"']"));
-    	if(dn.size()>0 && drn.size()>0 && cn.size()>0 && sn.size()>0)
-    	{
-    		return true;
-    	}
-    	else
-    	{
-    		return false;
-    	}
-    }
-  
-    @FindBy(xpath = "//mat-chip//mat-icon[text()='add']")
-    public WebElement btnAddServiceOrder;
-    
-    @FindBy(xpath = "//h3[text()='SERVICE ORDER SITES']")
-    public WebElement titleServiceOrderSite;
-  
-    
-    public void clickonAddServiceOrderButton()
-    {
-    	generics.moveTo(titleServiceOrderSite);
-    	generics.clickOn(btnAddServiceOrder);
-    	testStepsLog("Clicked on Add Service Order button");
-    	generics.pause(5);
-    }
-    
-    @FindBy(xpath = "//div[contains(text(),'Service order has been saved successfully !')]")
-    public WebElement SuccessMessageServiceOrder;
-    
-    @FindBy(xpath = "//button[contains(text(),'Save')]")
-    public WebElement btnSaveServiceOrder;
-    
-    public void clickonSavebtnOfServiceOrder()
-    {
-    	generics.clickOn(btnSaveServiceOrder);
-    	testStepsLog("Clicked on Save button of Service order");
-    	generics.pause(5);
-    	
-    }
-    
-    public boolean isNewServiceOrderAddded()
-    {
-    	return generics.isPresent(SuccessMessageServiceOrder);
-    }
-    
-    @FindBy(xpath = "//button[contains(text(),'Pay Now')]")
-    public WebElement btnPayNow;
-    
-    public void clickonPaynow() 
-    {
-    	generics.clickOn(btnPayNow);
-    	testStepsLog("Clicked on Pay Now Button");
-    	generics.pause(3);
-    }
-  
-    @FindBy(xpath = "//mat-radio-group[@formcontrolname='existingCardNo']//mat-radio-button//label/div[1]")
-    public WebElement rbPaymentMethod;
-    
-    public void SelectPaymentMethod()
-    {
-    	generics.clickOn(rbPaymentMethod);
-    	testStepsLog("Payment method selected");
-    }
-    
-    @FindBy(xpath = "//input[@formcontrolname='existingCardCvv']")
-    public WebElement txtCVV;
-    
-    public void typeCVV()
-    {
-    	generics.type(txtCVV, String.valueOf(generics.getRandomBetween(111, 999)));
-    	
-    	testStepsLog("Payment method selected");
-    }
-    
-    @FindBy(xpath = "//mat-radio-group[@formcontrolname='existingAddress']")
-    public WebElement rbAddress;
-    
-    public void SelectAddress()
-    {
-    	generics.clickOn(rbAddress);
-    	testStepsLog("Address selected");
-    }
-    
-    @FindBy(xpath = "//mat-checkbox[@formcontrolname='confirmBox']")
-    public WebElement chkConfirmation;
-    
-    public void SelectConfirmationCheckbox()
-    {
-    	generics.clickOn(chkConfirmation);
-    	testStepsLog("Confirmation checkbox selected");
-    }
-    
-    @FindBy(xpath = "//div[contains(@class,'pay_now_buttons')]/button[2]")
-    public WebElement btnPayAmount;
-    
-    public void ClickonPayAmount()
-    {
-    	generics.clickOn(btnPayAmount);
-    	testStepsLog("Clicked on PayAmount button");
-    }
-  
-    @FindBy(xpath = "//input[@formcontrolname='file']")
-    public WebElement btnFileUpload;
-    
-    public void UploadFile()
-    {
-    	try
-    	{
-    		Actions action=new Actions(localDriver);
-    		action.moveToElement(btnFileUpload, 20, 0).click().build().perform();
-	    	Robot robot = new Robot();
-			generics.pause(2);
-			Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-			StringSelection stringSelection = new StringSelection("D:\\GFLAutomation\\WISHES\\gflwishes\\src\\test\\java\\gfl\\testData\\username.xlsx");
-			clipboard.setContents(stringSelection, null);
-			robot.keyPress(KeyEvent.VK_CONTROL);
-		    robot.keyPress(KeyEvent.VK_V);
-		    robot.keyRelease(KeyEvent.VK_V);
-		    robot.keyRelease(KeyEvent.VK_CONTROL);
-		    robot.keyPress(KeyEvent.VK_ENTER);
-		    robot.keyRelease(KeyEvent.VK_ENTER);
-		    testCaseLog("Clicked on File Upload");
-	    	generics.pause(10);
-	    		        
-    	}
-    	catch(Exception e)
-    	{
-    		testCaseLog("File Not uploaded");
-    	}
-    	
-    	
-    }
-  
-    @FindBy(xpath = "//button[contains(text(),' save & proceed to temp service')]")
-    public WebElement btnSaveAndProceedToTempService;
-    
-    public void clickonSaveAndProceedToTempServicebutton()
-    {
-    	generics.clickOn(btnSaveAndProceedToTempService);
-    	testStepsLog("Clicked ON Save and Proceed To Temp Service Button");
-    	generics.pause(6);
-    }
-    
-    @FindBy(xpath = "//div[contains(text(),'Payment Successful')]")
-    public WebElement SuccessMessagePayment;
-    
-    public boolean isPaymentDone() {
-    	return generics.isPresent(SuccessMessagePayment);
-    }
-  	*/
+
     @FindBy(xpath = "//table[contains(@class,'table_customers')]//tbody//tr[1]//td[1]//a")
     public WebElement firstCustomer;
 
@@ -967,7 +514,7 @@ public class CustomerPage extends Customer {
     public void getCustomerID(int row) {
         cd = generics.getText(customerID);
         try {
-            SetTestData(cd, row, 13);
+            SetTestData(cd, row, CUSTOMER_ID);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

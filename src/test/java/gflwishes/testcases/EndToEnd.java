@@ -360,59 +360,72 @@ public class EndToEnd extends EnhancedBaseClass {
 
         for (int i = 1; i < rows - 1; i++) {
 
+            try {
+                if (cp.isFMCompleted(i)) {
 
-            lp.OpenServiceOrder();
-            cp.changepagesize();
-            cp.getCustomerName(i);
-            cp.openServiceOrder();
-            if (cp.isProperStatusDisplayed(i)) {
-                success("Proper Status of service order displayed");
+                    lp.OpenServiceOrder();
+                    cp.changepagesize();
+                    cp.getCustomerName(i);
+                    cp.openServiceOrder();
+                    if (cp.isProperStatusDisplayed(i)) {
+                        success("Proper Status of service order displayed");
 
-            } else {
-                failure("Proper status of service order not displayed");
+                    } else {
+                        failure("Proper status of service order not displayed");
+                    }
+                    if (cp.isProperVehicleDisplayed(i)) {
+                        success("Proper assigned Vehicle of service order displayed");
+
+                    } else {
+                        failure("Proper Vehicle of service order not displayed");
+                    }
+                    if (cp.isProperDispatcherDisplayed(i)) {
+                        success("Proper Dispatcher value of service order displayed");
+
+                    } else {
+                        failure("Proper Dispatcher of service order not displayed");
+                    }
+
+                    if (cp.isProperDispatcherNoteDisplayed(i)) {
+                        success("Proper Dispatcher note value of service order displayed");
+
+                    } else {
+                        failure("Proper Dispatcher note value of service order not displayed");
+                    }
+                    if (cp.isProperDriverNoteDisplayed(i)) {
+                        success("Proper Driver note value of service order displayed");
+
+                    } else {
+                        failure("Proper driver note value of service order not displayed");
+                    }
+                    if (cp.isProperDriverDisplayed(i)) {
+                        success("Proper Driver value of service order displayed");
+
+                    } else {
+                        failure("Proper Driver value of service order not displayed");
+                    }
+                    if (cp.isProperScaleDisplayed(i)) {
+                        success("Proper Driver note value of service order displayed");
+
+                    } else {
+                        failure("Proper driver note value of service order not displayed");
+                    }
+                    if (cp.isProperweightDisplayed(i)) {
+                        success("Proper Driver value of service order displayed");
+
+                    } else {
+                        failure("Proper Driver value of service order not displayed");
+                    }
+                }
+                else
+                {
+                    continue;
+                }
             }
-            if (cp.isProperVehicleDisplayed(i)) {
-                success("Proper assigned Vehicle of service order displayed");
-
-            } else {
-                failure("Proper Vehicle of service order not displayed");
-            }
-            if (cp.isProperDispatcherDisplayed(i)) {
-                success("Proper Dispatcher value of service order displayed");
-
-            } else {
-                failure("Proper Dispatcher of service order not displayed");
-            }
-
-            if (cp.isProperDispatcherNoteDisplayed(i)) {
-                success("Proper Dispatcher note value of service order displayed");
-
-            } else {
-                failure("Proper Dispatcher note value of service order not displayed");
-            }
-            if (cp.isProperDriverNoteDisplayed(i)) {
-                success("Proper Driver note value of service order displayed");
-
-            } else {
-                failure("Proper driver note value of service order not displayed");
-            }
-            if (cp.isProperDriverDisplayed(i)) {
-                success("Proper Driver value of service order displayed");
-
-            } else {
-                failure("Proper Driver value of service order not displayed");
-            }
-            if (cp.isProperScaleDisplayed(i)) {
-                success("Proper Driver note value of service order displayed");
-
-            } else {
-                failure("Proper driver note value of service order not displayed");
-            }
-            if (cp.isProperweightDisplayed(i)) {
-                success("Proper Driver value of service order displayed");
-
-            } else {
-                failure("Proper Driver value of service order not displayed");
+            catch(Exception e)
+            {
+                testStepsLog("FM to Wishes comparision fail : " + String.valueOf(i));
+                continue;
             }
 
         }
