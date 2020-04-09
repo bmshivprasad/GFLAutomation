@@ -43,13 +43,11 @@ public class vehiclePage extends vehicle {
     @FindBy(xpath = "(//div[text()='REGIONS']/following-sibling::div//div[@class='card_title'])")
     WebElement regions;
 
-    public void OpenRegion()
-    {
+    public void OpenRegion() {
         generics.clickOn(regions);
         testStepsLog("Open selected regions");
         generics.pause(3);
     }
-
 
 
     @FindBy(xpath = "//span[@class='date_string']")
@@ -57,13 +55,13 @@ public class vehiclePage extends vehicle {
 
     @FindBy(xpath = "//mat-icon[text()='filter_list ']")
     WebElement btnFilter;
+
     public boolean verifyDispatchPage() {
         return generics.isDisplay(lblToday) && generics.isDisplay(btnFilter);
     }
 
 
     public static String VehicalName;
-
 
 
     public void openVehicle() {
@@ -81,18 +79,16 @@ public class vehiclePage extends vehicle {
     @FindBy(xpath = "(//h3[text()='Logged into:']/following-sibling::div/p)[1]")
     public WebElement servicezone;
 
-    public static String  Zone;
-    public void getServiceZone()
-    {
-       generics.clickOn(sidepanel);
-       String z=generics.getText(servicezone);
+    public static String Zone;
 
-       Zone=(z.split("-")[1]).trim();
-       testStepsLog("Service zone : " + Zone);
-       generics.clickOn(leftarrow);
+    public void getServiceZone() {
+        generics.clickOn(sidepanel);
+        String z = generics.getText(servicezone);
+
+        Zone = (z.split("-")[1]).trim();
+        testStepsLog("Service zone : " + Zone);
+        generics.clickOn(leftarrow);
     }
-
-
 
 
     @FindBy(xpath = "//a[contains(text(),'VEHICLES')]")
@@ -101,13 +97,12 @@ public class vehiclePage extends vehicle {
     @FindBy(xpath = "//span[@dataname='ADD VEHICLE']//preceding-sibling::mat-icon[text()='add']")
     public WebElement btnAddVehicle;
 
-    public void ClickonVehicleTab()
-    {
+    public void ClickonVehicleTab() {
         generics.clickOn(tabVehicle);
         testStepsLog("Clicked on Vehicle tab");
     }
-    public void clickonAddVehiclebutton()
-    {
+
+    public void clickonAddVehiclebutton() {
 
         generics.pause(2);
 
@@ -119,9 +114,8 @@ public class vehiclePage extends vehicle {
     @FindBy(xpath = "//input[@formcontrolname='vin']")
     public WebElement txtVin;
 
-    public void typeVin()
-    {
-        String Vin= generics.getRandomCharacters(5);
+    public void typeVin() {
+        String Vin = generics.getRandomCharacters(5);
         generics.type(txtVin, Vin);
         testStepsLog("Vin value inserted : " + Vin);
     }
@@ -129,10 +123,9 @@ public class vehiclePage extends vehicle {
     @FindBy(xpath = "//input[@formcontrolname='vehiclename']")
     public WebElement txtVehiclename;
 
-    public void typeVehicalname()
-    {
+    public void typeVehicalname() {
         generics.pause(3);
-        VehicalName="V_" + generics.getRandomCharacters(8);
+        VehicalName = "V_" + generics.getRandomCharacters(8);
         generics.type(txtVehiclename, VehicalName);
         testStepsLog("Vehicle value inserted : " + VehicalName);
     }
@@ -148,7 +141,7 @@ public class vehiclePage extends vehicle {
         String BU = excelUtils.getTestData(END_TO_END, 1, 14);
         generics.clickOn(dpBusinessUnit);
         generics.pause(2);
-        WebElement element = localDriver.findElement(By.xpath("//mat-option/span[contains(text(),'"+BU+"')]"));
+        WebElement element = localDriver.findElement(By.xpath("//mat-option/span[contains(text(),'" + BU + "')]"));
         element.click();
         testStepsLog("Site Business unit Selected : " + BU);
         generics.pause(2);
@@ -162,10 +155,9 @@ public class vehiclePage extends vehicle {
     @FindBy(xpath = "//mat-option[2]")
     public WebElement firstOption;
 
-    public void selectServiceZone()
-    {
+    public void selectServiceZone() {
         generics.clickOn(dpServiceZone);
-        WebElement element=localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+Zone+"')]"));
+        WebElement element = localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'" + Zone + "')]"));
         element.click();
         testStepsLog("Service Zone Selected : " + Zone);
     }
@@ -177,19 +169,20 @@ public class vehiclePage extends vehicle {
     @FindBy(xpath = "//mat-select[@formcontrolname='regionTruxVehicleTypeId']")
     public WebElement dpVehicleType;
 
-    public void selectVehicleType()
-    {
+    @FindBy(xpath = "//mat-option//span[text()=' ROLLOFF ']")
+    WebElement btnRollOff;
+
+    public void selectVehicleType() {
         generics.moveTo(lblOdo);
         generics.clickOn(dpVehicleType);
-        generics.clickOn(firstOption);
+        generics.clickOn(btnRollOff);
         testStepsLog("Vehicle Type Selected");
     }
 
     @FindBy(xpath = "//div[text()='SAVE VEHICLE']")
     public WebElement btnSaveVehicle;
 
-    public void clickonSaveButton()
-    {
+    public void clickonSaveButton() {
         generics.moveTo(btnSaveVehicle);
         generics.clickOn(btnSaveVehicle);
         testStepsLog("Clicked on Save Vehicle Button");
@@ -197,22 +190,20 @@ public class vehiclePage extends vehicle {
         generics.pause(6);
     }
 
-    public boolean isvehicleCreated()
-    {
-        String CVehical=VehicalName.toUpperCase();
-        List<WebElement> element=localDriver.findElements(By.xpath("//div[text()=' "+CVehical+" ']"));
-        if(element.size()>0)
+    public boolean isvehicleCreated() {
+        String CVehical = VehicalName.toUpperCase();
+        List<WebElement> element = localDriver.findElements(By.xpath("//div[text()=' " + CVehical + " ']"));
+        if (element.size() > 0)
             return true;
         else
             return false;
     }
-    public void copyVehicleInEndToEndExcel()
-    {
-        String CVehical=VehicalName.toUpperCase();
-        int row=getRowsExcel();
-        for(int i=1;i<row;i++)
-        {
-            excelUtils.setTestData("EndToEnd",i,8,CVehical);
+
+    public void copyVehicleInEndToEndExcel() {
+        String CVehical = VehicalName.toUpperCase();
+        int row = getRowsExcel();
+        for (int i = 1; i < row; i++) {
+            excelUtils.setTestData("EndToEnd", i, 8, CVehical);
         }
         testStepsLog("Vehicle entery done in EndToEnd.xlsx file");
     }
@@ -230,9 +221,6 @@ public class vehiclePage extends vehicle {
             return 0;
         }
     }
-
-
-
 
 
     public boolean searching(String keywords, int column) {
