@@ -19,5 +19,5 @@ public interface ExcelColumns {
     int BRANCH_BU = 14;
     int SCALE_TICKET = 15;
     int WEIGHT = 16;
-
+    int PAYMENT = 17;
 }
