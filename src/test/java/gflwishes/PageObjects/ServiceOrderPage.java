@@ -296,7 +296,7 @@ public class ServiceOrderPage extends ServiceOrder implements ExcelColumns {
     public int getRowsExcel() {
         try {
             FileInputStream file = new FileInputStream(
-                    System.getProperty("user.dir") + "/src/test//java//gfl//testData//ServiceOrder.xlsx");
+                    System.getProperty("user.dir") + "/src/test//java//gfl//testData//EndToEnd.xlsx");
             XSSFWorkbook workbook = new XSSFWorkbook(file);
             XSSFSheet sheet = workbook.getSheet("Sheet1");
             return sheet.getPhysicalNumberOfRows();
