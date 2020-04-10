@@ -160,7 +160,7 @@ public class LandingPage extends EnhancedBaseClass {
         generics.pause(1);
         generics.clickOn(CDEdashboard);
         testStepsLog("Click on CDE Dashboard link ");
-        generics.pause(3);
+        generics.pause(5);
     }
 
     public void OpenServiceOrder() {

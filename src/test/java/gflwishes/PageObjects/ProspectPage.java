@@ -571,6 +571,7 @@ public class ProspectPage extends Prospect {
 
     public void selectServiceType()
     {
+    	generics.pause(2);
         generics.clickOn(dpServiceType);
         generics.clickOn(optionRollOff);
         testStepsLog("Service type selected");
@@ -584,6 +585,7 @@ public class ProspectPage extends Prospect {
 
     public void typeContainerCount(int row)
     {
+    	generics.pause(2);
         generics.moveTo(titleDisposal);
         String CC=excelUtils.getTestData("Prospect", row, 5);
         generics.type(txtContainerCount,CC);
@@ -595,6 +597,7 @@ public class ProspectPage extends Prospect {
 
     public void SelectContainerType(int row)
     {
+    	generics.pause(2);
         String CT=excelUtils.getTestData("Prospect", row, 6);
         generics.clickOn(dpContainerType);
         WebElement element=localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+CT+"')]"));
@@ -607,6 +610,7 @@ public class ProspectPage extends Prospect {
 
     public void typeContainerFee(int row)
     {
+    	generics.pause(2);
         String CF=excelUtils.getTestData("Prospect", row, 7);
         generics.type(txtContainerFee,CF);
         testStepsLog("Container Fee : " + CF);
@@ -617,6 +621,7 @@ public class ProspectPage extends Prospect {
 
     public void SelectContainerSize(int row)
     {
+    	generics.pause(2);
         String CS=excelUtils.getTestData("Prospect", row, 8);
         generics.clickOn(dpContainerSize);
         WebElement element=localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+CS+"')]"));
@@ -633,6 +638,7 @@ public class ProspectPage extends Prospect {
 
     public void SelectFreuency(int row)
     {
+    	generics.pause(2);
         String F=excelUtils.getTestData("Prospect", row, 9);
         generics.clickOn(dpFrequency);
         WebElement element=localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+F+"')]"));
@@ -653,7 +659,10 @@ public class ProspectPage extends Prospect {
 
     public void SelectChargeType(int row)
     {
-        generics.moveTo(btnCalculate);
+    	JavascriptExecutor js = (JavascriptExecutor)localDriver;
+    	js.executeScript("arguments[0].scrollIntoView(true);",localDriver.findElement(By.xpath("//p[contains(.,'The selected service day')]")));
+   	
+//      generics.moveTo("//div[@class='card_title'][contains(.,'DISPOSAL')]")));
         generics.pause(2);
         String CT=excelUtils.getTestData("Prospect", row, 10);
         generics.clickOn(dpChargeType);
@@ -673,6 +682,10 @@ public class ProspectPage extends Prospect {
 
     public void SelectHaulType(int row)
     {
+    	JavascriptExecutor js = (JavascriptExecutor)localDriver;
+    	js.executeScript("arguments[0].scrollIntoView(true);",txtLocationType);
+  
+    	generics.pause(2);
         String HT=excelUtils.getTestData("Prospect", row, 11);
         generics.clickOn(dpHaultype);
         WebElement element=localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+HT+"')]"));
@@ -684,6 +697,7 @@ public class ProspectPage extends Prospect {
 
     public void SelectMaterial(int row)
     {
+    	generics.pause(2);
         String M=excelUtils.getTestData("Prospect", row, 12);
         generics.clickOn(dpserviceTypeMeterial);
         WebElement element=localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+M+"')]"));
@@ -696,10 +710,10 @@ public class ProspectPage extends Prospect {
     public void selectDisposibleSite()
     {
         //String M=excelUtils.getTestData("Prospect", row, 12);
-        generics.pause(5);
+    	generics.pause(6);        
         generics.clickOn(dpdiposibleSite);
         generics.clickOn(firstOption);
-
+        generics.pause(10);
         testStepsLog("Disposible site selected : ");
     }
 
@@ -708,6 +722,7 @@ public class ProspectPage extends Prospect {
 
     public void clickonCalculate()
     {
+    	generics.pause(2);
         generics.clickOn(btnCalculate);
         testStepsLog("Clicked ON calculate button");
         generics.pause(6);
@@ -720,6 +735,7 @@ public class ProspectPage extends Prospect {
 
     public void typeEstTime(int row)
     {
+    	generics.pause(2);
         String ET=excelUtils.getTestData("Prospect", row, 13);
         generics.type(txtEstTime,ET);
         testStepsLog("Estimated time entered in min : " + ET);
@@ -734,6 +750,7 @@ public class ProspectPage extends Prospect {
 
     public void typenote()
     {
+    	generics.pause(4);       
         JavascriptExecutor js = (JavascriptExecutor) localDriver;
         js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
         String note=generics.getRandomCharacters(10);
@@ -746,6 +763,7 @@ public class ProspectPage extends Prospect {
 
     public void typeLocationType(int row)
     {
+    	generics.pause(5);
         String LT=excelUtils.getTestData("Prospect", row, 14);
         generics.type(txtLocationType,LT);
         testStepsLog("Location Type : " + LT);
@@ -756,6 +774,7 @@ public class ProspectPage extends Prospect {
 
     public void clickonAddService()
     {
+    	generics.pause(5);
         generics.clickOn(AddService);
         testStepsLog("Clicked on Add Service button");
     }
@@ -765,7 +784,8 @@ public class ProspectPage extends Prospect {
 
     public void clickonUpdateAgreement()
     {
-        generics.clickOn(UpdateAgreement);
+    	generics.pause(5);
+    	generics.clickOn(UpdateAgreement);
         testStepsLog("Clicked on UpdateAgreement button");
     }
 
@@ -774,6 +794,7 @@ public class ProspectPage extends Prospect {
 
     public void clickonSaveAndSubmitCSA()
     {
+    	generics.pause(5);
         generics.clickOn(btnSaveAndSubmitCSA);
         testStepsLog("Clicked on Save And Submit CSA button");
     }
@@ -783,9 +804,10 @@ public class ProspectPage extends Prospect {
 
     public void clickonSubmitButton()
     {
+    	generics.pause(5);
         generics.clickOn(btnSubmitted);
         testStepsLog("Clicked on SubmitButton CSA button");
-        generics.pause(5);
+        generics.pause(10);
     }
 
 
@@ -809,16 +831,11 @@ public class ProspectPage extends Prospect {
     @FindBy(xpath = "//*[text()='AGREEMENT TERMS AND CONDITIONS']")
     public WebElement Aggreement;
 
-    
-    @FindBy(xpath = "//td[contains(text(),'Test342')]/../td[contains(.,'Approved')]/..//a")
-    
-    public WebElement AgreementsNo;
-    
     public void clickonAgreementsNo() {
-    	generics.moveTo(AgreementsNo);
-        generics.clickOn(AgreementsNo);
+    	generics.moveTo(localDriver.findElement(By.xpath("//td[contains(text(),'"+ProspectName+"')]/../td[contains(.,'Approved')]/..//a")));
+        generics.clickOn(localDriver.findElement(By.xpath("//td[contains(text(),'"+ProspectName+"')]/../td[contains(.,'Approved')]/..//a")));
         generics.pause(5);
-        testStepsLog("Clicked on Agreements No.");
+        testStepsLog("Clicked on Approveed Agreement.");
     }
   
  @FindBy(xpath = "//a[contains(text(),' 4 ')]")
@@ -839,7 +856,7 @@ public class ProspectPage extends Prospect {
     
     public void clickonCustomerCopy() {
         generics.clickOn(btnCustomercopy);
-        generics.pause(3);
+        generics.pause(5);
         testStepsLog("Clicked on CUSTOMER COPY.");
     }
     
@@ -855,7 +872,7 @@ public class ProspectPage extends Prospect {
     	generics.pause(3);
         generics.clickOn(chkAgreementTC);
         generics.pause(3);
-        testStepsLog("Clicked on Tearms and Condition.");
+        testStepsLog("Checked Tearms and Condition checkbox.");
     }
  
     @FindBy(xpath = "//button[contains(text(),'MARK AS SIGNED')]")
@@ -863,7 +880,7 @@ public class ProspectPage extends Prospect {
     
     public void clickonMarkAsSigned() {
         generics.clickOn(btnMarkassigned);
-        generics.pause(3);
+        generics.pause(5);
         testStepsLog("Clicked on MARK AS SIGNED.");
     }
     
@@ -873,8 +890,8 @@ public class ProspectPage extends Prospect {
     public void clickonDropFileHereorClicktoUpload() {
     	Uploadpath = "C:\\Users\\Automation\\Desktop\\Test1.PNG";     
         btnUpload.sendKeys(Uploadpath); 
-        generics.pause(3);
-        testStepsLog("Clicked on Drop Files here or Click to Upload.");
+        generics.pause(5);
+        testStepsLog("Digital Signature Uploaded Sucessfully.");
     }
     
     @FindBy(xpath = "//strong[contains(text(),'I confirm that this CSA has been signed')]")
@@ -882,7 +899,7 @@ public class ProspectPage extends Prospect {
     
     public void SelectIconfirmthatthisCSAhasbeensigned() {
         generics.clickOn(chkCSASigned);
-        generics.pause(3);
+        generics.pause(5);
         JavascriptExecutor je = (JavascriptExecutor) localDriver;
         je.executeScript("arguments[0].scrollIntoView(true);",btnUpload);
         testStepsLog("Clicked I confirm that this CSA has been signed.");
@@ -893,7 +910,7 @@ public class ProspectPage extends Prospect {
     
     public void clickonSubmitDocument() {
         generics.clickOn(btnSubmitDocument);
-        generics.pause(3);
+        generics.pause(5);
         testStepsLog("Clicked on Submit Document.");
     }
     
@@ -901,8 +918,8 @@ public class ProspectPage extends Prospect {
     public WebElement btnSubmittoCDE; 
     public void clickonSubmitCDE() {
         generics.clickOn(btnSubmittoCDE);
-        generics.pause(3);
-        testStepsLog("Clicked on SUBMIT TO CDEt.");
+        generics.pause(5);
+        testStepsLog("Clicked on SUBMIT TO CDE.");
     }
     
     @FindBy(xpath = "//h2[contains(text(),' Are you sure you want to Submit this CSA to CDE ? ')]")
@@ -916,7 +933,7 @@ public class ProspectPage extends Prospect {
     
     public void clickonSubmit() {
         generics.clickOn(btnSubmit);
-        generics.pause(3);
+        generics.pause(5);
         testStepsLog("Clicked on SUBMIT.");
     }
     
@@ -925,7 +942,7 @@ public class ProspectPage extends Prospect {
     
     public void clickonSubmittoCDE() {
         generics.clickOn(btnSubmittocde);
-        generics.pause(3);
+        generics.pause(5);
         testStepsLog("Clicked on SUBMIT TO CDE.");
     }
     
@@ -943,7 +960,7 @@ public class ProspectPage extends Prospect {
     
     public void ClickonUnassigned() {
         generics.clickOn(btnUnassigned);
-        generics.pause(3);
+        generics.pause(5);
         testStepsLog("Clicked on Unassigned.");
     }
     
@@ -979,7 +996,7 @@ public class ProspectPage extends Prospect {
 
     public void SelectDocumentsReviewed() {
         generics.clickOn(chkAgreement);
-        generics.pause(3);
+        generics.pause(5);
         testStepsLog("Agreement checkbox selected.");
     }
     
@@ -999,7 +1016,7 @@ public class ProspectPage extends Prospect {
     
     public void ClickonComplete() {
         generics.clickOn(btnComplete);
-        generics.pause(4);
+        generics.pause(5);
         testStepsLog("Clicked on COMPLETE.");
     }
     
@@ -1007,7 +1024,6 @@ public class ProspectPage extends Prospect {
     public WebElement Completettickeheading;
     
     public boolean isCpmpleteTicketpopup() { 
-    	generics.pause(3);
         return generics.isPresent(Completettickeheading);        
     }
     

@@ -94,9 +94,8 @@ public class Prospect extends EnhancedBaseClass {
             } else {
                 failure("Prospect not created.");
             }
-	        
-//============CK's code=============
-			pp.clickonCreateQuote();
+
+	        pp.clickonCreateQuote();
 			//pp.clickonCreateQuote();
 	        pp.clickonNextButton();
 			//pp.clickonNextButton();
@@ -108,11 +107,11 @@ public class Prospect extends EnhancedBaseClass {
 			pp.SelectContainerSize(i);
 			pp.SelectFreuency(i);
 			pp.SelectChargeType(i);
-			pp.SelectHaulType(i);
 			pp.SelectMaterial(i);
 			pp.selectDisposibleSite();
-			pp.typeEstTime(i);
 			pp.typeLocationType(i);
+			pp.SelectHaulType(i);	
+			pp.typeEstTime(i);
 			pp.clickonCalculate();
 			pp.typenote();
 			pp.clickonAddService();
@@ -144,8 +143,7 @@ public class Prospect extends EnhancedBaseClass {
             } else {
                 failure("Agreements page not open");
             }
-	        
-	        pp.clickonPageNo();
+	       
 	        pp.clickonAgreementsNo();
 	        pp.clickonCustomerCopy();
 	        pp.clickonChkAgreementTearmsAndCondition();
