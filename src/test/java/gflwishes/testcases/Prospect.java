@@ -180,6 +180,11 @@ public class Prospect extends EnhancedBaseClass {
             } else {
                 failure("Complete Ticket Popup not displayed.");
             }
+	        if (pp.isCpmplettticketmsg()) {
+                success("Ticket has been completed successfully ! message verification ");
+            } else {
+                failure("Ticket has been completed successfully ! meddage not verified.");
+            }
 	        }
 	        catch (Exception e) {
 	        	System.out.print("Prospect not created");

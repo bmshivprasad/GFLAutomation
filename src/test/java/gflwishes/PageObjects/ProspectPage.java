@@ -1,5 +1,7 @@
 package gflwishes.PageObjects;
 
+import java.awt.datatransfer.StringSelection;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -531,7 +533,6 @@ public class ProspectPage extends Prospect {
 
     @FindBy(xpath = "//button[contains(text(),'NEXT')]")
     public WebElement btnNext;
-
     public void clickonNextButton() {
 
         generics.pause(4);
@@ -855,6 +856,7 @@ public class ProspectPage extends Prospect {
     public WebElement btnCustomercopy;
     
     public void clickonCustomerCopy() {
+    	generics.pause(3);
         generics.clickOn(btnCustomercopy);
         generics.pause(5);
         testStepsLog("Clicked on CUSTOMER COPY.");
@@ -888,7 +890,7 @@ public class ProspectPage extends Prospect {
     public WebElement btnUpload;
     public static String Uploadpath;
     public void clickonDropFileHereorClicktoUpload() {
-    	Uploadpath = "C:\\Users\\Automation\\Desktop\\Test1.PNG";     
+    	Uploadpath = TEST_DATA_LOCATION + File.separator + "Signature.PNG";     
         btnUpload.sendKeys(Uploadpath); 
         generics.pause(5);
         testStepsLog("Digital Signature Uploaded Sucessfully.");
@@ -985,29 +987,33 @@ public class ProspectPage extends Prospect {
     public static String Servicelineitem;
 
     public void typeServiceLineItem() {
-    	Servicelineitem = "123";
+    	Servicelineitem = "12345";
         generics.clickOn(txtServicelineitem);
         generics.type(txtServicelineitem, Servicelineitem);
         testStepsLog("Service Line Item inserted.");
     }
     
-    @FindBy(xpath ="//input[@id=\"mat-checkbox-86-input\"]")
+    @FindBy(xpath ="//mat-checkbox[@id='mat-checkbox-43']")
     public WebElement chkAgreement;
 
     public void SelectDocumentsReviewed() {
+    	generics.pause(3);
         generics.clickOn(chkAgreement);
-        generics.pause(5);
+        generics.pause(3);
         testStepsLog("Agreement checkbox selected.");
     }
     
-    @FindBy(xpath ="//textarea[@formcontrolname=\"leaveANote\"]")
+    @FindBy(xpath ="//textarea[@formcontrolname='leaveANote']")
     public WebElement txtLeavecomment;
     public static String Leavecomment;
 
     public void typeLeaveAComment() {
     	Leavecomment = generics.getRandomCharacters(10);
+    	generics.pause(3);
         generics.clickOn(txtLeavecomment);
+        generics.pause(2);
         generics.type(txtLeavecomment, Leavecomment);
+        generics.pause(3);
         testStepsLog("Leave a Comment inserted.");
     }
     
@@ -1027,13 +1033,22 @@ public class ProspectPage extends Prospect {
         return generics.isPresent(Completettickeheading);        
     }
     
-    @FindBy(xpath = "//button[@id=\"btnProceed\"]")
+    @FindBy(xpath = "//button[@id='btnProceed']")
     public WebElement btncomplete;
     
     public void Clickoncomplete() {
         generics.clickOn(btncomplete);
         generics.pause(4);
         testStepsLog("Clicked on COMPLETE.");
+    }
+    
+  
+    @FindBy(xpath = "//div[contains(text(),'Ticket has been completed successfully !')]")
+    public WebElement Completetticketmessage;
+    
+    public boolean isCpmplettticketmsg() { 
+    	 generics.pause(3);
+        return generics.isPresent(Completetticketmessage);        
     }
     
     @FindBy(xpath ="//input[@formcontrolname=\"customerErpId\"]")
