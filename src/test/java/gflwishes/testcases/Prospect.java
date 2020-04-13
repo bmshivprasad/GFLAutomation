@@ -24,7 +24,7 @@ public class Prospect extends EnhancedBaseClass {
 	    @Test
 	    public void TC001WS_Verify_Create_new_Prospect_Functionality() {
 
-	        testCaseLog("TC001_TC002_TC003_Verify_Create_new_Prospect_Functionality ");
+	        testCaseLog("TC001__Verify_Create_new_Prospect_Functionality ");
 
 	        LoginPage login = new LoginPage(wishesDriver);
 	        LandingPage lp = new LandingPage(wishesDriver);
@@ -41,8 +41,10 @@ public class Prospect extends EnhancedBaseClass {
 
 	        for (int i = 1; i < rows - 1; i++) {
 
+		        try {
+	        	
 	        lp.OpenProspect();
-	         
+
 	        if (pp.isProspectPageOpen()) {
                 success("Prospect page open successfully");
             } else {
@@ -63,7 +65,7 @@ public class Prospect extends EnhancedBaseClass {
             } else {
                 failure("Entered Prosepect name not displayed as companyname");
             }
-	        pp.typeWebsite();
+	        //pp.typeWebsite();
 	        pp.selectBillingCurrency();
 	        pp.selectSalesRep();
 	        pp.selectBusinessUnit1(i);
@@ -83,18 +85,18 @@ public class Prospect extends EnhancedBaseClass {
 	        pp.selectAddressline1ofSite(i);
 	        pp.typePostalcode(i);
 	        pp.SelectbillToCustomerBillingAddress();
-	        pp.SelectSitecontactsameasprimarycontact();
+	        pp.SelectSiteContactSameAsPrimaryContact();
 	        pp.clickonbtnSaveCustomer();
 	        
 	        if (pp.isProspectCreatedSuccessful()) {
-                success("Prospect created successfull message validation.");
+                success("Prospect created successfully.");
             } else {
                 failure("Prospect not created.");
             }
-//============CK's code=============
-			pp.clickonCreateQuote();
+
 	        pp.clickonCreateQuote();
-			pp.clickonNextButton();
+			//pp.clickonCreateQuote();
+	        pp.clickonNextButton();
 			//pp.clickonNextButton();
 			pp.clickonAddServiceButton();
 			pp.selectServiceType();
@@ -104,11 +106,11 @@ public class Prospect extends EnhancedBaseClass {
 			pp.SelectContainerSize(i);
 			pp.SelectFreuency(i);
 			pp.SelectChargeType(i);
-			pp.SelectHaulType(i);
 			pp.SelectMaterial(i);
 			pp.selectDisposibleSite();
-			pp.typeEstTime(i);
 			pp.typeLocationType(i);
+			pp.SelectHaulType(i);	
+			pp.typeEstTime(i);
 			pp.clickonCalculate();
 			pp.typenote();
 			pp.clickonAddService();
@@ -133,10 +135,57 @@ public class Prospect extends EnhancedBaseClass {
 				failure("CSA not Saved successfully");
 			}
 
-	        }
+	        lp.OpenAgreements();
+	        
+	        if (pp.isAgreementsPageOpen()) {
+                success("Agreements page open successfully");
+            } else {
+                failure("Agreements page not open");
+            }
 	       
-	        sa.assertAll();
+	        pp.clickonAgreementsNo();
+	        pp.clickonCustomerCopy();
+	        pp.clickonChkAgreementTearmsAndCondition();
+	        pp.clickonMarkAsSigned();
+	        pp.SelectIconfirmthatthisCSAhasbeensigned();
+	        pp.clickonDropFileHereorClicktoUpload();  
+	        pp.clickonSubmitDocument();
+	        pp.clickonSubmitCDE();
+	        
+	        if (pp.isPopupdisplayedCSAtoCDE()) {
+                success("CSAtoCDE Popup displayed. ");
+            } else {
+                failure("CSAtoCDE Popup not displayed.");
+            }
+	        
+	        pp.clickonSubmit();
+	        pp.clickonSubmittoCDE();
+	       
+	        lp.OpenCDEDashboard();	
+	        pp.ClickonUnassigned();
+	        
+	        if (pp.isTicketDetailsOpen()) {
+                success("Ticket Details page Open Successfully.");
+            } else {
+                failure("Ticket Details page not Opened.");
+            }
+	        pp.typeTruxCustomerNo();
+	        pp.typeSiteNo(); 
+	        pp.typeServiceLineItem();
+	        pp.SelectDocumentsReviewed();
+	        pp.typeLeaveAComment();
+	        pp.ClickonComplete();
+	        if (pp.isCpmpleteTicketpopup()) {
+                success("Complete Ticket Popup displayed. ");
+            } else {
+                failure("Complete Ticket Popup not displayed.");
+            }
+	        }
+	        catch (Exception e) {
+	        	System.out.print("Prospect not created");
+	            continue;
+			}
 	    }
-
-	
+	        sa.assertAll();
+	 }
 }
