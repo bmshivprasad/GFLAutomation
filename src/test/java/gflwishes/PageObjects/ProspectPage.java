@@ -682,7 +682,7 @@ public class ProspectPage extends Prospect {
     public void SelectHaulType(int row)
     {
     	JavascriptExecutor js = (JavascriptExecutor)localDriver;
-    	js.executeScript("arguments[0].scrollIntoView(true);",txtLocationType);
+    	js.executeScript("arguments[0].scrollIntoView(true);",dpHaultype);
   
     	generics.pause(2);
         String HT=excelUtils.getTestData("Prospect", row, 11);
