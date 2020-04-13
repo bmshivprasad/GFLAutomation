@@ -8,7 +8,6 @@ import gflwishes.PageObjects.LandingPage;
 import gflwishes.PageObjects.LoginPage;
 import gflwishes.PageObjects.ProspectPage;
 import gflwishes.base.EnhancedBaseClass;
-import gflwishes.base.Generics;
 
 public class Prospect extends EnhancedBaseClass {
 
@@ -27,9 +26,9 @@ public class Prospect extends EnhancedBaseClass {
 
 	        testCaseLog("TC001_TC002_TC003_Verify_Create_new_Prospect_Functionality ");
 
-	        LoginPage login = new LoginPage(driver);
-	        LandingPage lp = new LandingPage(driver);
-	        ProspectPage pp = new ProspectPage(driver);
+	        LoginPage login = new LoginPage(wishesDriver);
+	        LandingPage lp = new LandingPage(wishesDriver);
+	        ProspectPage pp = new ProspectPage(wishesDriver);
 	        int rows = pp.getRowsExcel();
 
 	        login.loginAs(USER_NAME, PASSWORD);

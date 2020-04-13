@@ -20,4 +20,5 @@ public interface ExcelColumns {
     int SCALE_TICKET = 15;
     int WEIGHT = 16;
     int PAYMENT = 17;
+    
 }

@@ -34,10 +34,12 @@ import java.util.concurrent.TimeUnit;
 
 public class EnhancedBaseClass extends ExtentInitializer implements Configurations {
 
-    public WebDriver driver;
+    public WebDriver wishesDriver;
+    public WebDriver fleetMapperDriver;
     public static Logger log4j = Logger.getLogger("EnhancedBaseClass");
     public SoftAssert sa;
     public ExcelUtils excelUtils = new ExcelUtils();
+    public static String methodName = "";
 
     @BeforeSuite(alwaysRun = true)
     public void startReport(ITestContext testContext) {
@@ -50,6 +52,19 @@ public class EnhancedBaseClass extends ExtentInitializer implements Configuratio
     public void setUp(Method method) {
 
         sa = new SoftAssert();
+        methodName = method.getName();
+
+        if (methodName.contains("WS")) {
+            wishesDriver = initiateDriver(wishesDriver);
+            wishesDriver.get(BASE_URL);
+        } else {
+            fleetMapperDriver = initiateDriver(fleetMapperDriver);
+            fleetMapperDriver.get(FM_URL);
+        }
+
+    }
+
+    private WebDriver initiateDriver(WebDriver driver) {
 
         if (driver == null) {
             switch (BROWSER.toLowerCase()) {
@@ -70,20 +85,18 @@ public class EnhancedBaseClass extends ExtentInitializer implements Configuratio
                     driver = new ChromeDriver();
                     break;
             }
-            driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(Integer.parseInt(IMPLICIT_WAIT), TimeUnit.SECONDS);
             driver.manage().window().maximize();
         }
 
-        if (method.getName().split("_")[0].contains("WS"))
-            driver.get(BASE_URL);
-        else driver.get(FM_URL);
-
+        return driver;
     }
 
     @AfterMethod(alwaysRun = true)
     public void tearDown(ITestResult testResult) {
 
         String testName;
+        String screenshotPath;
 
         ITestContext ex = testResult.getTestContext();
 
@@ -94,7 +107,8 @@ public class EnhancedBaseClass extends ExtentInitializer implements Configuratio
                 logger.log(Status.FAIL, MarkupHelper.createLabel(testName + " : FAILED", ExtentColor.RED));
                 logger.log(Status.FAIL,
                         MarkupHelper.createLabel(testResult.getThrowable() + " : FAILED", ExtentColor.RED));
-                String screenshotPath = getExtentScreenShot(driver, testName, false);
+                if (methodName.contains("WS")) screenshotPath = getExtentScreenShot(wishesDriver, testName, false);
+                else screenshotPath = getExtentScreenShot(fleetMapperDriver, testName, false);
                 logger.fail("Test Case Failed Snapshot is attached below");
                 logger.addScreenCaptureFromPath(screenshotPath);
                 log4j.error(testName + " : Fail");
@@ -122,6 +136,11 @@ public class EnhancedBaseClass extends ExtentInitializer implements Configuratio
     public void cleanUp() {
         log4j.info("<strong>+++++++++++++++++++++++++++++++++ Closing the " + BROWSER +
                 " browser instance +++++++++++++++++++++++++++++++++</strong>");
+        cleanupDriver(fleetMapperDriver);
+        cleanupDriver(wishesDriver);
+    }
+
+    public void cleanupDriver(WebDriver driver) {
         driver.manage().deleteAllCookies();
         driver.close();
         driver.quit();
@@ -199,7 +218,8 @@ public class EnhancedBaseClass extends ExtentInitializer implements Configuratio
 
     public void failure(String log) {
         sa.assertTrue(false, log);
-        getExtentScreenShot(driver, getCurrentTimeStampString(), true);
+        if (methodName.contains("WS")) getExtentScreenShot(wishesDriver, getCurrentTimeStampString(), true);
+        else getExtentScreenShot(fleetMapperDriver, getCurrentTimeStampString(), true);
         logger.fail(MarkupHelper.createLabel(log + " : FAIL", ExtentColor.RED));
         log4j.error(log + " : FAIL");
     }

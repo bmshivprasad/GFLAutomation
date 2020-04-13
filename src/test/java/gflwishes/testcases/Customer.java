@@ -29,9 +29,9 @@ public class Customer extends EnhancedBaseClass {
 
         testCaseLog("TC001_TC002_TC003_Verify_Create_new_Customer_Functionality");
 
-        LoginPage login = new LoginPage(driver);
-        LandingPage lp = new LandingPage(driver);
-        CustomerPage cp = new CustomerPage(driver);
+        LoginPage login = new LoginPage(wishesDriver);
+        LandingPage lp = new LandingPage(wishesDriver);
+        CustomerPage cp = new CustomerPage(wishesDriver);
         int rows = cp.getRowsExcel();
 
         login.loginAs(USER_NAME, PASSWORD);
@@ -118,9 +118,9 @@ public class Customer extends EnhancedBaseClass {
 
         testCaseLog("TC002WS_Verify_Create_Quote");
 
-        LoginPage login = new LoginPage(driver);
-        LandingPage lp = new LandingPage(driver);
-        CustomerPage cp = new CustomerPage(driver);
+        LoginPage login = new LoginPage(wishesDriver);
+        LandingPage lp = new LandingPage(wishesDriver);
+        CustomerPage cp = new CustomerPage(wishesDriver);
         int rows = cp.getRowsExcel();
 
         //login.loginAs(USER_NAME, PASSWORD);
@@ -237,9 +237,9 @@ public class Customer extends EnhancedBaseClass {
 
         testCaseLog("TC004_Edit_Customer_Functionality");
 
-        LoginPage login = new LoginPage(driver);
-        LandingPage lp = new LandingPage(driver);
-        CustomerPage cp = new CustomerPage(driver);//object creation for project page
+        LoginPage login = new LoginPage(wishesDriver);
+        LandingPage lp = new LandingPage(wishesDriver);
+        CustomerPage cp = new CustomerPage(wishesDriver);//object creation for project page
 
 
         login.loginAs(USER_NAME, PASSWORD);

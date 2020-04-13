@@ -17,8 +17,8 @@ public class EndToEnd extends EnhancedBaseClass {
 
         testCaseLog("TC03_Create_Vehicle_Functionality");
 
-        LoginPage login = new LoginPage(driver);
-        vehiclePage vc = new vehiclePage(driver);
+        LoginPage login = new LoginPage(fleetMapperDriver);
+        vehiclePage vc = new vehiclePage(fleetMapperDriver);
 
         login.loginAs(USER_NAME, PASSWORD);
 
@@ -26,7 +26,7 @@ public class EndToEnd extends EnhancedBaseClass {
         vc.OpenRegion();
         vc.ClickonVehicleTab();
         vc.clickonAddVehiclebutton();
-        vc.selectBusinessUnit();
+         vc.selectBusinessUnit();
         vc.typeVehicalname();
 
         vc.typeVin();
@@ -46,13 +46,12 @@ public class EndToEnd extends EnhancedBaseClass {
 
         testCaseLog("TC001_TC002_TC003_Verify_Create_new_Customer_Functionality");
 
-        LoginPage login = new LoginPage(driver);
-        LandingPage lp = new LandingPage(driver);
-        CustomerPage cp = new CustomerPage(driver);
+        LoginPage login = new LoginPage(wishesDriver);
+        LandingPage lp = new LandingPage(wishesDriver);
+        CustomerPage cp = new CustomerPage(wishesDriver);
         int rows = cp.getRowsExcel();
 
-        // login.loginAs(USER_NAME, PASSWORD);
-        login.selectSignIn(USER_NAME);
+        login.loginAs(USER_NAME, PASSWORD);
 
         if (lp.isUserLoginSuccessful()) {
             success("User Login Successful");
@@ -118,10 +117,8 @@ public class EndToEnd extends EnhancedBaseClass {
                 }
                 cp.getCustomerID(i);
             } catch (Exception e) {
-                testStepsLog("Customer not created for " + String.valueOf(i));
-                continue;
+                testStepsLog("Customer not created for " + i);
             }
-
 
         }
         sa.assertAll();
@@ -133,17 +130,9 @@ public class EndToEnd extends EnhancedBaseClass {
 
         testCaseLog("TC0011_Verify_Create_Service_order_Functionality");
 
-        LandingPage lp = new LandingPage(driver);
-        ServiceOrderPage cp = new ServiceOrderPage(driver);
+        LandingPage lp = new LandingPage(wishesDriver);
+        ServiceOrderPage cp = new ServiceOrderPage(wishesDriver);
         int rows = cp.getRowsExcel();
-
-        //  new LoginPage(driver).loginAs(USER_NAME, PASSWORD);
-
-        if (lp.isUserLoginSuccessful()) {
-            success("User Login Successful");
-        } else {
-            failure("Failed to Login");
-        }
 
         for (int i = 1; i < rows - 1; i++) {
             try {
@@ -232,8 +221,7 @@ public class EndToEnd extends EnhancedBaseClass {
                     continue;
                 }
             } catch (Exception e) {
-                testStepsLog("Service order not Created : " + String.valueOf(i));
-                continue;
+                testStepsLog("Service order not Created : " + i);
             }
         }
         sa.assertAll();
@@ -244,10 +232,8 @@ public class EndToEnd extends EnhancedBaseClass {
 
         testCaseLog("Verify_User_can_complete_pickup_order");
 
-        LoginPage login = new LoginPage(driver);
-        DispatchPO dispatchPO = new DispatchPO(driver);
-
-        login.selectSignIn(USER_NAME);
+        LoginPage login = new LoginPage(fleetMapperDriver);
+        DispatchPO dispatchPO = new DispatchPO(fleetMapperDriver);
 
         dispatchPO.openDispatcher();
 
@@ -348,15 +334,10 @@ public class EndToEnd extends EnhancedBaseClass {
 
         testCaseLog("TC005_Verify_All_deatails_in_wishes_if_service_order_status_Change_from_FM");
 
-        LandingPage lp = new LandingPage(driver);
-        ServiceOrderPage cp = new ServiceOrderPage(driver);
+        LandingPage lp = new LandingPage(wishesDriver);
+        ServiceOrderPage cp = new ServiceOrderPage(wishesDriver);
         int rows = cp.getRowsExcel();
 
-        if (lp.isUserLoginSuccessful()) {
-            success("User Login Successful");
-        } else {
-            failure("Failed to Login");
-        }
 
         for (int i = 1; i < rows - 1; i++) {
 
@@ -416,16 +397,11 @@ public class EndToEnd extends EnhancedBaseClass {
                     } else {
                         failure("Proper Driver value of service order not displayed");
                     }
-                }
-                else
-                {
+                } else {
                     continue;
                 }
-            }
-            catch(Exception e)
-            {
-                testStepsLog("FM to Wishes comparision fail : " + String.valueOf(i));
-                continue;
+            } catch (Exception e) {
+                testStepsLog("FM to Wishes comparision fail : " + i);
             }
 
         }

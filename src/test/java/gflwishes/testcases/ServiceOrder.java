@@ -30,9 +30,9 @@ public class ServiceOrder extends EnhancedBaseClass {
 
         testCaseLog("TC0011_Verify_Create_Service_order_Functionality");
 
-        LoginPage login = new LoginPage(driver);
-        LandingPage lp = new LandingPage(driver);
-        ServiceOrderPage cp = new ServiceOrderPage(driver);//object creation for project page
+        LoginPage login = new LoginPage(wishesDriver);
+        LandingPage lp = new LandingPage(wishesDriver);
+        ServiceOrderPage cp = new ServiceOrderPage(wishesDriver);//object creation for project page
         int rows = cp.getRowsExcel();
 
         login.loginAs(USER_NAME, PASSWORD);
@@ -148,8 +148,8 @@ public class ServiceOrder extends EnhancedBaseClass {
 
         testCaseLog("TC005_Verify_All_deatails_in_wishes_if_service_order_status_Change_from_FM");
 
-        LandingPage lp = new LandingPage(driver);
-        ServiceOrderPage cp = new ServiceOrderPage(driver);
+        LandingPage lp = new LandingPage(wishesDriver);
+        ServiceOrderPage cp = new ServiceOrderPage(wishesDriver);
         int rows = cp.getRowsExcel();
 
         if (lp.isUserLoginSuccessful()) {

@@ -21,8 +21,8 @@ public class Dispatch extends EnhancedBaseClass {
 
         testCaseLog("Verify_User_can_complete_pickup_order");
 
-        LoginPage login = new LoginPage(driver);
-        DispatchPO dispatchPO = new DispatchPO(driver);
+        LoginPage login = new LoginPage(wishesDriver);
+        DispatchPO dispatchPO = new DispatchPO(wishesDriver);
 
         int count = 0;
 
@@ -69,11 +69,11 @@ public class Dispatch extends EnhancedBaseClass {
 
         testCaseLog("TC005_Verify_All_deatails_in_wishes_if_service_order_status_Change_from_FM");
 
-        LoginPage login = new LoginPage(driver);
-        LandingPage lp = new LandingPage(driver);
-        ServiceOrderPage cp = new ServiceOrderPage(driver);//object creation for project page
+        LoginPage login = new LoginPage(wishesDriver);
+        LandingPage lp = new LandingPage(wishesDriver);
+        ServiceOrderPage cp = new ServiceOrderPage(wishesDriver);//object creation for project page
         int rows = cp.getRowsExcel();
-        driver.get("https://wishes-qa.azurewebsites.net/");
+        wishesDriver.get("https://wishes-qa.azurewebsites.net/");
         login.loginAs(USER_NAME, PASSWORD);
 
         if (lp.isUserLoginSuccessful()) {

@@ -19,9 +19,9 @@ public interface Configurations {
     String configurationPath = getProjectDir() + "/Configuration/config.properties";
 
     String END_TO_END = "EndToEnd";
-    
+
     String Prospect = "Prospect";
-    
+
     String BASE_URL = getProperty("wishesURL");
     String FM_URL = getProperty("fleetMapperURL");
 
@@ -30,6 +30,9 @@ public interface Configurations {
 
     String BROWSER = getProperty("browser");
     String PROJECT_DIR = getProjectDir();
+
+    String IMPLICIT_WAIT = getProperty("default_wait");
+    String WEBDRIVER_WAIT = getProperty("webdriver_wait");
 
     static String getProjectDir() {
         return System.getProperty("user.dir");

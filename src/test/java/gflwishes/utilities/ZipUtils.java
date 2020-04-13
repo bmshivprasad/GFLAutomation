@@ -11,7 +11,7 @@ import java.util.zip.ZipOutputStream;
 
 public class ZipUtils implements Configurations {
 
-    private List<String> fileList;
+    private final List<String> fileList;
     private static String SOURCE_FOLDER = "";
 
     private ZipUtils() {

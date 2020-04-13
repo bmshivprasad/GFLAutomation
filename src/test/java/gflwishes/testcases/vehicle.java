@@ -30,9 +30,9 @@ public class vehicle extends EnhancedBaseClass {
 
         testCaseLog("TC03_Create_Vehicle_Functionality");
 
-        LoginPage login = new LoginPage(driver);
-        LandingPage lp = new LandingPage(driver);
-        vehiclePage vc = new vehiclePage(driver);//object creation for project page
+        LoginPage login = new LoginPage(wishesDriver);
+        LandingPage lp = new LandingPage(wishesDriver);
+        vehiclePage vc = new vehiclePage(wishesDriver);//object creation for project page
 
         login.loginAs(USER_NAME, PASSWORD);
         vc.getServiceZone();

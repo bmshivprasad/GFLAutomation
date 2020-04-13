@@ -9,12 +9,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Generics extends EnhancedBaseClass {
 
-    private WebDriver generalDriver;
-    private WebDriverWait wait;
+    private final WebDriver generalDriver;
+    private final WebDriverWait wait;
 
     public Generics(WebDriver baseDriver) {
         this.generalDriver = baseDriver;
-        wait = new WebDriverWait(generalDriver, 45);
+        wait = new WebDriverWait(generalDriver, Integer.parseInt(WEBDRIVER_WAIT));
         log4j = Logger.getLogger("Generics");
     }
 
