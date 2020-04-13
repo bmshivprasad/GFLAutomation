@@ -59,13 +59,15 @@ public class Prospect extends EnhancedBaseClass {
                 failure("Popup not displayed");
             }
 	        pp.typeProspectname(i);
+	        
 	        pp.clickonCreateNewProspectlnk();
+	        
 	        if (pp.isEnteredProspectDisplayed()) {
                 success("Entered Prosepect name displayed as companyname");
             } else {
                 failure("Entered Prosepect name not displayed as companyname");
             }
-	        //pp.typeWebsite();
+	        
 	        pp.selectBillingCurrency();
 	        pp.selectSalesRep();
 	        pp.selectBusinessUnit1(i);
@@ -180,6 +182,8 @@ public class Prospect extends EnhancedBaseClass {
             } else {
                 failure("Complete Ticket Popup not displayed.");
             }
+	        pp.ClickonPopComplete();
+	        
 	        if (pp.isCpmplettticketmsg()) {
                 success("Ticket has been completed successfully ! message verification ");
             } else {

@@ -177,7 +177,7 @@ public class ProspectPage extends Prospect {
 
     }
     
-    @FindBy(xpath ="//input[@formcontrolname=\"webSite\"]")
+    @FindBy(xpath ="//input[@formcontrolname='webSite']")
     public WebElement txtWebsite;
 
     public static String Website;
@@ -202,12 +202,10 @@ public class ProspectPage extends Prospect {
         generics.pause(5);
     }
     
-    @FindBy(xpath = "//span[contains(text(),'CapexTest Approver')]")
+    @FindBy(xpath = "//mat-select[@formcontrolname='salesRepId']")
     public WebElement dpSalesRep;
     
-   // @FindBy(xpath = "//mat-option[contains(.,'CapexTest Approver')]")
-    @FindBy(xpath = "//mat-option[2]")
-    
+    @FindBy(xpath = "//mat-option[contains(.,'CapexTest Approver')]")
     public WebElement dpRepOption;
     
     public void selectSalesRep() {
@@ -217,7 +215,7 @@ public class ProspectPage extends Prospect {
         generics.pause(3);
     }
   
-    @FindBy(xpath = "//mat-select[@id='mat-select-12']")
+    @FindBy(xpath = "//mat-select[@formcontrolname='taxJurisdictionErpCode']")
     public WebElement dpJurisdiction;
     
     @FindBy(xpath = "//mat-option[3]")
@@ -525,7 +523,7 @@ public class ProspectPage extends Prospect {
 
     public void clickonCreateQuote()
     {
-        generics.pause(4);
+    	generics.pause(4);
         generics.clickOn(btnCreateQuote);
         generics.pause(4);
         testStepsLog("Clicked on Create Quote button");
@@ -536,9 +534,9 @@ public class ProspectPage extends Prospect {
     public void clickonNextButton() {
 
         generics.pause(4);
+        generics.waitForElementVisible(localDriver.findElement(By.xpath("//span[@title='Clear all']")));	
         JavascriptExecutor js = (JavascriptExecutor) localDriver;
-        js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
-        generics.pause(4);
+        js.executeScript("window.scrollTo(0, document.body.scrollHeight)");        
         generics.clickOn(btnNext);
         generics.pause(2);
         testStepsLog("Clicked On Next Button");
@@ -911,7 +909,8 @@ public class ProspectPage extends Prospect {
     public WebElement btnSubmitDocument;
     
     public void clickonSubmitDocument() {
-        generics.clickOn(btnSubmitDocument);
+    	 generics.pause(5);
+    	generics.clickOn(btnSubmitDocument);
         generics.pause(5);
         testStepsLog("Clicked on Submit Document.");
     }
@@ -919,7 +918,9 @@ public class ProspectPage extends Prospect {
     @FindBy(xpath = "//button[contains(text(),'SUBMIT TO CDE')]")
     public WebElement btnSubmittoCDE; 
     public void clickonSubmitCDE() {
-        generics.clickOn(btnSubmittoCDE);
+       
+    	generics.pause(5);
+    	generics.clickOn(btnSubmittoCDE);
         generics.pause(5);
         testStepsLog("Clicked on SUBMIT TO CDE.");
     }
@@ -943,7 +944,8 @@ public class ProspectPage extends Prospect {
     public WebElement btnSubmittocde;
     
     public void clickonSubmittoCDE() {
-        generics.clickOn(btnSubmittocde);
+    	generics.pause(5);
+    	generics.clickOn(btnSubmittocde);
         generics.pause(5);
         testStepsLog("Clicked on SUBMIT TO CDE.");
     }
@@ -957,10 +959,11 @@ public class ProspectPage extends Prospect {
         testStepsLog("Clicked on CLONE.");
     }
     
-    @FindBy(xpath = "//div[contains(text(),'Unassigned')]")
+    @FindBy(xpath = "//tr/td[contains(.,'CapexTest Approver')]/../td//div[contains(text(),'Unassigned')]")
     public WebElement btnUnassigned;
     
     public void ClickonUnassigned() {
+    	generics.pause(5);
         generics.clickOn(btnUnassigned);
         generics.pause(5);
         testStepsLog("Clicked on Unassigned.");
@@ -984,16 +987,16 @@ public class ProspectPage extends Prospect {
     
     @FindBy(xpath ="//input[@formcontrolname=\"erpId\"]")
     public WebElement txtServicelineitem;
-    public static String Servicelineitem;
+    public static int Servicelineitem;
 
     public void typeServiceLineItem() {
-    	Servicelineitem = "12345";
+    	Servicelineitem = generics.getRandomBetween(1, 99999);
         generics.clickOn(txtServicelineitem);
-        generics.type(txtServicelineitem, Servicelineitem);
+        generics.type(txtServicelineitem, String.valueOf(Servicelineitem));
         testStepsLog("Service Line Item inserted.");
     }
     
-    @FindBy(xpath ="//mat-checkbox[@id='mat-checkbox-43']")
+    @FindBy(xpath ="//mat-checkbox[@formcontrolname='isChecked'][1]")
     public WebElement chkAgreement;
 
     public void SelectDocumentsReviewed() {
@@ -1036,7 +1039,7 @@ public class ProspectPage extends Prospect {
     @FindBy(xpath = "//button[@id='btnProceed']")
     public WebElement btncomplete;
     
-    public void Clickoncomplete() {
+    public void ClickonPopComplete() {
         generics.clickOn(btncomplete);
         generics.pause(4);
         testStepsLog("Clicked on COMPLETE.");
@@ -1048,28 +1051,29 @@ public class ProspectPage extends Prospect {
     
     public boolean isCpmplettticketmsg() { 
     	 generics.pause(3);
-        return generics.isPresent(Completetticketmessage);        
+    	 generics.waitForElementVisible(Completetticketmessage);
+         return generics.isPresent(Completetticketmessage);        
     }
     
     @FindBy(xpath ="//input[@formcontrolname=\"customerErpId\"]")
     public WebElement txtTruxcustomerno;
-    public static String Truxcustomerno;
+    public static int Truxcustomerno;
 
     public void typeTruxCustomerNo() {
-    	Truxcustomerno = "12";
+    	Truxcustomerno = generics.getRandomBetween(1, 99999);
         generics.clickOn(txtTruxcustomerno);
-        generics.type(txtTruxcustomerno, Truxcustomerno);
+        generics.type(txtTruxcustomerno, String.valueOf(Truxcustomerno));
         testStepsLog("Trux Customer No. inserted.");
     }
     
     @FindBy(xpath ="//input[@formcontrolname=\"siteErpId\"]")
     public WebElement txtSiteNo;
-    public static String Siteno;
+    public static int Siteno;
 
     public void typeSiteNo() {
-    	Siteno = "10";
+    	Siteno = generics.getRandomBetween(1, 99999);
         generics.clickOn(txtSiteNo);
-        generics.type(txtSiteNo, Siteno);
+        generics.type(txtSiteNo, String.valueOf(Siteno)); 
         testStepsLog("Site No. inserted.");
     }
     
