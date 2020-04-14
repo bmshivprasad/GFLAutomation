@@ -201,13 +201,13 @@ public class ProspectPage extends Prospect {
         testStepsLog("BillingCurrency selected");
         generics.pause(5);
     }
-    
+
     @FindBy(xpath = "//mat-select[@formcontrolname='salesRepId']")
     public WebElement dpSalesRep;
-    
+
     @FindBy(xpath = "//mat-option[contains(.,'CapexTest Approver')]")
     public WebElement dpRepOption;
-    
+
     public void selectSalesRep() {
         generics.clickOn(dpSalesRep);
         generics.clickOn(dpRepOption);
@@ -681,8 +681,8 @@ public class ProspectPage extends Prospect {
 
     public void SelectHaulType(int row)
     {
-    	JavascriptExecutor js = (JavascriptExecutor)localDriver;
-    	js.executeScript("arguments[0].scrollIntoView(true);",dpHaultype);
+    	//JavascriptExecutor js = (JavascriptExecutor)localDriver;
+    	//js.executeScript("arguments[0].scrollIntoView(true);",dpHaultype);
   
     	generics.pause(2);
         String HT=excelUtils.getTestData("Prospect", row, 11);
@@ -762,6 +762,10 @@ public class ProspectPage extends Prospect {
 
     public void typeLocationType(int row)
     {
+
+        JavascriptExecutor js = (JavascriptExecutor)localDriver;
+        js.executeScript("arguments[0].scrollIntoView(true);",btnCalculate);
+
     	generics.pause(5);
         String LT=excelUtils.getTestData("Prospect", row, 14);
         generics.type(txtLocationType,LT);
@@ -974,15 +978,12 @@ public class ProspectPage extends Prospect {
     
     @FindBy(xpath = "//h3[contains(text(),'ORDER FORM NOTES')]")
     public WebElement Orderformnotes;
-    
+
     public boolean isTicketDetailsOpen() {
-    	
-    	JavascriptExecutor je = (JavascriptExecutor) localDriver;
-        je.executeScript("arguments[0].scrollIntoView(true);",Orderformnotes);
-        
-    	generics.pause(3);
+
+        generics.pause(3);
         return generics.isPresent(Ticketdetailspage);
-            
+
     }
     
     @FindBy(xpath ="//input[@formcontrolname=\"erpId\"]")
@@ -1060,6 +1061,9 @@ public class ProspectPage extends Prospect {
     public static int Truxcustomerno;
 
     public void typeTruxCustomerNo() {
+
+        JavascriptExecutor je = (JavascriptExecutor) localDriver;
+        je.executeScript("arguments[0].scrollIntoView(true);",Orderformnotes);
     	Truxcustomerno = generics.getRandomBetween(1, 99999);
         generics.clickOn(txtTruxcustomerno);
         generics.type(txtTruxcustomerno, String.valueOf(Truxcustomerno));
@@ -1075,6 +1079,22 @@ public class ProspectPage extends Prospect {
         generics.clickOn(txtSiteNo);
         generics.type(txtSiteNo, String.valueOf(Siteno)); 
         testStepsLog("Site No. inserted.");
+    }
+
+    @FindBy(xpath = "//div[@class='flex_row align_items_left id_container']/div/div")
+    public WebElement prospectID;
+
+    public static String pId;
+
+    public void getProspecctID(int row) {
+        pId = generics.getText(prospectID);
+        try {
+            SetTestData(pId, row, 20);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        testStepsLog("Prospect Created ID : " + pId);
     }
     
     

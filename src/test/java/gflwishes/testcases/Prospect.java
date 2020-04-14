@@ -109,10 +109,12 @@ public class Prospect extends EnhancedBaseClass {
 			pp.SelectFreuency(i);
 			pp.SelectChargeType(i);
 			pp.SelectMaterial(i);
-			pp.selectDisposibleSite();
-			pp.typeLocationType(i);
-			pp.SelectHaulType(i);	
+			pp.SelectHaulType(i);
 			pp.typeEstTime(i);
+			pp.selectDisposibleSite();
+
+			pp.typeLocationType(i);
+
 			pp.clickonCalculate();
 			pp.typenote();
 			pp.clickonAddService();
@@ -189,7 +191,10 @@ public class Prospect extends EnhancedBaseClass {
             } else {
                 failure("Ticket has been completed successfully ! meddage not verified.");
             }
+
+			pp.getProspecctID(i);
 	        }
+
 	        catch (Exception e) {
 	        	System.out.print("Prospect not created");
 	            continue;
