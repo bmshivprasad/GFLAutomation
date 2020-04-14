@@ -1094,7 +1094,7 @@ public class ProspectPage extends Prospect {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        testStepsLog("Prospect Created ID : " + pId);
+        testStepsLog("Prospect Created ID  : " + pId);
     }
     
     

@@ -227,7 +227,7 @@ public class EndToEndProspect extends EnhancedBaseClass {
     @Test
     public void TC002WS_Verify_Create_Service_order_Functionality() {
 
-        testCaseLog("TC0011_Verify_Create_Service_order_Functionality");
+        testCaseLog("TC0011_Verify_Create_Service_order_Functionality ");
 
         LandingPage lp = new LandingPage(wishesDriver);
         EndtoEndProspectPage cp = new EndtoEndProspectPage(wishesDriver);

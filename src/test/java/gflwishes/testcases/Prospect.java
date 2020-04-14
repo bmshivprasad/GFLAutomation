@@ -196,7 +196,7 @@ public class Prospect extends EnhancedBaseClass {
 	        }
 
 	        catch (Exception e) {
-	        	System.out.print("Prospect not created");
+	        	System.out.print("Prospect not created ");
 	            continue;
 			}
 	    }
