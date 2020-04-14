@@ -2,6 +2,7 @@ package gflwishes.PageObjects;
 
 import gflwishes.base.Generics;
 import gflwishes.testcases.vehicle;
+import gflwishes.utilities.ExcelColumns;
 import gflwishes.utilities.ExcelUtils;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.DataFormatter;
@@ -23,7 +24,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 
-public class vehiclePage extends vehicle {
+public class vehiclePage extends vehicle implements ExcelColumns {
 
     private WebDriver localDriver;
     private Generics generics;
@@ -193,28 +194,10 @@ public class vehiclePage extends vehicle {
     }
 
     public void copyVehicleInEndToEndExcel() {
-        String CVehical = VehicalName.toUpperCase();
-        int row = getRowsExcel();
-        for (int i = 1; i < row; i++) {
-            excelUtils.setTestData("EndToEnd", i, 8, CVehical);
-        }
+        for (int i = 1; i < ExcelUtils.getRowsExcel(END_TO_END); i++)
+            excelUtils.setTestData(END_TO_END, i, VEHICLE_NAME, VehicalName.toUpperCase());
         testStepsLog("Vehicle entery done in EndToEnd.xlsx file");
     }
-
-    public int getRowsExcel() {
-        FileInputStream file;
-        try {
-            file = new FileInputStream(
-                    System.getProperty("user.dir") + "/src/test//java//gfl//testData//EndToEnd.xlsx");
-            XSSFWorkbook workbook = new XSSFWorkbook(file);
-            XSSFSheet sheet = workbook.getSheet("Sheet1");
-            return sheet.getPhysicalNumberOfRows();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return 0;
-        }
-    }
-
 
     public boolean searching(String keywords, int column) {
         String xpath = "//table[contains(@class,'MuiTable-root')]/tr";

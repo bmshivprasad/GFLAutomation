@@ -116,6 +116,7 @@ public class ExcelUtils implements Configurations {
             file.close();
             fo.close();
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("Failed to load file " + fileLocation);
         }
     }

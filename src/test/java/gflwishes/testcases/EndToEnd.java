@@ -26,7 +26,7 @@ public class EndToEnd extends EnhancedBaseClass {
         vc.OpenRegion();
         vc.ClickonVehicleTab();
         vc.clickonAddVehiclebutton();
-         vc.selectBusinessUnit();
+        vc.selectBusinessUnit();
         vc.typeVehicalname();
 
         vc.typeVin();
@@ -116,13 +116,13 @@ public class EndToEnd extends EnhancedBaseClass {
                     failure("Customer not Added successfully");
                 }
                 cp.getCustomerID(i);
+                excelUtils.UpdateExternalSiteID();
             } catch (Exception e) {
                 testStepsLog("Customer not created for " + i);
             }
 
         }
         sa.assertAll();
-        excelUtils.UpdateExternalSiteID();
     }
 
     @Test
