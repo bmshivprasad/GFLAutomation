@@ -141,9 +141,11 @@ public class EnhancedBaseClass extends ExtentInitializer implements Configuratio
     }
 
     public void cleanupDriver(WebDriver driver) {
-        driver.manage().deleteAllCookies();
-        driver.close();
-        driver.quit();
+        if (driver != null) {
+            driver.manage().deleteAllCookies();
+            driver.close();
+            driver.quit();
+        }
     }
 
     @AfterSuite(alwaysRun = true)

@@ -194,6 +194,7 @@ public class vehiclePage extends vehicle implements ExcelColumns {
     }
 
     public void copyVehicleInEndToEndExcel() {
+        System.out.println(ExcelUtils.getRowsExcel(END_TO_END));
         for (int i = 1; i < ExcelUtils.getRowsExcel(END_TO_END); i++)
             excelUtils.setTestData(END_TO_END, i, VEHICLE_NAME, VehicalName.toUpperCase());
         testStepsLog("Vehicle entery done in EndToEnd.xlsx file");
