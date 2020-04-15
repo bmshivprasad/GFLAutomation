@@ -230,10 +230,11 @@ public class EndToEndProspect extends EnhancedBaseClass {
     public void TC002WS_Verify_Create_Service_order_Functionality() {
 
         testCaseLog("TC0011_Verify_Create_Service_order_Functionality ");
-
+        LoginPage login = new LoginPage(wishesDriver);
         LandingPage lp = new LandingPage(wishesDriver);
         EndtoEndProspectPage cp = new EndtoEndProspectPage(wishesDriver);
         //EndtoEndProspectPage pp = new EndtoEndProspectPage(wishesDriver);
+        login.loginAs(USER_NAME, PASSWORD);
         int rows = cp.getRowsExcel();
 
         for (int i = 1; i < rows - 1; i++) {

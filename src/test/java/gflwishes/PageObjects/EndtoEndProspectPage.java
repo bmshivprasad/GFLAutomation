@@ -1221,7 +1221,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         for (int i = 1; i < row; i++) {
             excelUtils.setTestData("Prospect", i, 15, CVehical);
         }
-        testStepsLog("Vehicle entery done in EndToEnd.xlsx file");
+        testStepsLog("Vehicle entery done in Prospect.xlsx file");
     }
 
     //==============================================================================
@@ -1286,7 +1286,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     }
 
     public void getDispatcherName(int count) {
-        excelUtils.setTestData(END_TO_END, count, DISPATCHER, localDriver.findElement(By.xpath("//mat-sidenav//mat-card-title")).
+        excelUtils.setTestData(Prospect, count, 16, localDriver.findElement(By.xpath("//mat-sidenav//mat-card-title")).
                 getAttribute("innerHTML"));
     }
 
@@ -1300,7 +1300,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         generics.scrollToElement(truckDragAndDrop);
         testStepsLog("Drag and Drop Truck from the map to order.");
         act.dragAndDrop(localDriver.findElement(By.xpath("//map-common-vehicle-item//span[contains(text(),'" +
-                excelUtils.getTestData("EndToEnd", count, VEHICLE_NAME) + "')]")), truckDragAndDrop).build().perform();
+                excelUtils.getTestData("Prospect", count, 15) + "')]")), truckDragAndDrop).build().perform();
         generics.pause(10);
     }
 
@@ -1374,8 +1374,8 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         generics.pause(2);
         ((JavascriptExecutor) localDriver).executeScript("document.evaluate('//div[@class=\"mat-form-field-infix\"]'," +
                 "   document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click();");
-        excelUtils.setTestData(END_TO_END, count, STATUS, "COMPLETED");
-        String driverName = excelUtils.getTestData(END_TO_END, count, DRIVER);
+        excelUtils.setTestData(Prospect, count, 25, "COMPLETED");
+        String driverName = excelUtils.getTestData(Prospect, count, 18);
         generics.clickOnJS(localDriver.findElement(By.xpath("//span[@class='mat-option-text' and text()='" + driverName + "']")));
         generics.clickOnJS(btnProceed);
         generics.pause(5);
@@ -1391,7 +1391,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     WebElement txtSearch;
 
     public void searchAddress(int count) {
-        SiteAddress = excelUtils.getTestData(END_TO_END, count, 0);
+        SiteAddress = excelUtils.getTestData(Prospect, count, 0);
         new WebDriverWait(localDriver, 30).until(ExpectedConditions.invisibilityOfElementLocated(
                 By.xpath("//div[text()='Loading...']")));
         generics.clickOnJS(btnSearchOrder);
@@ -1416,7 +1416,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     public static String SiteCustomer;
 
     public boolean verifyDeliveryDetails(int count) {
-        SiteCustomer = excelUtils.getTestData(END_TO_END, count, CUSTOMER_NAME);
+        SiteCustomer = excelUtils.getTestData(Prospect, count, 2);
         System.out.println(lblOrderType.getText());
         System.out.println(localDriver.findElement(By.xpath("//span[contains(text(),'" +
                 SiteAddress.split(",")[0] + "')]")).getText().
@@ -1427,8 +1427,8 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
                         SiteAddress.split(",")[0] + "')]")).
                         getText().replace("\n", "").trim().replaceAll("\\s", "").
                         equalsIgnoreCase(SiteAddress.replaceAll("\\s", ""))
-                && lblSiteContact.getText().equalsIgnoreCase(excelUtils.getTestData(END_TO_END,
-                count, SITE_NAME)) && lblCustomer.getText().equalsIgnoreCase(SiteCustomer);
+                && lblSiteContact.getText().equalsIgnoreCase(excelUtils.getTestData(Prospect,
+                count, 3)) && lblCustomer.getText().equalsIgnoreCase(SiteCustomer);
     }
 
     @FindBy(xpath = "//div[contains(text(),'EXPECTED TIME ON SITE')]//following-sibling::div//map-common-date-time-view//div")
@@ -1537,8 +1537,8 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         generics.clickOnJS(btnScaleTicket);
         generics.type(txtScaleTicket, String.valueOf(scaleTicket));
         generics.type(txtWeight, String.valueOf(weight));
-        excelUtils.setTestData(END_TO_END, count, SCALE_TICKET, String.valueOf(scaleTicket));
-        excelUtils.setTestData(END_TO_END, count, WEIGHT, String.valueOf(weight));
+        excelUtils.setTestData(Prospect, count, 22, String.valueOf(scaleTicket));
+        excelUtils.setTestData(Prospect, count, 23, String.valueOf(weight));
         generics.clickOnJS(btnAcceptTickerDetails);
         generics.pause(3);
     }
@@ -1577,19 +1577,19 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         generics.clickOn(btnAddDriverNote);
         generics.pause(1);
         generics.type(txtDriverNotes, driverNote);
-        driverNote = excelUtils.getTestData(END_TO_END, count, DRIVER_NOTES) + "," + driverNote;
-        excelUtils.setTestData(END_TO_END, count, DRIVER_NOTES, driverNote);
+        driverNote = excelUtils.getTestData(Prospect, count, 19) + "," + driverNote;
+        excelUtils.setTestData(Prospect, count, 19, driverNote);
         generics.clickOn(btnAddNote);
         generics.pause(5);
     }
 
 
     public boolean isPaymentDone(int count) {
-        return !excelUtils.getTestData(END_TO_END, count, PAYMENT).isEmpty();
+        return !excelUtils.getTestData(Prospect, count, 24).isEmpty();
     }
 
     public void setFlag(int count, boolean flag) {
-        if (flag) excelUtils.setTestData(END_TO_END, count, STATUS, "INCOMPLETE");
+        if (flag) excelUtils.setTestData(Prospect, count, 25, "INCOMPLETE");
     }
 
     //===============================================================================Service Order
@@ -1626,7 +1626,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     public static String CustomerName;
 
     public void typeCustomername(int row) {
-        CustomerName = excelUtils.getTestData(END_TO_END, row, CUSTOMER_NAME);
+        CustomerName = excelUtils.getTestData(Prospect, row, 2);
         generics.clickOn(txtCustomerName);
         generics.type(txtCustomerName, CustomerName);
 
@@ -1645,7 +1645,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     public WebElement dpSelectSite;
 
     public void selectSite(int row) {
-        String St = excelUtils.getTestData(END_TO_END, row, SITE_NAME);
+        String St = excelUtils.getTestData(Prospect, row, 3);
         generics.clickOn(dpSelectSite);
         generics.pause(1);
 
@@ -1673,7 +1673,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     public void selectMaterial(int row) {
         generics.pause(5);
         generics.moveTo(dpMaterial);
-        String Material = excelUtils.getTestData(END_TO_END, row, MATERIAL);
+        String Material = excelUtils.getTestData(Prospect, row, 12);
         JavascriptExecutor js = (JavascriptExecutor) localDriver;
         js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
         generics.scrollToElement(dpMaterial);
@@ -1688,7 +1688,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
 
     public void selectContainerSize(int row) {
         generics.clickOn(dpContainerSize);
-        String ContainerSize = excelUtils.getTestData(END_TO_END, row, CONTAINER_SIZE);
+        String ContainerSize = excelUtils.getTestData(Prospect, row, 8);
         WebElement element = localDriver.findElement(By.xpath("//span[contains(text(),'" + ContainerSize + "')]"));
         element.click();
         testStepsLog("Container size selected : " + ContainerSize);
@@ -1699,7 +1699,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
 
     public void selectHaulType(int row) {
         generics.clickOn(dpHaulType);
-        String HaulType = excelUtils.getTestData(END_TO_END, row, TYPE_OF_HAUL);
+        String HaulType = excelUtils.getTestData(Prospect, row, 11);
         WebElement element = localDriver.findElement(By.xpath("//span[contains(text(),'" + HaulType + "')]"));
         element.click();
         testStepsLog("Haul Type selected : " + HaulType);
@@ -2051,7 +2051,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
         generics.clickOn(txtDispatchnote);
         generics.type(txtDispatchnote, note);
-        excelUtils.setTestData(Prospect,i, DISPATCHER_NOTES,note);
+        excelUtils.setTestData(Prospect,i, 17,note);
         testStepsLog("Dispatch note inserted " + note);
     }
 
@@ -2068,7 +2068,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         generics.clickOn(tabdriver);
         generics.clickOn(txtDrivernote);
         generics.type(txtDrivernote, Drivernote);
-        excelUtils.setTestData(Prospect,i, DRIVER_NOTES,note);
+        excelUtils.setTestData(Prospect,i, 19,note);
         testStepsLog("Driver note inserted " + Drivernote);
     }
 
@@ -2275,7 +2275,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     public void getCustomerID(int row) {
         cd = generics.getText(customerID);
         try {
-            SetTestData(cd, row, SITE_NAME);
+            SetTestData(cd, row, 3);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -2315,7 +2315,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     }
 
     public void getCustomerName(int row) {
-        CustomerName = excelUtils.getTestData(Prospect, row, CUSTOMER_NAME);
+        CustomerName = excelUtils.getTestData(Prospect, row, 2);
         testStepsLog("Checking details for customer : " + CustomerName);
     }
 
@@ -2345,7 +2345,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         JavascriptExecutor js = (JavascriptExecutor) localDriver;
         js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
         String vehicle = generics.getText(txtVehicle);
-        String vc = excelUtils.getTestData(Prospect, row, VEHICLE_NAME);
+        String vc = excelUtils.getTestData(Prospect, row, 15);
         if (vehicle.toLowerCase().equals(vc.toLowerCase())) {
             return true;
         } else {
@@ -2359,7 +2359,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     public boolean isProperDispatcherDisplayed(int row) {
 
         String Dispatcher = generics.getText(txtDispatcher);
-        String ds = excelUtils.getTestData(Prospect, row, DISPATCHER);
+        String ds = excelUtils.getTestData(Prospect, row, 16);
         if (Dispatcher.toLowerCase().equals(ds.toLowerCase())) {
             return true;
         } else {
@@ -2373,7 +2373,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     public boolean isProperScaleDisplayed(int row) {
 
         String scale = generics.getText(scaleticket);
-        String s = excelUtils.getTestData(Prospect, row, SCALE_TICKET);
+        String s = excelUtils.getTestData(Prospect, row, 22);
         if (scale.equals(s)) {
             return true;
         } else {
@@ -2384,7 +2384,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     public boolean isProperweightDisplayed(int row) {
 
         String Weight = generics.getText(weight);
-        String w = excelUtils.getTestData(Prospect, row, WEIGHT);
+        String w = excelUtils.getTestData(Prospect, row, 23);
         if (Weight.equals(w)) {
             return true;
         } else {
@@ -2395,7 +2395,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     public boolean isProperDriverDisplayed(int row) {
 
         String Driver = generics.getText(txtDriver);
-        String dv = excelUtils.getTestData(Prospect, row, DRIVER);
+        String dv = excelUtils.getTestData(Prospect, row, 18);
         if (Driver.toLowerCase().equals(dv.toLowerCase())) {
             return true;
         } else {
@@ -2409,7 +2409,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     public boolean isProperDispatcherNoteDisplayed(int row) {
 
         String Dispatchernote = generics.getText(txtDispatcherNote);
-        String dn = excelUtils.getTestData(Prospect, row, DISPATCHER_NOTES);
+        String dn = excelUtils.getTestData(Prospect, row, 17);
         String[] dis= dn.split(",");
         for(int i=0;i<dis.length;i++) {
             if (Dispatchernote.contains(dis[i])) {
@@ -2427,7 +2427,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     public boolean isProperDriverNoteDisplayed(int row) {
 
         String Drivernote = generics.getText(txtDriverNote);
-        String dn = excelUtils.getTestData(Prospect, row, DRIVER_NOTES);
+        String dn = excelUtils.getTestData(Prospect, row, 19);
         if (Drivernote.equals(dn)) {
             return true;
         } else {
@@ -2554,20 +2554,20 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
 
     public String getCustomerIDStatus(int row) {
 
-        String Cust= excelUtils.getTestData(Prospect, row, CUSTOMER_ID);
+        String Cust= excelUtils.getTestData(Prospect, row, 20);
         return Cust;
 
     }
     public void UpdateStatus(int row) {
 
-        excelUtils.setTestData(Prospect,row,PAYMENT,"Pass");
+        excelUtils.setTestData(Prospect,row,24,"Pass");
         testStepsLog("Status updated in excel");
 
 
     }
 
     public boolean isFMCompleted(int count) {
-        return !excelUtils.getTestData(Prospect, count, PAYMENT).isEmpty();
+        return !excelUtils.getTestData(Prospect, count, 24).isEmpty();
     }
     public boolean isApproveDisplay() {
         return generics.isPresent(btnApproved);

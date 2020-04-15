@@ -512,6 +512,7 @@ public class ProspectPage extends Prospect {
     
     public boolean isProspectCreatedSuccessful() {
         pId = generics.getText(prospectID);
+        testStepsLog("Prospect ID = " + pId);
         return generics.isPresent(Prospectsuccessmsg);
         
     }
@@ -596,7 +597,7 @@ public class ProspectPage extends Prospect {
 
     public void SelectContainerType(int row)
     {
-    	generics.pause(2);
+    	generics.pause(6);
         String CT=excelUtils.getTestData("Prospect", row, 6);
         generics.clickOn(dpContainerType);
         WebElement element=localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+CT+"')]"));
