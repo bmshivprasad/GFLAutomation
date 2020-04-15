@@ -511,7 +511,7 @@ public class ProspectPage extends Prospect {
     public WebElement Prospectsuccessmsg;
     
     public boolean isProspectCreatedSuccessful() {
-    	
+        pId = generics.getText(prospectID);
         return generics.isPresent(Prospectsuccessmsg);
         
     }
@@ -965,10 +965,15 @@ public class ProspectPage extends Prospect {
     
     @FindBy(xpath = "//tr/td[contains(.,'CapexTest Approver')]/../td//div[contains(text(),'Unassigned')]")
     public WebElement btnUnassigned;
+
+    @FindBy(xpath = "(//td[text()=' CapexTest Approver ']/preceding-sibling::td//a)[1]")
+    public WebElement AssigntoMe;
+
     
     public void ClickonUnassigned() {
     	generics.pause(5);
-        generics.clickOn(btnUnassigned);
+        generics.moveTo(btnUnassigned);
+        generics.clickOn(AssigntoMe);
         generics.pause(5);
         testStepsLog("Clicked on Unassigned.");
     }
@@ -1087,7 +1092,7 @@ public class ProspectPage extends Prospect {
     public static String pId;
 
     public void getProspecctID(int row) {
-        pId = generics.getText(prospectID);
+
         try {
             SetTestData(pId, row, 20);
         } catch (IOException e) {

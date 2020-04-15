@@ -1782,7 +1782,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     public int getRowsCustomerCreation() {
         try {
             FileInputStream file = new FileInputStream(
-                    System.getProperty("user.dir") + "/src/test//java//gfl//testData//EndToEnd.xlsx");
+                    System.getProperty("user.dir") + "/src/test//java//gfl//testData//Prospect.xlsx");
             XSSFWorkbook workbook = new XSSFWorkbook(file);
             XSSFSheet sheet = workbook.getSheet("Sheet1");
             return sheet.getPhysicalNumberOfRows();
@@ -2051,7 +2051,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
         generics.clickOn(txtDispatchnote);
         generics.type(txtDispatchnote, note);
-        excelUtils.setTestData(END_TO_END,i, DISPATCHER_NOTES,note);
+        excelUtils.setTestData(Prospect,i, DISPATCHER_NOTES,note);
         testStepsLog("Dispatch note inserted " + note);
     }
 
@@ -2068,7 +2068,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         generics.clickOn(tabdriver);
         generics.clickOn(txtDrivernote);
         generics.type(txtDrivernote, Drivernote);
-        excelUtils.setTestData(END_TO_END,i, DRIVER_NOTES,note);
+        excelUtils.setTestData(Prospect,i, DRIVER_NOTES,note);
         testStepsLog("Driver note inserted " + Drivernote);
     }
 
@@ -2315,7 +2315,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     }
 
     public void getCustomerName(int row) {
-        CustomerName = excelUtils.getTestData(END_TO_END, row, CUSTOMER_NAME);
+        CustomerName = excelUtils.getTestData(Prospect, row, CUSTOMER_NAME);
         testStepsLog("Checking details for customer : " + CustomerName);
     }
 
@@ -2330,7 +2330,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
 
     public boolean isProperStatusDisplayed(int row) {
         String status = generics.getText(txtStatus);
-        String st = excelUtils.getTestData(END_TO_END, row, 7);
+        String st = excelUtils.getTestData(Prospect, row, 7);
         if (status.toLowerCase().equals(st.toLowerCase())) {
             return true;
         } else {
@@ -2345,7 +2345,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         JavascriptExecutor js = (JavascriptExecutor) localDriver;
         js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
         String vehicle = generics.getText(txtVehicle);
-        String vc = excelUtils.getTestData(END_TO_END, row, VEHICLE_NAME);
+        String vc = excelUtils.getTestData(Prospect, row, VEHICLE_NAME);
         if (vehicle.toLowerCase().equals(vc.toLowerCase())) {
             return true;
         } else {
@@ -2359,7 +2359,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     public boolean isProperDispatcherDisplayed(int row) {
 
         String Dispatcher = generics.getText(txtDispatcher);
-        String ds = excelUtils.getTestData(END_TO_END, row, DISPATCHER);
+        String ds = excelUtils.getTestData(Prospect, row, DISPATCHER);
         if (Dispatcher.toLowerCase().equals(ds.toLowerCase())) {
             return true;
         } else {
@@ -2373,7 +2373,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     public boolean isProperScaleDisplayed(int row) {
 
         String scale = generics.getText(scaleticket);
-        String s = excelUtils.getTestData(END_TO_END, row, SCALE_TICKET);
+        String s = excelUtils.getTestData(Prospect, row, SCALE_TICKET);
         if (scale.equals(s)) {
             return true;
         } else {
@@ -2384,7 +2384,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     public boolean isProperweightDisplayed(int row) {
 
         String Weight = generics.getText(weight);
-        String w = excelUtils.getTestData(END_TO_END, row, WEIGHT);
+        String w = excelUtils.getTestData(Prospect, row, WEIGHT);
         if (Weight.equals(w)) {
             return true;
         } else {
@@ -2395,7 +2395,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     public boolean isProperDriverDisplayed(int row) {
 
         String Driver = generics.getText(txtDriver);
-        String dv = excelUtils.getTestData(END_TO_END, row, DRIVER);
+        String dv = excelUtils.getTestData(Prospect, row, DRIVER);
         if (Driver.toLowerCase().equals(dv.toLowerCase())) {
             return true;
         } else {
@@ -2409,7 +2409,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     public boolean isProperDispatcherNoteDisplayed(int row) {
 
         String Dispatchernote = generics.getText(txtDispatcherNote);
-        String dn = excelUtils.getTestData(END_TO_END, row, DISPATCHER_NOTES);
+        String dn = excelUtils.getTestData(Prospect, row, DISPATCHER_NOTES);
         String[] dis= dn.split(",");
         for(int i=0;i<dis.length;i++) {
             if (Dispatchernote.contains(dis[i])) {
@@ -2427,7 +2427,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     public boolean isProperDriverNoteDisplayed(int row) {
 
         String Drivernote = generics.getText(txtDriverNote);
-        String dn = excelUtils.getTestData(END_TO_END, row, DRIVER_NOTES);
+        String dn = excelUtils.getTestData(Prospect, row, DRIVER_NOTES);
         if (Drivernote.equals(dn)) {
             return true;
         } else {
@@ -2554,20 +2554,20 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
 
     public String getCustomerIDStatus(int row) {
 
-        String Cust= excelUtils.getTestData(END_TO_END, row, CUSTOMER_ID);
+        String Cust= excelUtils.getTestData(Prospect, row, CUSTOMER_ID);
         return Cust;
 
     }
     public void UpdateStatus(int row) {
 
-        excelUtils.setTestData(END_TO_END,row,PAYMENT,"Pass");
+        excelUtils.setTestData(Prospect,row,PAYMENT,"Pass");
         testStepsLog("Status updated in excel");
 
 
     }
 
     public boolean isFMCompleted(int count) {
-        return !excelUtils.getTestData(END_TO_END, count, PAYMENT).isEmpty();
+        return !excelUtils.getTestData(Prospect, count, PAYMENT).isEmpty();
     }
     public boolean isApproveDisplay() {
         return generics.isPresent(btnApproved);

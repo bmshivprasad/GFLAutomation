@@ -61,7 +61,7 @@ public class EndToEndProspect extends EnhancedBaseClass {
             failure("Failed to Login");
         }
 
-        for (int i = 1; i < rows - 1; i++) {
+        for (int i = 1; i < rows ; i++) {
 
             try {
 
@@ -213,7 +213,9 @@ public class EndToEndProspect extends EnhancedBaseClass {
                 } else {
                     failure("Ticket has been completed successfully ! meddage not verified.");
                 }
+
                 pp.getProspecctID(i);
+
             }
             catch (Exception e) {
                 System.out.print("Prospect not created");
