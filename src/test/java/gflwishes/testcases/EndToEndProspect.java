@@ -230,14 +230,15 @@ public class EndToEndProspect extends EnhancedBaseClass {
     public void TC002WS_Verify_Create_Service_order_Functionality() {
 
         testCaseLog("TC0011_Verify_Create_Service_order_Functionality ");
-        LoginPage login = new LoginPage(wishesDriver);
+
         LandingPage lp = new LandingPage(wishesDriver);
         EndtoEndProspectPage cp = new EndtoEndProspectPage(wishesDriver);
         //EndtoEndProspectPage pp = new EndtoEndProspectPage(wishesDriver);
-        login.loginAs(USER_NAME, PASSWORD);
+        //LoginPage login = new LoginPage(wishesDriver);
+        //login.loginAs(USER_NAME, PASSWORD);
         int rows = cp.getRowsExcel();
 
-        for (int i = 1; i < rows - 1; i++) {
+        for (int i = 1; i < rows ; i++) {
             try {
                 String CustID = cp.getCustomerIDStatus(i);
                 if (CustID != "") {
@@ -312,7 +313,7 @@ public class EndToEndProspect extends EnhancedBaseClass {
                     cp.SelectAddress();
                     cp.SelectConfirmationCheckbox();
                     cp.UploadFile();
-                    // cp.ClickonPayAmount();
+                    cp.ClickonPayAmount();
                     if (cp.isPaymentDone()) {
                         success("Paymenet Done successfully");
                         cp.UpdateStatus(i);
@@ -325,6 +326,7 @@ public class EndToEndProspect extends EnhancedBaseClass {
                 }
             } catch (Exception e) {
                 testStepsLog("Service order not Created : " + i);
+                continue;
             }
         }
         sa.assertAll();
@@ -338,6 +340,7 @@ public class EndToEndProspect extends EnhancedBaseClass {
         LoginPage login = new LoginPage(fleetMapperDriver);
         EndtoEndProspectPage dispatchPO = new EndtoEndProspectPage(fleetMapperDriver);
 
+        login.loginAs(USER_NAME, PASSWORD);
         dispatchPO.openDispatcher();
 
         if (dispatchPO.verifyDispatchPage()) {
@@ -346,7 +349,7 @@ public class EndToEndProspect extends EnhancedBaseClass {
             failure("ERROR : Dispatch page is not display.");
         }
 
-        for (int count = 1; count < ExcelUtils.getRowsExcel(getClass().getSimpleName()) - 1; count++) {
+        for (int count = 1; count < ExcelUtils.getRowsExcel("Prospect") ; count++) {
 
             try {
                 if (dispatchPO.isPaymentDone(count)) {
@@ -438,11 +441,13 @@ public class EndToEndProspect extends EnhancedBaseClass {
         testCaseLog("TC005_Verify_All_deatails_in_wishes_if_service_order_status_Change_from_FM");
 
         LandingPage lp = new LandingPage(wishesDriver);
-        ServiceOrderPage cp = new ServiceOrderPage(wishesDriver);
+        //ServiceOrderPage cp = new ServiceOrderPage(wishesDriver);
+        EndtoEndProspectPage cp = new EndtoEndProspectPage(wishesDriver);
         int rows = cp.getRowsExcel();
+        LoginPage login = new LoginPage(wishesDriver);
+        login.loginAs(USER_NAME, PASSWORD);
 
-
-        for (int i = 1; i < rows - 1; i++) {
+        for (int i = 1; i < rows ; i++) {
 
             try {
                 if (cp.isFMCompleted(i)) {
