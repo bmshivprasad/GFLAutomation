@@ -534,7 +534,7 @@ public class ProspectPage extends Prospect {
     public WebElement btnNext;
     public void clickonNextButton() {
 
-        generics.pause(4);
+        generics.pause(7);
         generics.waitForElementVisible(localDriver.findElement(By.xpath("//span[@title='Clear all']")));	
         JavascriptExecutor js = (JavascriptExecutor) localDriver;
         js.executeScript("window.scrollTo(0, document.body.scrollHeight)");        
