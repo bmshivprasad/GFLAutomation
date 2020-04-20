@@ -215,7 +215,7 @@ public class EndToEndProspect extends EnhancedBaseClass {
                 }
 
                 pp.getProspecctID(i);
-
+                excelUtils.UpdateExternalSiteID("Prospect",i);
             }
             catch (Exception e) {
                 System.out.print("Prospect not created");
@@ -223,7 +223,7 @@ public class EndToEndProspect extends EnhancedBaseClass {
             }
         }
         sa.assertAll();
-        excelUtils.UpdateExternalSiteID();
+
     }
 
     @Test

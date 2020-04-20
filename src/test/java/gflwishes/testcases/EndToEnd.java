@@ -116,7 +116,7 @@ public class EndToEnd extends EnhancedBaseClass {
                     failure("Customer not Added successfully");
                 }
                 cp.getCustomerID(i);
-                excelUtils.UpdateExternalSiteID();
+                excelUtils.UpdateExternalSiteID("EndtoEnd",i);
             } catch (Exception e) {
                 testStepsLog("Customer not created for " + i);
             }

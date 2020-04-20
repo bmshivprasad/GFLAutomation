@@ -124,7 +124,7 @@ public class ExcelUtils implements Configurations {
     /*Temporary utility method created as there is no TRUX integration for QA Env in Wishes.
     This method updates the ExternalID in the Site table to 1.
      With this update, the site creation will work as expected. */
-    public void UpdateExternalSiteID(int row) {
+    public void UpdateExternalSiteID(String filename, int row) {
         ExcelUtils excelUtils = new ExcelUtils();
         Connection connection = null;
         Statement statement;
@@ -133,7 +133,7 @@ public class ExcelUtils implements Configurations {
             try {
                 connection = DriverManager.getConnection(dbURL);
                 statement = connection.createStatement();
-                String UCN = excelUtils.getTestData("EndToEnd", row, 13).split(" ")[1];
+                String UCN = excelUtils.getTestData(filename, row, 13).split(" ")[1];
                 System.out.println(UCN);
                 String updateExtIDQuery = "UPDATE dbo.Site set ExternalId = 1 WHERE CustomerId = (Select cust.id from universalcustomer as ucn inner join customer as cust on ucn.name = cust.name where ucn.id = "+UCN+");" ;
                 System.out.println(updateExtIDQuery);
