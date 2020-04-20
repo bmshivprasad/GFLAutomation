@@ -124,27 +124,19 @@ public class ExcelUtils implements Configurations {
     /*Temporary utility method created as there is no TRUX integration for QA Env in Wishes.
     This method updates the ExternalID in the Site table to 1.
      With this update, the site creation will work as expected. */
-    public void UpdateExternalSiteID() {
-
+    public void UpdateExternalSiteID(int row) {
         ExcelUtils excelUtils = new ExcelUtils();
         Connection connection = null;
         Statement statement;
-
         String dbURL = "jdbc:sqlserver://gfldev.database.windows.net;databaseName=Wishes-QA;user=wishes_qa;password=W1sh3sd3v";
-
         {
             try {
                 connection = DriverManager.getConnection(dbURL);
                 statement = connection.createStatement();
-                String customerId = excelUtils.getTestData("EndToEnd", 1, 13).split(" ")[1];
-                System.out.println(customerId);
-                String updateExtIDQuery = "UPDATE dbo.Site set ExternalId = 1 WHERE CustomerId = " + customerId;
+                String UCN = excelUtils.getTestData("EndToEnd", row, 13).split(" ")[1];
+                System.out.println(UCN);
+                String updateExtIDQuery = "UPDATE dbo.Site set ExternalId = 1 WHERE CustomerId = (Select cust.id from universalcustomer as ucn inner join customer as cust on ucn.name = cust.name where ucn.id = "+UCN+");" ;
                 System.out.println(updateExtIDQuery);
-                /*
-                 * ResultSet resultSet = statement.executeQuery(SQL);
-                 * System.out.println(resultSet.getFetchSize()); while (resultSet.next()) {
-                 * System.out.println(resultSet.getString(7)); }
-                 */
                 statement.executeUpdate(updateExtIDQuery);
             } catch (Exception e) {
                 e.printStackTrace();
