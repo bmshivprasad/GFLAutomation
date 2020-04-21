@@ -50,8 +50,8 @@ public class EndToEndProspect extends EnhancedBaseClass {
         LoginPage login = new LoginPage(wishesDriver);
         LandingPage lp = new LandingPage(wishesDriver);
         CustomerPage cp = new CustomerPage(wishesDriver);
-
-        ProspectPage pp = new ProspectPage(wishesDriver);
+        EndtoEndProspectPage pp = new EndtoEndProspectPage(wishesDriver);
+        //ProspectPage pp = new ProspectPage(wishesDriver);
         int rows = pp.getRowsExcel();
         login.loginAs(USER_NAME, PASSWORD);
 
