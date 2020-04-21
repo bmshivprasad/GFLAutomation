@@ -22,6 +22,8 @@ public interface Configurations {
 
     String Prospect = "Prospect";
 
+    String ProspectAll="ProspectAll";
+
     String BASE_URL = getProperty("wishesURL");
     String FM_URL = getProperty("fleetMapperURL");
 

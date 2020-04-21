@@ -139,8 +139,8 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         fo.close();
 
     }
-    
-    
+
+
     @FindBy(xpath = "//b[text()='Create New Prospect']")
     public WebElement lnkCreateNewProspect;
 
@@ -148,11 +148,11 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         generics.clickOn(lnkCreateNewProspect);
         testStepsLog("Clicked on Create New Prospect button");
     }
-    
-    
+
+
     @FindBy(xpath = "//input[@placeholder='Company Name']")
     public WebElement txtComplanyName;
-    
+
     public boolean isEnteredProspectDisplayed() {
         String cn = generics.getValue(txtComplanyName);
         if (cn.equals(ProspectName)) {
@@ -162,14 +162,14 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         }
 
     }
-    
+
     ExcelUtils excelUtils = new ExcelUtils();
-    
+
     @FindBy(xpath = "(//mat-select[@formcontrolname='businessUnitId'])[1]")
     public WebElement dpBusinessUnit1;
-    
+
     public void selectBusinessUnit1(int row) {
-    	generics.pause(3);
+        generics.pause(3);
         String BU = excelUtils.getTestData(Prospect, row, 4);
 
         generics.clickOn(dpBusinessUnit1);
@@ -180,40 +180,38 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         generics.pause(3);
 
     }
-    
-    @FindBy(xpath ="//input[@formcontrolname=\"webSite\"]")
+
+    @FindBy(xpath ="//input[@formcontrolname='webSite']")
     public WebElement txtWebsite;
 
     public static String Website;
 
     public void typeWebsite() {
-    	Website = "www." + generics.getRandomCharacters(5) + ".com";
+        Website = "www." + generics.getRandomCharacters(5) + ".com";
         generics.clickOn(txtWebsite);
         generics.type(txtWebsite, Website);
         testStepsLog("Website inserted");
     }
-    
+
     @FindBy(xpath = "//span[contains(text(),'Canadian Dollar')]")
     public WebElement dpBillingCurrency;
-    
+
     @FindBy(xpath = "//mat-option[3]")
     public WebElement ThirdOption;
-    
+
     public void selectBillingCurrency() {
         generics.clickOn(dpBillingCurrency);
         generics.clickOn(ThirdOption);
         testStepsLog("BillingCurrency selected");
         generics.pause(5);
     }
-    
-    @FindBy(xpath = "//span[contains(text(),'CapexTest Approver')]")
+
+    @FindBy(xpath = "//mat-select[@formcontrolname='salesRepId']")
     public WebElement dpSalesRep;
-    
-   // @FindBy(xpath = "//mat-option[contains(.,'CapexTest Approver')]")
-    @FindBy(xpath = "//mat-option[2]")
-    
+
+    @FindBy(xpath = "//mat-option[contains(.,'CapexTest Approver')]")
     public WebElement dpRepOption;
-    
+
     public void selectSalesRep() {
         generics.clickOn(dpSalesRep);
         generics.clickOn(dpRepOption);
@@ -223,39 +221,39 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
 
     @FindBy(xpath = "//mat-select[@formcontrolname='taxJurisdictionErpCode']")
     public WebElement dpJurisdiction;
-    
+
     @FindBy(xpath = "//mat-option[3]")
     public WebElement SecondOption;
-    
+
     public void selectJurisdiction() {
         generics.clickOn(dpJurisdiction);
         generics.clickOn(SecondOption);
         testStepsLog("Jurisdiction selected");
         generics.pause(3);
     }
-    
+
     @FindBy(xpath = "//mat-select[@aria-label='Select Customer Type']")
     public WebElement dpcustomertype;
 
     @FindBy(xpath = "//mat-option[2]")
     public WebElement firstOption;
-    
+
     public void selectcustomertype() {
         generics.clickOn(dpcustomertype);
         generics.clickOn(firstOption);
         generics.pause(2);
         testStepsLog("Customer type selected");
     }
-    
+
     @FindBy(xpath = "//div[text()='CONTACT DETAILS']")
     public WebElement SectionContractDetails;
-    
+
     @FindBy(xpath = "(//ng-select[@placeholder='Address Line 1'])[1]")
     public WebElement dpAddressLine1;
 
     @FindBy(xpath = "(//ng-select[@placeholder='Address Line 1'])[1]//input")
     public WebElement txtAddressLine1;
-    
+
     @FindBy(xpath = "(//ng-dropdown-panel//span)[1]")
     public WebElement firstAddress;
 
@@ -269,7 +267,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         testStepsLog("Address line selected");
         generics.pause(2);
     }
-    
+
     @FindBy(xpath = "//mat-checkbox[@formcontrolname='billingAsCompanyAddress']//div[contains(@class,'mat-checkbox-inner-container')]")
     public WebElement chkBillingAddAsCompanyAdd;
 
@@ -278,7 +276,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         testStepsLog("Bill Address checkbox selected");
         generics.pause(3);
     }
-    
+
     @FindBy(xpath = "(//mat-label[text()='Contact Name']/ancestor::span/preceding-sibling::input)[1]")
     public WebElement txtContactName;
 
@@ -291,7 +289,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         generics.pause(2);
         testStepsLog("Contact detail inserted");
     }
-    
+
     @FindBy(xpath = "(//input[@formcontrolname='email'])[1]")
 
     public WebElement txtEmail;
@@ -300,17 +298,17 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
 
     public void typeEmail() {
         Email = generics.getRandomCharacters(10) + "@gmail.com";
-        
-       
-        
+
+
+
         generics.moveTo(txtEmail);
         generics.type(txtEmail, Email);
 
         testStepsLog("Email inserted");
-        
-     
+
+
     }
-    
+
     @FindBy(xpath = "(//input[@formcontrolname='position'])[1]")
 
     public WebElement txtContactPosition;
@@ -330,8 +328,8 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
 		}*/
         testStepsLog("ContactPosition inserted");
     }
-    
-  
+
+
     @FindBy(xpath = "(//input[@formcontrolname='primaryPhoneNumber'])[1]")
     public WebElement txtPhoneNumber;
     public static String PhoneNumber;
@@ -343,11 +341,11 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
 
         testStepsLog("PhoneNumber inserted");
     }
-    
-    
-    
-    
-    
+
+
+
+
+
     @FindBy(xpath = "(//input[@formcontrolname='primaryExtension'])[1]")
     public WebElement txtExt;
 
@@ -359,12 +357,12 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         generics.moveTo(txtExt);
         generics.type(txtExt, String.valueOf(extension));
         testStepsLog("extension inserted");
-        
+
         JavascriptExecutor je = (JavascriptExecutor) localDriver;
         je.executeScript("arguments[0].scrollIntoView(true);",txtEmail);
     }
-    
-    
+
+
     @FindBy(xpath = "//input[@placeholder='Enter Site Name']")
     public WebElement txtSiteName;
 
@@ -383,12 +381,12 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         }
         testStepsLog("SiteName inserted");
     }
-    
+
     @FindBy(xpath = "(//mat-select[@formcontrolname='businessUnitId'])[2]")
     public WebElement dpBusinessUnit;
 
     public void selectBusinessUnit() {
-    	 generics.moveTo(dpBusinessUnit);	
+        generics.moveTo(dpBusinessUnit);
         generics.clickOn(dpBusinessUnit);
         generics.pause(2);
     	/*try {
@@ -401,9 +399,9 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         generics.pause(2);
         testStepsLog("Site Business unit Selected");
         generics.pause(2);
-       
+
     }
-    
+
     @FindBy(xpath = "//mat-select[@formcontrolname='businessTypeErpCode']")
     public WebElement dpBusinessType;
     public void selectBusinessType() {
@@ -420,11 +418,11 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         generics.clickOn(firstOption);
         generics.pause(2);
         testStepsLog("Site Business Type Selected");
-        
+
         JavascriptExecutor je = (JavascriptExecutor) localDriver;
         je.executeScript("arguments[0].scrollIntoView(true);",dpBusinessUnit);
     }
-    
+
     @FindBy(xpath = "//mat-select[@id='mat-select-18']")
     public WebElement dpSalesRep1;
     public void selectSalesRep1() {
@@ -441,14 +439,14 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         generics.clickOn(firstOption);
         generics.pause(2);
         testStepsLog("Site Business Sales Rep Selected");
-        
-        
-    }
-    
-    //@FindBy(xpath = "(//mat-checkbox[@formcontrolname='addressAsCustomerAddress']//div[contains(@class,'mat-checkbox-inner-container')]")
-   // public WebElement chkbx;
 
-    
+
+    }
+
+    //@FindBy(xpath = "(//mat-checkbox[@formcontrolname='addressAsCustomerAddress']//div[contains(@class,'mat-checkbox-inner-container')]")
+    // public WebElement chkbx;
+
+
     @FindBy(xpath = "(//ng-select[@placeholder='Address Line 1'])[3]")
     public WebElement dpAddressLine1OfSite;
 
@@ -461,8 +459,8 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     public void selectAddressline1ofSite(int row) {
         String Add = excelUtils.getTestData(Prospect, row, 0);
         testStepsLog("Address : " + Add);
-        
-        
+
+
         generics.moveTo(txtPostalcode);
         generics.clickOn(dpAddressLine1OfSite);
         generics.type(txtAddressLine1OfSite, Add);
@@ -474,7 +472,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
 //        js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
         generics.pause(2);
     }
-    
+
     public void typePostalcode(int row) {
         String pc = excelUtils.getTestData(Prospect, row, 1);
         generics.type(txtPostalcode, Keys.CONTROL + "a" + Keys.DELETE);
@@ -483,7 +481,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         testStepsLog("Postal code inserted +" + pc);
         generics.pause(2);
     }
-    
+
     @FindBy(xpath = "//mat-checkbox[@formcontrolname='billToCustomerBillingAddress']")
     public WebElement chkbillToCustomerBillingAddress;
 
@@ -493,7 +491,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         testStepsLog("Select Bill to Customer Billing Address checkbox");
         generics.pause(2);
     }
-    
+
     @FindBy(xpath = "//mat-checkbox[@formcontrolname='isSiteContactSameAsPrimaryContact']")
     public WebElement chkbSitecontactsameasprimarycontact;
 
@@ -503,7 +501,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         testStepsLog("Select Site contact same as primary contact checkbox");
         generics.pause(2);
     }
-    
+
     @FindBy(xpath = "//button[contains(text(),'SAVE AND SUBMIT')]")
     public WebElement btnSave;
 
@@ -512,14 +510,15 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         generics.pause(4);
         testStepsLog("Clicked on Save Customer button");
     }
-    
+
     @FindBy(xpath = "//div[contains(text(),'Prospect has been created successfully!')]")
     public WebElement Prospectsuccessmsg;
-    
+
     public boolean isProspectCreatedSuccessful() {
-    	
+        pId = generics.getText(prospectID);
+        testStepsLog("Prospect ID = " + pId);
         return generics.isPresent(Prospectsuccessmsg);
-        
+
     }
 
     //====================================CK Code for Add Service====================================
@@ -2571,5 +2570,31 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     }
     public boolean isApproveDisplay() {
         return generics.isPresent(btnApproved);
+    }
+
+    @FindBy(xpath = "//button[@id='btnProceed']")
+    public WebElement btncomplete;
+
+    public void ClickonPopComplete() {
+        generics.clickOn(btncomplete);
+        generics.pause(4);
+        testStepsLog("Clicked on COMPLETE.");
+    }
+
+
+    @FindBy(xpath = "//div[@class='flex_row align_items_left id_container']/div/div")
+    public WebElement prospectID;
+
+    public static String pId;
+
+    public void getProspecctID(int row) {
+
+        try {
+            SetTestData(pId, row, 20);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        testStepsLog("Prospect Created ID  : " + pId);
     }
 }
