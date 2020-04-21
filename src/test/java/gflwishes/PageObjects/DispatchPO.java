@@ -134,8 +134,9 @@ public class DispatchPO extends Dispatch implements ExcelColumns {
         generics.pause(4);
         Actions act = new Actions(driver);
         testStepsLog("Drag and Drop Truck from the map to order.");
-        act.dragAndDrop(driver.findElement(By.xpath("//map-common-vehicle-item-header//" +
-                "span[contains(@class,'vehicle_id_font')]")), lstTodayVehicle.get(0)).build().perform();
+        act.dragAndDrop(driver.findElement(By.xpath("//span[text()='This vehicle has no assignments']//" +
+                        "ancestor::map-common-vehicle-item//span[contains(@class,'vehicle_id_font')]")),
+                lstTodayVehicle.get(0)).build().perform();
         orderTitle = lstTodayVehicleTitle.get(0).getText();
         generics.pause(10);
     }
@@ -217,7 +218,7 @@ public class DispatchPO extends Dispatch implements ExcelColumns {
         generics.pause(5);
     }
 
-    @FindBy(xpath = "//i[text()='date_range']")
+    @FindBy(xpath = "//i[text()='date_range']//following-sibling::span")
     WebElement btnDatePicker;
 
     @FindBy(xpath = "//dispatch-order-aside-header//mat-icon[text()='search']")
@@ -248,6 +249,10 @@ public class DispatchPO extends Dispatch implements ExcelColumns {
         } else {
             generics.clickOn(lstPastVehicle.get(0));
         }
+    }
+
+    public void selectOrder() {
+        generics.clickOn(lstTodayVehicle.get(0));
     }
 
     @FindBy(xpath = "//map-common-order-item-details//span[@class='badge_text']")
@@ -462,22 +467,39 @@ public class DispatchPO extends Dispatch implements ExcelColumns {
     private WebElement lblSuccessOrderAssign;
 
     public boolean verifyOrderAssigned() {
-        boolean bool = lblSuccessOrderAssign.isDisplayed();
+        // boolean bool = lblSuccessOrderAssign.isDisplayed();
+        boolean bool = false;
         for (WebElement webElement : lstAssignedVehicle) {
             if (webElement.getText().equalsIgnoreCase(orderTitle)) {
-                bool = bool && webElement.getText().equalsIgnoreCase(orderTitle);
+                bool = webElement.getText().equalsIgnoreCase(orderTitle);
             }
         }
         return bool;
     }
 
     public boolean orderStatusAssigned() {
-        return driver.findElement(By.xpath("//p[text(),'" + orderTitle + "']//ancestor::map-common-order-item" +
+        return driver.findElement(By.xpath("//p[text()=' " + orderTitle + " ']//ancestor::map-common-order-item" +
                 "//div[contains(@class,'_assigned')]")).isDisplayed();
     }
 
     public boolean verifyOrderFilteredAsAssigned() {
         return driver.findElement(By.xpath("//p[contains(text(),'found for \"" + orderTitle.split(" ")[0] + "\"')]//" +
                 "following-sibling::map-common-order-list//p")).isDisplayed();
+    }
+
+    public void setTomorrowDateToOrder() {
+        selectOrder();
+        generics.clickOn(lblOrderDate);
+        generics.clickOn(driver.findElement(By.xpath("//span[@bsdatepickerdaydecorator and text()='" +
+                LocalDate.now().plusDays(1).format(DateTimeFormatter.ofPattern("dd")) + "']")));
+        generics.clickOnJS(btnProceed);
+    }
+
+    public void filterTomorrowOrder() {
+        new WebDriverWait(driver, 20).until(ExpectedConditions.invisibilityOfAllElements(
+                driver.findElements(By.xpath("cdk-overlay-backdrop-showing"))));
+        btnDatePicker.click();
+        generics.clickOn(driver.findElement(By.xpath("//span[@bsdatepickerdaydecorator and text()='" +
+                LocalDate.now().plusDays(1).format(DateTimeFormatter.ofPattern("dd")) + "']")));
     }
 }

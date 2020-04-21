@@ -87,5 +87,51 @@ public class RODSP06 extends EnhancedBaseClass {
 
     }
 
+    @Test
+    public void TC036_Assign_an_order_which_requested_date_time_is_in_future() {
+
+        testCaseLog("TC036 : Assign an order which requested date time is in future");
+
+        LoginPage login = new LoginPage(fleetMapperDriver);
+        DispatchPO dispatchPO = new DispatchPO(fleetMapperDriver);
+        login.loginAs(USER_NAME, PASSWORD);
+
+        dispatchPO.openDispatcher();
+
+        if (dispatchPO.verifyDispatchPage()) {
+            success("User can see the dispatch page.");
+        } else {
+            failure("ERROR : Dispatch page is not display.");
+        }
+
+        dispatchPO.setTomorrowDateToOrder();
+
+        dispatchPO.filterTomorrowOrder();
+
+        dispatchPO.addTruckFromMapForToday();
+
+        if (dispatchPO.verifyOrderAssigned()) {
+            success("Verify order assigned successfully");
+        } else {
+            failure("ERROR : Verify order assigned successfully");
+        }
+
+        if (dispatchPO.orderStatusAssigned()) {
+            success("Verify order status display assigned successfully");
+        } else {
+            failure("Verify order status display assigned successfully");
+        }
+
+        dispatchPO.filterOrder("assigned");
+
+        dispatchPO.searchAddress();
+
+        if (dispatchPO.verifyOrderFilteredAsAssigned()) {
+            success("Verify order status display assigned successfully");
+        } else {
+            failure("Verify order status display assigned successfully");
+        }
+
+    }
 
 }
