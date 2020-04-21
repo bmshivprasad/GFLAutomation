@@ -116,7 +116,7 @@ public class EndToEnd extends EnhancedBaseClass {
                     failure("Customer not Added successfully");
                 }
                 cp.getCustomerID(i);
-                excelUtils.UpdateExternalSiteID("EndtoEnd",i);
+                excelUtils.UpdateExternalSiteID("EndtoEnd", i);
             } catch (Exception e) {
                 testStepsLog("Customer not created for " + i);
             }
@@ -251,7 +251,7 @@ public class EndToEnd extends EnhancedBaseClass {
                     dispatchPO.getDispatcherName(count);
 
                     dispatchPO.searchAddress(count);
-                    dispatchPO.selectOrder();
+                    dispatchPO.selectOrder(true);
 
                     if (dispatchPO.verifyDeliveryDetails(count)) {
                         success("User can see the dispatch oder details.");

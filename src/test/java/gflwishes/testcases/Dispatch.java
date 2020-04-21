@@ -38,7 +38,7 @@ public class Dispatch extends EnhancedBaseClass {
         }
 
         dispatchPO.searchAddress(count);
-        dispatchPO.selectOrder();
+        dispatchPO.selectOrder(true);
 
         if (dispatchPO.verifyDeliveryDetails(count)) {
             success("User can see the dispatch oder details.");

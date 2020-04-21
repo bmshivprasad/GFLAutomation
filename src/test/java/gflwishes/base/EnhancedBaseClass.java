@@ -31,6 +31,7 @@ import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 
 public class EnhancedBaseClass extends ExtentInitializer implements Configurations {
 
@@ -82,6 +83,8 @@ public class EnhancedBaseClass extends ExtentInitializer implements Configuratio
                     break;
                 default:
                     WebDriverManager.chromedriver().setup();
+                    System.setProperty("webdriver.chrome.silentOutput", "true");
+                    java.util.logging.Logger.getLogger("org.openqa.selenium").setLevel(Level.OFF);
                     driver = new ChromeDriver();
                     break;
             }

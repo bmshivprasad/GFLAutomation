@@ -100,16 +100,14 @@ public class Customer extends EnhancedBaseClass {
                     failure("Customer not Added successfully");
                 }
                 cp.getCustomerID(i);
-            }
-            catch (Exception e)
-            {
-                testStepsLog("Customer not created : " + String.valueOf(i) );
+            } catch (Exception e) {
+                testStepsLog("Customer not created : " + String.valueOf(i));
                 continue;
             }
 
         }
         sa.assertAll();
-        excelUtils.UpdateExternalSiteID();
+        excelUtils.UpdateExternalSiteID(END_TO_END, rows);
 
     }
 
@@ -152,23 +150,17 @@ public class Customer extends EnhancedBaseClass {
                 cp.typenote();
                 cp.clickonAddService();
                 cp.clickonUpdateAgreement();
-                if(cp.isAggreementUpdated())
-                {
+                if (cp.isAggreementUpdated()) {
                     success("Aggreeement updpated successfully");
-                }
-                else
-                {
+                } else {
                     failure("Aggreeement not updated successfully");
                 }
 
                 cp.clickonSaveAndSubmitCSA();
                 cp.clickonSubmitButton();
-                if(cp.isCSASaved())
-                {
+                if (cp.isCSASaved()) {
                     success("CSA Saved successfully");
-                }
-                else
-                {
+                } else {
                     failure("CSA not Saved successfully");
                 }
 

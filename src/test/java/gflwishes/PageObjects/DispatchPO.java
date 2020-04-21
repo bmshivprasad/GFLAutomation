@@ -26,6 +26,8 @@ public class DispatchPO extends Dispatch implements ExcelColumns {
     private WebDriver driver;
     private Generics generics;
 
+    private String orderTitle = "";
+
     public static String SiteAddress;
     ExcelUtils excelUtils = new ExcelUtils();
 
@@ -66,6 +68,9 @@ public class DispatchPO extends Dispatch implements ExcelColumns {
 
     @FindBy(xpath = "//map-common-white-container//div[text()='DRAG & DROP HERE']")
     WebElement truckDragAndDrop;
+
+    @FindAll(value = {@FindBy(xpath = "//div[contains(@class,'pastDate')]")})
+    List<WebElement> lstPastVehicle;
 
     @FindBy(xpath = "(//map-common-vehicle-list//mat-list-item//span[text()='This vehicle has no assignments'])[1]" +
             "//ancestor::map-common-vehicle-item//map-common-vehicle-item-header//span[contains(text(),'')]")
@@ -113,6 +118,25 @@ public class DispatchPO extends Dispatch implements ExcelColumns {
         testStepsLog("Drag and Drop Truck from the map to order.");
         act.dragAndDrop(driver.findElement(By.xpath("//map-common-vehicle-item//span[contains(text(),'" +
                 excelUtils.getTestData("EndToEnd", count, VEHICLE_NAME) + "')]")), truckDragAndDrop).build().perform();
+        generics.pause(10);
+    }
+
+    public void addTruckFromMapForPast() {
+        generics.pause(4);
+        Actions act = new Actions(driver);
+        testStepsLog("Drag and Drop Truck from the map to order.");
+        act.dragAndDrop(driver.findElement(By.xpath("//map-common-vehicle-item-header//" +
+                "span[contains(@class,'vehicle_id_font')]")), lstPastVehicle.get(0)).build().perform();
+        generics.pause(10);
+    }
+
+    public void addTruckFromMapForToday() {
+        generics.pause(4);
+        Actions act = new Actions(driver);
+        testStepsLog("Drag and Drop Truck from the map to order.");
+        act.dragAndDrop(driver.findElement(By.xpath("//map-common-vehicle-item-header//" +
+                "span[contains(@class,'vehicle_id_font')]")), lstTodayVehicle.get(0)).build().perform();
+        orderTitle = lstTodayVehicleTitle.get(0).getText();
         generics.pause(10);
     }
 
@@ -210,9 +234,20 @@ public class DispatchPO extends Dispatch implements ExcelColumns {
         generics.type(txtSearch, SiteAddress.split(" ")[0]);
     }
 
-    public void selectOrder() {
-        generics.clickOn(driver.findElement(By.xpath("(//div[@class='card']//p[contains(text()," +
-                "' " + SiteAddress.split(",")[0].toUpperCase() + " ')])[last()]")));
+    public void searchAddress() {
+        new WebDriverWait(driver, 30).until(ExpectedConditions.invisibilityOfElementLocated(
+                By.xpath("//div[text()='Loading...']")));
+        generics.clickOnJS(btnSearchOrder);
+        generics.type(txtSearch, orderTitle.split(" ")[0]);
+    }
+
+    public void selectOrder(boolean isFromData) {
+        if (isFromData) {
+            generics.clickOn(driver.findElement(By.xpath("(//div[@class='card']//p[contains(text()," +
+                    "' " + SiteAddress.split(",")[0].toUpperCase() + " ')])[last()]")));
+        } else {
+            generics.clickOn(lstPastVehicle.get(0));
+        }
     }
 
     @FindBy(xpath = "//map-common-order-item-details//span[@class='badge_text']")
@@ -401,5 +436,48 @@ public class DispatchPO extends Dispatch implements ExcelColumns {
 
     public void setFlag(int count, boolean flag) {
         if (flag) excelUtils.setTestData(END_TO_END, count, STATUS, "INCOMPLETE");
+    }
+
+    @FindBy(xpath = "//h3[contains(@class,'error_text')]")
+    private WebElement lblError;
+
+    public boolean verifyPastDateTruckMove() {
+        return lblError.getText().equalsIgnoreCase("This operation cannot be performed.");
+    }
+
+    @FindAll(value = {@FindBy(xpath = "//map-common-order-item/div[not(@class)]")})
+    List<WebElement> lstTodayVehicle;
+
+    @FindAll(value = {@FindBy(xpath = "//map-common-order-item/div[not(@class)]//p")})
+    List<WebElement> lstTodayVehicleTitle;
+
+    public boolean isTodayOrderNotDisplay() {
+        return lstTodayVehicle.isEmpty();
+    }
+
+    @FindAll(value = {@FindBy(xpath = "//map-common-vehicle-list//div[@id='order-item']//p")})
+    List<WebElement> lstAssignedVehicle;
+
+    @FindBy(xpath = "//span[text()='Order has been successfully Assigned to the driver']")
+    private WebElement lblSuccessOrderAssign;
+
+    public boolean verifyOrderAssigned() {
+        boolean bool = lblSuccessOrderAssign.isDisplayed();
+        for (WebElement webElement : lstAssignedVehicle) {
+            if (webElement.getText().equalsIgnoreCase(orderTitle)) {
+                bool = bool && webElement.getText().equalsIgnoreCase(orderTitle);
+            }
+        }
+        return bool;
+    }
+
+    public boolean orderStatusAssigned() {
+        return driver.findElement(By.xpath("//p[text(),'" + orderTitle + "']//ancestor::map-common-order-item" +
+                "//div[contains(@class,'_assigned')]")).isDisplayed();
+    }
+
+    public boolean verifyOrderFilteredAsAssigned() {
+        return driver.findElement(By.xpath("//p[contains(text(),'found for \"" + orderTitle.split(" ")[0] + "\"')]//" +
+                "following-sibling::map-common-order-list//p")).isDisplayed();
     }
 }
