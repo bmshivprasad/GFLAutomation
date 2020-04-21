@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -548,6 +549,7 @@ public class ProspectPage extends Prospect {
 
     public void clickonAddNewServiceButton() {
 
+        generics.pause(4);
         JavascriptExecutor js = (JavascriptExecutor) localDriver;
         js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
         generics.moveTo(Aggreement);
@@ -660,9 +662,19 @@ public class ProspectPage extends Prospect {
     	generics.pause(6);
         String CT=excelUtils.getTestData("ProspectAll", row, 6);
         generics.clickOn(dpContainerType);
-        WebElement element=localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+CT+"')]"));
-        element.click();
-        testStepsLog("Container Type Selected : " + CT);
+        List<WebElement> element=localDriver.findElements(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+CT+"')]"));
+        if(element.size()>0)
+        {
+
+            element.get(0).click();
+            testStepsLog("Container type  site selected : " + CT);
+        }
+        else
+        {
+            generics.clickOn(firstOption);
+            testStepsLog("first container type site selecte ");
+        }
+
     }
 
     @FindBy(xpath = "//input[@formcontrolname='containerRentalFee']")
@@ -758,6 +770,7 @@ public class ProspectPage extends Prospect {
     public void SelectMaterial(int row)
     {
     	generics.pause(2);
+    	generics.moveTo(btnCalculate);
         String M=excelUtils.getTestData("ProspectAll", row, 12);
         generics.clickOn(dpserviceTypeMeterial);
         WebElement element=localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+M+"')]"));
@@ -767,14 +780,26 @@ public class ProspectPage extends Prospect {
     @FindBy(xpath = "//mat-select[@formcontrolname='disposalSiteId']")
     public WebElement dpdiposibleSite;
 
-    public void selectDisposibleSite()
+    public void selectDisposibleSite(int row)
     {
-        //String M=excelUtils.getTestData("Prospect", row, 12);
+        String M=excelUtils.getTestData("ProspectAll", row, 17);
     	generics.pause(6);
         generics.clickOn(dpdiposibleSite);
-        generics.clickOn(firstOption);
+        List<WebElement> element=localDriver.findElements(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+M+"')]"));
+        if(element.size()>0)
+        {
+
+            element.get(0).click();
+            testStepsLog("Disposible site selected : " + M);
+        }
+        else
+        {
+            generics.clickOn(firstOption);
+            testStepsLog("first disposible site selecte ");
+        }
+
         generics.pause(10);
-        testStepsLog("Disposible site selected : ");
+
     }
 
     @FindBy(xpath = "//button[contains(text(),'Calculate')]")
@@ -1171,11 +1196,37 @@ public class ProspectPage extends Prospect {
     public void SelectServiceZone(int row)
     {
         generics.pause(2);
-        String M=excelUtils.getTestData("ProspectALL", row, 12);
+        String M=excelUtils.getTestData("ProspectALL", row, 15);
         generics.clickOn(dpserviceZone);
         WebElement element=localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+M+"')]"));
         element.click();
         testStepsLog("Material selected : " + M);
     }
+
+    @FindBy(xpath = "//mat-select[@formcontrolname='serviceZoneDensityId']")
+    public WebElement dpserviceZoneDensity;
+
+    public void SelectServiceZoneDensity(int row)
+    {
+        generics.pause(2);
+        String M=excelUtils.getTestData("ProspectALL", row, 16);
+        generics.clickOn(dpserviceZoneDensity);
+        WebElement element=localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+M+"')]"));
+        element.click();
+        testStepsLog("Material selected : " + M);
+    }
+
+    @FindBy(xpath = "//mat-select[@formcontrolname='weight']")
+    public WebElement weight;
+
+    public void typeWeight()
+    {
+        generics.type(weight,String.valueOf(generics.getRandomBetween(0,9)));
+        testStepsLog("Weight inserted");
+    }
+
+
+
+
 
 }

@@ -110,11 +110,12 @@ public class Prospect extends EnhancedBaseClass {
 				pp.typeContainerFee(i);
 				pp.SelectContainerSize(i);
 				pp.SelectFreuency(i);
-				pp.SelectChargeType(i);
+
 				pp.SelectMaterial(i);
-				pp.SelectHaulType(i);
-				pp.typeEstTime(i);
-				pp.selectDisposibleSite();
+				pp.SelectServiceZone(i);
+				pp.SelectServiceZoneDensity(i);
+				pp.typeWeight();
+				pp.selectDisposibleSite(i);
 
 				pp.typeLocationType(i);
 
