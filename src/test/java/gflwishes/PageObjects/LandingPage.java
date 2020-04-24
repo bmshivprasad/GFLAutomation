@@ -157,7 +157,7 @@ public class LandingPage extends EnhancedBaseClass {
     }
     
     public void OpenCDEDashboard() {
-        generics.pause(1);
+        generics.pause(6);
         generics.clickOn(CDEdashboard);
         testStepsLog("Click on CDE Dashboard link ");
         generics.pause(5);

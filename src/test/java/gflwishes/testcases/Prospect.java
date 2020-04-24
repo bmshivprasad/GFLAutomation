@@ -146,7 +146,7 @@ public class Prospect extends EnhancedBaseClass {
 				} else {
 					failure("Agreements page not open");
 				}
-
+                pp.searchProspect();
 				pp.clickonAgreementsNo();
 				pp.clickonCustomerCopy();
 				pp.clickonChkAgreementTearmsAndCondition();
@@ -337,7 +337,7 @@ public class Prospect extends EnhancedBaseClass {
                 } else {
                     failure("Agreements page not open");
                 }
-
+                pp.searchProspect();
                 pp.clickonAgreementsNo();
                 pp.clickonCustomerCopy();
                 pp.clickonChkAgreementTearmsAndCondition();
@@ -520,7 +520,7 @@ public class Prospect extends EnhancedBaseClass {
                 } else {
                     failure("Agreements page not open");
                 }
-
+                pp.searchProspect();
                 pp.clickonAgreementsNo();
                 pp.clickonCustomerCopy();
                 pp.clickonChkAgreementTearmsAndCondition();
@@ -703,7 +703,7 @@ public class Prospect extends EnhancedBaseClass {
                 } else {
                     failure("Agreements page not open");
                 }
-
+                pp.searchProspect();
                 pp.clickonAgreementsNo();
                 pp.clickonCustomerCopy();
                 pp.clickonChkAgreementTearmsAndCondition();

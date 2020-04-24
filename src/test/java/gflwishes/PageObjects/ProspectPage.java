@@ -928,6 +928,19 @@ public class ProspectPage extends Prospect {
         generics.pause(5);
         return generics.isPresent(CSASuccess);
     }
+    @FindBy(xpath = "//input[@formcontrolname='searchValue']")
+    public WebElement Searchbox;
+
+    public void searchProspect()
+    {
+        generics.pause(3);
+        generics.type(Searchbox,ProspectName+Keys.ENTER);
+        generics.pause(4);
+
+    }
+
+
+
     @FindBy(xpath = "//*[contains(text(),'AGREEMENT TERMS AND CONDITIONS')]")
     public WebElement Aggreement;
 
