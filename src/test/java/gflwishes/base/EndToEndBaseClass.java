@@ -33,7 +33,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
-public class EnhancedBaseClass extends ExtentInitializer implements Configurations {
+public class EndToEndBaseClass extends ExtentInitializer implements Configurations {
 
     public WebDriver wishesDriver;
     public WebDriver fleetMapperDriver;
@@ -56,39 +56,41 @@ public class EnhancedBaseClass extends ExtentInitializer implements Configuratio
         methodName = method.getName();
 
         if (methodName.contains("WS")) {
-            wishesDriver = initiateDriver();
+            wishesDriver = initiateDriver(wishesDriver);
             wishesDriver.get(BASE_URL);
         } else {
-            fleetMapperDriver = initiateDriver();
+            fleetMapperDriver = initiateDriver(fleetMapperDriver);
             fleetMapperDriver.get(FM_URL);
         }
 
     }
 
-    private WebDriver initiateDriver() {
-        WebDriver driver;
-        switch (BROWSER.toLowerCase()) {
-            case "mozilla":
-            case "firefox":
-            case "mozilla firefox":
-                WebDriverManager.firefoxdriver().setup();
-                driver = new FirefoxDriver();
-                break;
-            case "ie":
-            case "internet explorer":
-            case "ie11":
-                WebDriverManager.iedriver().setup();
-                driver = new InternetExplorerDriver();
-                break;
-            default:
-                WebDriverManager.chromedriver().setup();
-                System.setProperty("webdriver.chrome.silentOutput", "true");
-                java.util.logging.Logger.getLogger("org.openqa.selenium").setLevel(Level.OFF);
-                driver = new ChromeDriver();
-                break;
+    private WebDriver initiateDriver(WebDriver driver) {
+
+        if (driver == null) {
+            switch (BROWSER.toLowerCase()) {
+                case "mozilla":
+                case "firefox":
+                case "mozilla firefox":
+                    WebDriverManager.firefoxdriver().setup();
+                    driver = new FirefoxDriver();
+                    break;
+                case "ie":
+                case "internet explorer":
+                case "ie11":
+                    WebDriverManager.iedriver().setup();
+                    driver = new InternetExplorerDriver();
+                    break;
+                default:
+                    WebDriverManager.chromedriver().setup();
+                    System.setProperty("webdriver.chrome.silentOutput", "true");
+                    java.util.logging.Logger.getLogger("org.openqa.selenium").setLevel(Level.OFF);
+                    driver = new ChromeDriver();
+                    break;
+            }
+            driver.manage().timeouts().implicitlyWait(Integer.parseInt(IMPLICIT_WAIT), TimeUnit.SECONDS);
+            driver.manage().window().maximize();
         }
-        driver.manage().timeouts().implicitlyWait(Integer.parseInt(IMPLICIT_WAIT), TimeUnit.SECONDS);
-        driver.manage().window().maximize();
 
         return driver;
     }
@@ -130,12 +132,15 @@ public class EnhancedBaseClass extends ExtentInitializer implements Configuratio
 
         } catch (Exception throwable) {
             System.err.println("Exception ::\n" + throwable);
-        } finally {
-            log4j.info("<strong>+++++++++++++++++++++++++++++++++ Closing the " + BROWSER +
-                    " browser instance +++++++++++++++++++++++++++++++++</strong>");
-            cleanupDriver(fleetMapperDriver);
-            cleanupDriver(wishesDriver);
         }
+    }
+
+    @AfterClass
+    public void cleanUp() {
+        log4j.info("<strong>+++++++++++++++++++++++++++++++++ Closing the " + BROWSER +
+                " browser instance +++++++++++++++++++++++++++++++++</strong>");
+        cleanupDriver(fleetMapperDriver);
+        cleanupDriver(wishesDriver);
     }
 
     public void cleanupDriver(WebDriver driver) {

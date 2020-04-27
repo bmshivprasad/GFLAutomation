@@ -1,12 +1,13 @@
 package gflwishes.testcases;
 
 import gflwishes.PageObjects.*;
+import gflwishes.base.EndToEndBaseClass;
 import gflwishes.base.EnhancedBaseClass;
 import gflwishes.utilities.ExcelUtils;
 import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
 
-public class EndToEndProspect extends EnhancedBaseClass {
+public class EndToEndProspect extends EndToEndBaseClass {
 
     public EndToEndProspect() {
         log4j = Logger.getLogger("EndToEnd");
@@ -18,8 +19,8 @@ public class EndToEndProspect extends EnhancedBaseClass {
         testCaseLog("TC03_Create_Vehicle_Functionality");
 
         LoginPage login = new LoginPage(fleetMapperDriver);
-        vehiclePage vp=new vehiclePage(fleetMapperDriver);
-        EndtoEndProspectPage vc=new EndtoEndProspectPage(fleetMapperDriver);
+        vehiclePage vp = new vehiclePage(fleetMapperDriver);
+        EndtoEndProspectPage vc = new EndtoEndProspectPage(fleetMapperDriver);
 
         login.loginAs(USER_NAME, PASSWORD);
 
@@ -61,7 +62,7 @@ public class EndToEndProspect extends EnhancedBaseClass {
             failure("Failed to Login");
         }
 
-        for (int i = 1; i < rows ; i++) {
+        for (int i = 1; i < rows; i++) {
 
             try {
 
@@ -141,23 +142,17 @@ public class EndToEndProspect extends EnhancedBaseClass {
                 pp.typenote();
                 pp.clickonAddService();
                 pp.clickonUpdateAgreement();
-                if(pp.isAggreementUpdated())
-                {
+                if (pp.isAggreementUpdated()) {
                     success("Aggreeement updpated successfully ");
-                }
-                else
-                {
+                } else {
                     failure("Aggreeement not updated successfully");
                 }
 
                 pp.clickonSaveAndSubmitCSA();
                 pp.clickonSubmitButton();
-                if(pp.isCSASaved())
-                {
+                if (pp.isCSASaved()) {
                     success("CSA Saved successfully");
-                }
-                else
-                {
+                } else {
                     failure("CSA not Saved successfully");
                 }
 
@@ -215,9 +210,8 @@ public class EndToEndProspect extends EnhancedBaseClass {
                 }
 
                 pp.getProspecctID(i);
-                excelUtils.UpdateExternalSiteID("Prospect",i);
-            }
-            catch (Exception e) {
+                excelUtils.UpdateExternalSiteID("Prospect", i);
+            } catch (Exception e) {
                 System.out.print("Prospect not created");
                 continue;
             }
@@ -238,7 +232,7 @@ public class EndToEndProspect extends EnhancedBaseClass {
         login.loginAs(USER_NAME, PASSWORD);
         int rows = cp.getRowsExcel();
 
-        for (int i = 1; i < rows ; i++) {
+        for (int i = 1; i < rows; i++) {
             try {
                 String CustID = cp.getCustomerIDStatus(i);
                 if (CustID != "") {
@@ -349,7 +343,7 @@ public class EndToEndProspect extends EnhancedBaseClass {
             failure("ERROR : Dispatch page is not display.");
         }
 
-        for (int count = 1; count < ExcelUtils.getRowsExcel("Prospect") ; count++) {
+        for (int count = 1; count < ExcelUtils.getRowsExcel("Prospect"); count++) {
 
             try {
                 if (dispatchPO.isPaymentDone(count)) {
@@ -447,7 +441,7 @@ public class EndToEndProspect extends EnhancedBaseClass {
         LoginPage login = new LoginPage(wishesDriver);
         login.loginAs(USER_NAME, PASSWORD);
 
-        for (int i = 1; i < rows ; i++) {
+        for (int i = 1; i < rows; i++) {
 
             try {
                 if (cp.isFMCompleted(i)) {

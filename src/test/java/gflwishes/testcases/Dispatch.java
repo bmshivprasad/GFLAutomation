@@ -52,7 +52,7 @@ public class Dispatch extends EnhancedBaseClass {
 
         dispatchPO.addTruckFromMap(count);
 
-        dispatchPO.openOrderFromVehiclePane();
+        dispatchPO.openOrderFromVehiclePane(false);
 
         dispatchPO.startOrder();
 

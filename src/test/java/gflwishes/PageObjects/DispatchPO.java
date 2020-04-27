@@ -108,6 +108,8 @@ public class DispatchPO extends Dispatch implements ExcelColumns {
     }
 
     public boolean verifyDispatchPage() {
+        new WebDriverWait(driver, 30).until(ExpectedConditions.invisibilityOfElementLocated(
+                By.xpath("//div[text()='Loading...']")));
         return generics.isDisplay(lblToday) && generics.isDisplay(btnFilter);
     }
 
@@ -118,7 +120,7 @@ public class DispatchPO extends Dispatch implements ExcelColumns {
         testStepsLog("Drag and Drop Truck from the map to order.");
         act.dragAndDrop(driver.findElement(By.xpath("//map-common-vehicle-item//span[contains(text(),'" +
                 excelUtils.getTestData("EndToEnd", count, VEHICLE_NAME) + "')]")), truckDragAndDrop).build().perform();
-        generics.pause(10);
+        generics.pause(3);
     }
 
     public void addTruckFromMapForPast() {
@@ -127,18 +129,22 @@ public class DispatchPO extends Dispatch implements ExcelColumns {
         testStepsLog("Drag and Drop Truck from the map to order.");
         act.dragAndDrop(driver.findElement(By.xpath("//map-common-vehicle-item-header//" +
                 "span[contains(@class,'vehicle_id_font')]")), lstPastVehicle.get(0)).build().perform();
-        generics.pause(10);
+        generics.pause(3);
     }
 
     public void addTruckFromMapForToday() {
         generics.pause(4);
         Actions act = new Actions(driver);
         testStepsLog("Drag and Drop Truck from the map to order.");
+        generics.scrollToElement(driver.findElement(By.xpath("//span[text()='This vehicle has no assignments']//" +
+                "ancestor::map-common-vehicle-item//span[contains(@class,'vehicle_id_font')]")));
+        generics.scrollToElement(lstTodayVehicle.get(0));
         act.dragAndDrop(driver.findElement(By.xpath("//span[text()='This vehicle has no assignments']//" +
                         "ancestor::map-common-vehicle-item//span[contains(@class,'vehicle_id_font')]")),
                 lstTodayVehicle.get(0)).build().perform();
         orderTitle = lstTodayVehicleTitle.get(0).getText();
-        generics.pause(10);
+        new WebDriverWait(driver, 20).until(ExpectedConditions.invisibilityOfAllElements(
+                driver.findElements(By.xpath("//div[contains(@class,'cdk-overlay-backdrop-showing')]"))));
     }
 
     public void filterOrder(String status) {
@@ -306,13 +312,25 @@ public class DispatchPO extends Dispatch implements ExcelColumns {
     @FindAll(value = {@FindBy(xpath = "//div[contains(@class,'_inprogress') or contains(@class,'_assigned')]//p")})
     List<WebElement> lstAssignedInProgressOrders;
 
-    public void openOrderFromVehiclePane() {
-        for (WebElement e : lstAssignedInProgressOrders) {
-            System.out.println(e.getText());
-            if (e.getText().contains(SiteAddress.split(",")[0])) {
-                generics.clickOnJS(e);
-                generics.pause(2);
-                break;
+    public void openOrderFromVehiclePane(boolean isFromData) {
+        if (isFromData) {
+            for (WebElement e : lstAssignedInProgressOrders) {
+                System.out.println(e.getText());
+                if (e.getText().contains(SiteAddress.split(",")[0])) {
+                    generics.clickOnJS(e);
+                    generics.pause(2);
+                    break;
+                }
+            }
+        } else {
+            System.out.println(lstAssignedInProgressOrders);
+            for (WebElement e : lstAssignedInProgressOrders) {
+                System.out.println(e.getText());
+                if (e.getText().contains(orderTitle)) {
+                    generics.clickOnJS(e);
+                    generics.pause(2);
+                    break;
+                }
             }
         }
     }
@@ -450,7 +468,11 @@ public class DispatchPO extends Dispatch implements ExcelColumns {
         return lblError.getText().equalsIgnoreCase("This operation cannot be performed.");
     }
 
-    @FindAll(value = {@FindBy(xpath = "//map-common-order-item/div[not(@class)]")})
+    public boolean verifyAssigningVehicleToInProgressOrder() {
+        return lblError.getText().equalsIgnoreCase("This operation cannot be performed.");
+    }
+
+    @FindAll(value = {@FindBy(xpath = "//map-common-order-item/div[not(@class)]//div[text()!='ON HOLD']")})
     List<WebElement> lstTodayVehicle;
 
     @FindAll(value = {@FindBy(xpath = "//map-common-order-item/div[not(@class)]//p")})
@@ -497,9 +519,27 @@ public class DispatchPO extends Dispatch implements ExcelColumns {
 
     public void filterTomorrowOrder() {
         new WebDriverWait(driver, 20).until(ExpectedConditions.invisibilityOfAllElements(
-                driver.findElements(By.xpath("cdk-overlay-backdrop-showing"))));
+                driver.findElements(By.xpath("//div[contains(@class,'cdk-overlay-backdrop-showing')]"))));
         btnDatePicker.click();
-        generics.clickOn(driver.findElement(By.xpath("//span[@bsdatepickerdaydecorator and text()='" +
-                LocalDate.now().plusDays(1).format(DateTimeFormatter.ofPattern("dd")) + "']")));
+        generics.clickOn(driver.findElement(By.xpath("//span[contains(@aria-label,'" +
+                LocalDate.now().plusDays(1).format(DateTimeFormatter.ofPattern("MMMM dd, yyyy")) + "')]")));
+    }
+
+    @FindAll(value = {@FindBy(xpath = "//mat-expansion-panel-header//following-sibling::div[@role='region']" +
+            "//mat-list-item//div[text()!='ON HOLD']")})
+    List<WebElement> lstUnAssignedOrders;
+
+    @FindBy(xpath = "//button//span[@dataname='PUT ON HOLD']")
+    WebElement btnOnHold;
+
+    public void makeOrderOnHold() {
+        generics.clickOn(lstUnAssignedOrders.get(0));
+        generics.clickOn(btnOnHold);
+        generics.clickOn(btnProceed);
+    }
+
+    public boolean verifyOnHoldAssignmentMessage() {
+        return lblError.getText().equalsIgnoreCase("You cannot assign Onhold " +
+                "assignments without reschedule it!");
     }
 }

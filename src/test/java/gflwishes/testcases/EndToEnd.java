@@ -1,12 +1,13 @@
 package gflwishes.testcases;
 
 import gflwishes.PageObjects.*;
+import gflwishes.base.EndToEndBaseClass;
 import gflwishes.base.EnhancedBaseClass;
 import gflwishes.utilities.ExcelUtils;
 import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
 
-public class EndToEnd extends EnhancedBaseClass {
+public class EndToEnd extends EndToEndBaseClass {
 
     public EndToEnd() {
         log4j = Logger.getLogger("EndToEnd");
@@ -265,7 +266,7 @@ public class EndToEnd extends EnhancedBaseClass {
 
                     dispatchPO.addTruckFromMap(count);
 
-                    dispatchPO.openOrderFromVehiclePane();
+                    dispatchPO.openOrderFromVehiclePane(true);
 
                     switch (dispatchPO.getOperationType().toLowerCase()) {
                         case "pick up":
