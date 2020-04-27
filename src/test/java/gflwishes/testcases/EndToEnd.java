@@ -60,7 +60,7 @@ public class EndToEnd extends EndToEndBaseClass {
             failure("Failed to Login");
         }
 
-        for (int i = 1; i < rows - 1; i++) {
+        for (int i = 1; i < rows ; i++) {
 
             lp.OpenCustomer();
             try {
@@ -135,7 +135,7 @@ public class EndToEnd extends EndToEndBaseClass {
         ServiceOrderPage cp = new ServiceOrderPage(wishesDriver);
         int rows = cp.getRowsExcel();
 
-        for (int i = 1; i < rows - 1; i++) {
+        for (int i = 1; i < rows; i++) {
             try {
                 String CustID = cp.getCustomerIDStatus(i);
                 if (CustID != "") {
@@ -340,7 +340,7 @@ public class EndToEnd extends EndToEndBaseClass {
         int rows = cp.getRowsExcel();
 
 
-        for (int i = 1; i < rows - 1; i++) {
+        for (int i = 1; i < rows; i++) {
 
             try {
                 if (cp.isFMCompleted(i)) {
