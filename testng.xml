@@ -6,7 +6,7 @@
         <classes>
             <class name="gflwishes.testcases.EndToEnd">
                 <methods>
-                    <include name="TC03FM_Create_Vehicle_Functionality"/>
+<!--                    <include name="TC03FM_Create_Vehicle_Functionality"/>-->
                     <include name="TC001WS_Verify_Create_new_Customer_Functionality"/>
                     <include name="TC002WS_Verify_Create_Service_order_Functionality"/>
                     <include name="TC003FM_Verify_User_can_complete_pickup_order"/>

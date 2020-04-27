@@ -1,11 +1,15 @@
 package gflwishes.testcases;
 
+import gflwishes.PageObjects.DispatchOR;
 import gflwishes.PageObjects.DispatchPO;
 import gflwishes.PageObjects.DispatchPO_2;
 import gflwishes.PageObjects.LoginPage;
 import gflwishes.base.EnhancedBaseClass;
 import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
+
+import java.util.List;
+import java.util.Map;
 
 public class RODSP06 extends EnhancedBaseClass {
 
@@ -243,6 +247,7 @@ public class RODSP06 extends EnhancedBaseClass {
 
         LoginPage login = new LoginPage(fleetMapperDriver);
         DispatchPO_2 dispatchPO_2 = new DispatchPO_2(fleetMapperDriver);
+        DispatchOR dispatchOR = new DispatchOR(fleetMapperDriver);
 
         login.loginAs(USER_NAME, PASSWORD);
 
@@ -253,6 +258,9 @@ public class RODSP06 extends EnhancedBaseClass {
         } else {
             failure("ERROR : Dispatch page is not display.");
         }
+
+        Map<Integer, List<String>> orders = dispatchOR.getAllOrderDetails();
+        Map<String, List<List<String>>> vehicles = dispatchOR.getAllVehicleDetails();
 
         if (dispatchPO_2.isERExOrderNotDisplay()) {
             dispatchPO_2.selectPastERExOrder();
