@@ -969,7 +969,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         testStepsLog("Clicked on Unassigned.");
     }
     
-    @FindBy(xpath = "//div[contains(text(),'TICKET DETAILS')]')]")
+    @FindBy(xpath = "//div[contains(text(),'TICKET DETAILS')]")
     public WebElement Ticketdetailspage;
     
     @FindBy(xpath = "//h3[contains(text(),'ORDER FORM NOTES')]")

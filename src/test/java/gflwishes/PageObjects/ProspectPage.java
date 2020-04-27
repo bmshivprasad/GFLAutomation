@@ -512,6 +512,7 @@ public class ProspectPage extends Prospect {
     public WebElement Prospectsuccessmsg;
 
     public boolean isProspectCreatedSuccessful() {
+        generics.pause(3);
         pId = generics.getText(prospectID);
         testStepsLog("Prospect ID = " + pId);
         return generics.isPresent(Prospectsuccessmsg);
@@ -549,7 +550,7 @@ public class ProspectPage extends Prospect {
 
     public void clickonAddNewServiceButton() {
 
-        generics.pause(4);
+        generics.pause(6);
         JavascriptExecutor js = (JavascriptExecutor) localDriver;
         js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
         generics.moveTo(Aggreement);
@@ -693,12 +694,23 @@ public class ProspectPage extends Prospect {
 
     public void SelectContainerSize(int row)
     {
-    	generics.pause(2);
+    	generics.pause(3);
         String CS=excelUtils.getTestData("ProspectAll", row, 8);
         generics.clickOn(dpContainerSize);
-        WebElement element=localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+CS+"')]"));
-        element.click();
-        testStepsLog("Container Size Selected : " + CS);
+        List<WebElement> element=localDriver.findElements(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+CS+"')]"));
+        if(element.size()>0)
+        {
+
+            element.get(0).click();
+            testStepsLog("Container size  selected : " + CS);
+        }
+        else
+        {
+            generics.clickOn(firstOption);
+            testStepsLog("first container size selecte ");
+        }
+
+
     }
 
     @FindBy(xpath = "//mat-select[@formcontrolname='serviceFrequencyId']")
@@ -788,7 +800,6 @@ public class ProspectPage extends Prospect {
         List<WebElement> element=localDriver.findElements(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+M+"')]"));
         if(element.size()>0)
         {
-
             element.get(0).click();
             testStepsLog("Disposible site selected : " + M);
         }
@@ -917,6 +928,19 @@ public class ProspectPage extends Prospect {
         generics.pause(5);
         return generics.isPresent(CSASuccess);
     }
+    @FindBy(xpath = "//input[@formcontrolname='searchValue']")
+    public WebElement Searchbox;
+
+    public void searchProspect()
+    {
+        generics.pause(3);
+        generics.type(Searchbox,ProspectName+Keys.ENTER);
+        generics.pause(4);
+
+    }
+
+
+
     @FindBy(xpath = "//*[contains(text(),'AGREEMENT TERMS AND CONDITIONS')]")
     public WebElement Aggreement;
 
@@ -1025,9 +1049,11 @@ public class ProspectPage extends Prospect {
     public WebElement btnSubmit;
 
     public void clickonSubmit() {
-        generics.clickOn(btnSubmit);
-        generics.pause(5);
-        testStepsLog("Clicked on SUBMIT.");
+        if(generics.isPresent(btnSubmit)) {
+            generics.clickOn(btnSubmit);
+            generics.pause(5);
+            testStepsLog("Clicked on SUBMIT.");
+        }
     }
 
     @FindBy(xpath = "//button[contains(text(),'SUBMIT TO CDE')]")
@@ -1064,7 +1090,7 @@ public class ProspectPage extends Prospect {
         testStepsLog("Clicked on Unassigned.");
     }
 
-    @FindBy(xpath = "//div[contains(text(),'TICKET DETAILS')]')]")
+    @FindBy(xpath = "//div[contains(text(),'TICKET DETAILS')]")
     public WebElement Ticketdetailspage;
 
     @FindBy(xpath = "//h3[contains(text(),'ORDER FORM NOTES')]")
@@ -1072,7 +1098,7 @@ public class ProspectPage extends Prospect {
 
     public boolean isTicketDetailsOpen() {
 
-        generics.pause(3);
+        generics.pause(8);
         return generics.isPresent(Ticketdetailspage);
 
     }
@@ -1216,7 +1242,7 @@ public class ProspectPage extends Prospect {
         testStepsLog("Material selected : " + M);
     }
 
-    @FindBy(xpath = "//mat-select[@formcontrolname='weight']")
+    @FindBy(xpath = "//input[@formcontrolname='weight']")
     public WebElement weight;
 
     public void typeWeight()
@@ -1224,6 +1250,18 @@ public class ProspectPage extends Prospect {
         generics.type(weight,String.valueOf(generics.getRandomBetween(0,9)));
         testStepsLog("Weight inserted");
     }
+
+    @FindBy(xpath = "//button[contains(text(),'APPROVE')]")
+    public WebElement btnApprove;
+
+    public void clickonApprovebutton()
+    {
+        if(generics.isPresent(btnApprove)) {
+            generics.clickOn(btnApprove);
+            testStepsLog("Clicked on Approved button");
+        }
+    }
+
 
 
 
