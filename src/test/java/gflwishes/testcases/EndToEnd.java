@@ -134,7 +134,8 @@ public class EndToEnd extends EndToEndBaseClass {
         LandingPage lp = new LandingPage(wishesDriver);
         ServiceOrderPage cp = new ServiceOrderPage(wishesDriver);
         int rows = cp.getRowsExcel();
-
+        LoginPage login = new LoginPage(wishesDriver);
+        login.loginAs(USER_NAME, PASSWORD);
         for (int i = 1; i < rows; i++) {
             try {
                 String CustID = cp.getCustomerIDStatus(i);
@@ -210,7 +211,7 @@ public class EndToEnd extends EndToEndBaseClass {
                     cp.SelectAddress();
                     cp.SelectConfirmationCheckbox();
                     cp.UploadFile();
-                    // cp.ClickonPayAmount();
+                    cp.ClickonPayAmount();
                     if (cp.isPaymentDone()) {
                         success("Paymenet Done successfully");
                         cp.UpdateStatus(i);

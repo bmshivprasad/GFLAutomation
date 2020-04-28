@@ -120,10 +120,11 @@ public class EndToEndProspect extends EndToEndBaseClass {
                 }
 
                 pp.clickonCreateQuote();
-                //pp.clickonCreateQuote();
-                pp.clickonNextButton();
+
+                pp.clickonAddNewServiceButton();
                 //pp.clickonNextButton();
-                pp.clickonAddServiceButton();
+
+                //pp.clickonAddServiceButton();
                 pp.selectServiceType();
                 pp.typeContainerCount(i);
                 pp.SelectContainerType(i);
@@ -141,12 +142,14 @@ public class EndToEndProspect extends EndToEndBaseClass {
                 pp.clickonCalculate();
                 pp.typenote();
                 pp.clickonAddService();
+                pp.clickonNextButton();
+                /*
                 pp.clickonUpdateAgreement();
                 if (pp.isAggreementUpdated()) {
                     success("Aggreeement updpated successfully ");
                 } else {
                     failure("Aggreeement not updated successfully");
-                }
+                }*/
 
                 pp.clickonSaveAndSubmitCSA();
                 pp.clickonSubmitButton();
@@ -156,6 +159,9 @@ public class EndToEndProspect extends EndToEndBaseClass {
                     failure("CSA not Saved successfully");
                 }
 
+                pp.clickonApprovebutton();
+                pp.clickonSubmit();
+
                 lp.OpenAgreements();
 
                 if (pp.isAgreementsPageOpen()) {
@@ -163,7 +169,7 @@ public class EndToEndProspect extends EndToEndBaseClass {
                 } else {
                     failure("Agreements page not open");
                 }
-
+                pp.searchProspect();
                 pp.clickonAgreementsNo();
                 pp.clickonCustomerCopy();
                 pp.clickonChkAgreementTearmsAndCondition();
