@@ -56,6 +56,231 @@ public class WishesAdminPage extends WishesAdmin {
         testStepsLog("Clicked ON Add Customer button");
         generics.pause(2);
     }
+    @FindBy(xpath = "//div[text()='Roll Off']")
+    public WebElement tabRollOff;
+
+    public void clickOnTabRollOff()
+    {
+        generics.clickOn(tabRollOff);
+        testStepsLog("Clicked on Tab Roll OFF");
+    }
+    @FindBy(xpath = "//span[text()='ACCEPTED MATERIALS']/following-sibling::button/i")
+    public WebElement btnAddAcceptedMaterials;
+
+    public void clickonAddAcceptedMaterialButton()
+    {
+        generics.pause(3);
+        JavascriptExecutor je = (JavascriptExecutor) localDriver;
+        je.executeScript("arguments[0].scrollIntoView(true);",btnAddAcceptedMaterials);
+        generics.clickOn(btnAddAcceptedMaterials);
+        testStepsLog("Clicked on Add Accepted material button");
+    }
+    @FindBy(xpath = "//mat-select[@formcontrolname='editedMaterialId']")
+    public WebElement dpMaterial;
+
+    @FindBy(xpath = "(//mat-option[@aria-disabled='false']/span)[2]")
+    public WebElement firstEnabledOption;
+
+    @FindBy(xpath = "(//mat-option[@aria-disabled='true']/span)[1]")
+    public WebElement firstOption;
+
+    @FindBy(xpath = "//i[text()='done']")
+    public WebElement btnDone;
+
+    @FindBy(xpath = "//i[text()='delete_forever']")
+    public WebElement btnDelete;
+
+
+
+    public static String Material;
+    public void selectMaterial() {
+        JavascriptExecutor je = (JavascriptExecutor) localDriver;
+        je.executeScript("arguments[0].scrollIntoView(true);", dpMaterial);
+        generics.clickOn(dpMaterial);
+        if (generics.isPresent(firstEnabledOption)) {
+            Material = generics.getText(firstEnabledOption);
+            generics.clickOn(firstEnabledOption);
+            testStepsLog("Clicked on First Material : " + Material);
+            generics.clickOn(btnDone);
+            testStepsLog("Material Added");
+            generics.pause(4);
+        } else{
+            Material = generics.getText(firstOption);
+            generics.clickOn(btnDelete);
+            generics.clickOn(btnDelete);
+            generics.pause(2);
+        }
+
+    }
+
+    //==============================================
+
+    @FindBy(xpath = "//span[text()='CONTAINER SIZES']/following-sibling::button/i")
+    public WebElement btnAddContainerSize;
+    public void clickonAddContainerSizeButton()
+    {
+
+        generics.clickOn(btnAddContainerSize);
+        testStepsLog("Clicked on Add Container size button");
+    }
+    @FindBy(xpath = "//mat-select[@formcontrolname='editedContainerSizeId']")
+    public WebElement dpContainerSize;
+
+
+    public static String ContainerSize;
+    public void selectContainerSize()
+    {
+        if (generics.isPresent(firstEnabledOption)) {
+            generics.clickOn(dpContainerSize);
+            ContainerSize = generics.getText(firstEnabledOption);
+            generics.clickOn(firstEnabledOption);
+            testStepsLog("Clicked on First ContainerSize : " + ContainerSize);
+            generics.clickOn(btnDone);
+            testStepsLog("ContainerSize Added");
+            generics.pause(4);
+        }
+        else
+        {
+            ContainerSize = generics.getText(firstOption);
+            generics.clickOn(btnDelete);
+            generics.clickOn(btnDelete);
+            generics.pause(2);
+        }
+
+    }
+
+    //=======================================================
+
+
+    @FindBy(xpath = "//span[text()='LOADING TIME']/following-sibling::button/i")
+    public WebElement btnAddAcceptedLoadingTime;
+
+    public void clickonAddLoaingTimeButton()
+    {
+        JavascriptExecutor je = (JavascriptExecutor) localDriver;
+        je.executeScript("arguments[0].scrollIntoView(true);",btnAddAcceptedLoadingTime);
+        generics.clickOn(btnAddAcceptedLoadingTime);
+        testStepsLog("Clicked on Add Loading Time");
+    }
+    @FindBy(xpath = "//mat-select[@formcontrolname='editedContainerTypeId']")
+    public WebElement dpLoadingTime;
+
+    @FindBy(xpath = "//mat-select[@formcontrolname='editedMinutes']")
+    public WebElement txtMinutes;
+
+    public static String LoadingTime;
+    public static int Minutes;
+    public void selectLoadingTime()
+    {
+        JavascriptExecutor je = (JavascriptExecutor) localDriver;
+        je.executeScript("arguments[0].scrollIntoView(true);",dpLoadingTime);
+        if (generics.isPresent(firstEnabledOption)) {
+            generics.clickOn(dpLoadingTime);
+            LoadingTime = generics.getText(firstEnabledOption);
+            generics.clickOn(firstEnabledOption);
+            testStepsLog("Clicked on First Loading TIme : " + LoadingTime);
+            Minutes=generics.getRandomBetween(1,5);
+            generics.type(txtMinutes,String.valueOf(Minutes));
+            generics.clickOn(btnDone);
+            testStepsLog("Loading time Added");
+            generics.pause(4);
+        }
+        else
+        {
+            LoadingTime = generics.getText(firstOption);
+            generics.clickOn(btnDelete);
+            generics.clickOn(btnDelete);
+            generics.pause(2);
+        }
+    }
+
+
+    //============================================================
+
+    @FindBy(xpath = "//span[text()='HAUL MULTIPLIER']/following-sibling::button/i")
+    public WebElement btnAddHaulMultiplier;
+
+    public void clickonAddHaulMultiplierButton()
+    {
+
+        generics.clickOn(btnAddHaulMultiplier);
+        testStepsLog("Clicked on Add Haul Multiplier");
+    }
+    @FindBy(xpath = "//mat-select[@formcontrolname='editedHaulTypeId']")
+    public WebElement dpHaulMultipler;
+
+    @FindBy(xpath = "//mat-select[@formcontrolname='editedMultiplier']")
+    public WebElement txtMultiper;
+
+
+    public static String HaulMultiplier;
+    public static int Multiper;
+    public void selectHaulMultipler()
+    {
+
+        if (generics.isPresent(firstEnabledOption)) {
+            generics.clickOn(dpHaulMultipler);
+            HaulMultiplier = generics.getText(firstEnabledOption);
+            generics.clickOn(firstEnabledOption);
+            testStepsLog("Clicked on First HaulMultiplier: " + HaulMultiplier);
+            Multiper=generics.getRandomBetween(1,5);
+            generics.type(txtMinutes,String.valueOf(Multiper));
+            generics.clickOn(btnDone);
+            testStepsLog("HaulMultiplier Added");
+            generics.pause(4);
+        }
+        else
+        {
+            HaulMultiplier = generics.getText(firstOption);
+            generics.clickOn(btnDelete);
+            generics.clickOn(btnDelete);
+            generics.pause(2);
+        }
+    }
+
+
+    //=====================================================================
+
+    @FindBy(xpath = "//span[text()='Fees']/following-sibling::button/i")
+    public WebElement btnAddAFees;
+
+    public void clickonAddFees()
+    {
+        JavascriptExecutor je = (JavascriptExecutor) localDriver;
+        je.executeScript("arguments[0].scrollIntoView(true);",btnAddAFees);
+        generics.clickOn(btnAddAFees);
+        testStepsLog("Clicked on Add Fees button");
+    }
+    @FindBy(xpath = "//mat-select[@formcontrolname='editedServiceFeeId']")
+    public WebElement dpServiceFee;
+
+
+    public static String Fees;
+
+    public void selectFees()
+    {
+        JavascriptExecutor je = (JavascriptExecutor) localDriver;
+        je.executeScript("arguments[0].scrollIntoView(true);",dpServiceFee);
+        if (generics.isPresent(firstEnabledOption)) {
+            generics.clickOn(dpLoadingTime);
+            Fees = generics.getText(firstEnabledOption);
+            generics.clickOn(firstEnabledOption);
+            testStepsLog("Clicked on First Fees type: " + Fees);
+
+            generics.clickOn(btnDone);
+            testStepsLog("Fees Added");
+            generics.pause(4);
+        }
+        else
+        {
+            LoadingTime = generics.getText(firstOption);
+            generics.clickOn(btnDelete);
+            generics.clickOn(btnDelete);
+            generics.pause(2);
+        }
+    }
+
+
 
     public boolean searching(String keywords, int column) {
         String xpath = "//table[contains(@class,'MuiTable-root')]/tr";

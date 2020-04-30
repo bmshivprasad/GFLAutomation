@@ -135,7 +135,7 @@ public class EndToEnd extends EndToEndBaseClass {
         ServiceOrderPage cp = new ServiceOrderPage(wishesDriver);
         int rows = cp.getRowsExcel();
         LoginPage login = new LoginPage(wishesDriver);
-        login.loginAs(USER_NAME, PASSWORD);
+        //login.loginAs(USER_NAME, PASSWORD);
         for (int i = 1; i < rows; i++) {
             try {
                 String CustID = cp.getCustomerIDStatus(i);

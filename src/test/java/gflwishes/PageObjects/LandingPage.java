@@ -96,6 +96,12 @@ public class LandingPage extends EnhancedBaseClass {
     
     @FindBy(xpath = "//div[contains(text(),'PROSPECTS ')]")
     public WebElement Prospect;
+
+    @FindBy(xpath = "//span[contains(text(),'ADMIN')]")
+    public WebElement Admin;
+
+    @FindBy(xpath = "//div[contains(text(),'C & M')]")
+    public WebElement CAndM;
     
     @FindBy(xpath = "//div[contains(text(),'AGREEMENTS ')]")
     public WebElement Agreements;
@@ -146,6 +152,20 @@ public class LandingPage extends EnhancedBaseClass {
         generics.pause(1);
         generics.clickOn(Prospect);
         testStepsLog("Click on Prospect link ");
+        generics.pause(2);
+    }
+
+    public void OpenAdmin() {
+        generics.pause(1);
+        generics.clickOn(Admin);
+        testStepsLog("Click on Admin link ");
+        generics.pause(2);
+    }
+
+    public void OpenCAndM() {
+        generics.pause(1);
+        generics.clickOn(CAndM);
+        testStepsLog("Click on C and M link ");
         generics.pause(2);
     }
 

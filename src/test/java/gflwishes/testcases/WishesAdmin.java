@@ -1,17 +1,18 @@
 package gflwishes.testcases;
 
-import gflwishes.PageObjects.AdminPage;
+import gflwishes.PageObjects.WishesAdminPage;
 import gflwishes.PageObjects.LandingPage;
 import gflwishes.PageObjects.LoginPage;
-import gflwishes.PageObjects.ProspectPage;
+
 import gflwishes.base.EnhancedBaseClass;
 import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
 
-public class WishesAdmin extends EnhancedBaseClass {
+public class WishesAdmin extends EnhancedBaseClass
+{
 
 	 public WishesAdmin() {
-	        log4j = Logger.getLogger("Prospect");
+	        log4j = Logger.getLogger("WishesAdmin");
 	    }
 
 
@@ -21,16 +22,16 @@ public class WishesAdmin extends EnhancedBaseClass {
 	    }
 
 	@Test
-	public void TC001WS_Verify_Create_Prospect_Functionality_with_ServiceType_FrontEnd() {
+	public void TC001WS_Verify_Adding()
+	{
 
 		testCaseLog("TC001WS_Verify_Create_Prospect_Functionality_with_ServiceType_FrontEnd");
 
 		LoginPage login = new LoginPage(wishesDriver);
 		LandingPage lp = new LandingPage(wishesDriver);
-		AdminPage cp = new AdminPage(wishesDriver);
+		WishesAdminPage ap = new WishesAdminPage(wishesDriver);
 
-		ProspectPage pp = new ProspectPage(wishesDriver);
-		int rows = pp.getRowsExcel();
+
 		login.loginAs(USER_NAME, PASSWORD);
 
 		if (lp.isUserLoginSuccessful()) {
@@ -38,8 +39,15 @@ public class WishesAdmin extends EnhancedBaseClass {
 		} else {
 			failure("Failed to Login");
 		}
-
-
+		lp.OpenAdmin();
+		lp.OpenCAndM();
+		ap.clickOnTabRollOff();
+		ap.clickonAddAcceptedMaterialButton();
+		ap.selectMaterial();
+		ap.selectContainerSize();
+		ap.selectLoadingTime();
+		ap.selectHaulMultipler();
+		ap.selectFees();
 
 		sa.assertAll();
 
