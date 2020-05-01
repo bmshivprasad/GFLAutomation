@@ -44,10 +44,24 @@ public class WishesAdmin extends EnhancedBaseClass
 		ap.clickOnTabRollOff();
 		ap.clickonAddAcceptedMaterialButton();
 		ap.selectMaterial();
+		ap.clickonAddContainerSizeButton();
 		ap.selectContainerSize();
+		ap.clickonAddLoaingTimeButton();
 		ap.selectLoadingTime();
+		ap.clickonAddHaulMultiplierButton();
 		ap.selectHaulMultipler();
+		ap.clickonAddFees();
 		ap.selectFees();
+		lp.OpenServiceOrder();
+		lp.OpenServiceOrder();
+
+		if (ap.isServiceOrderPageOpen()) {
+			success("Service Order page open successfully");
+		} else {
+			failure("Service Order page not open");
+		}
+		ap.clickonTempServicebtn();
+
 
 		sa.assertAll();
 

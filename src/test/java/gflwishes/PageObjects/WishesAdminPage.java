@@ -70,10 +70,11 @@ public class WishesAdminPage extends WishesAdmin {
     public void clickonAddAcceptedMaterialButton()
     {
         generics.pause(3);
-        JavascriptExecutor je = (JavascriptExecutor) localDriver;
-        je.executeScript("arguments[0].scrollIntoView(true);",btnAddAcceptedMaterials);
+        //JavascriptExecutor je = (JavascriptExecutor) localDriver;
+        //je.executeScript("arguments[0].scrollIntoView(true);",btnAddAcceptedMaterials);
         generics.clickOn(btnAddAcceptedMaterials);
         testStepsLog("Clicked on Add Accepted material button");
+        generics.pause(3);
     }
     @FindBy(xpath = "//mat-select[@formcontrolname='editedMaterialId']")
     public WebElement dpMaterial;
@@ -90,12 +91,18 @@ public class WishesAdminPage extends WishesAdmin {
     @FindBy(xpath = "//i[text()='delete_forever']")
     public WebElement btnDelete;
 
+    @FindBy(xpath = "//mat-option[1]")
+    public WebElement nooption;
+
+
 
 
     public static String Material;
     public void selectMaterial() {
         JavascriptExecutor je = (JavascriptExecutor) localDriver;
-        je.executeScript("arguments[0].scrollIntoView(true);", dpMaterial);
+        je.executeScript("arguments[0].scrollIntoView(true);", btnAddAcceptedMaterials);
+        testStepsLog("test");
+        generics.pause(2);
         generics.clickOn(dpMaterial);
         if (generics.isPresent(firstEnabledOption)) {
             Material = generics.getText(firstEnabledOption);
@@ -106,7 +113,7 @@ public class WishesAdminPage extends WishesAdmin {
             generics.pause(4);
         } else{
             Material = generics.getText(firstOption);
-            generics.clickOn(btnDelete);
+            generics.clickOn(nooption);
             generics.clickOn(btnDelete);
             generics.pause(2);
         }
@@ -119,7 +126,8 @@ public class WishesAdminPage extends WishesAdmin {
     public WebElement btnAddContainerSize;
     public void clickonAddContainerSizeButton()
     {
-
+        generics.moveTo(tabRollOff);
+        testStepsLog("moved");
         generics.clickOn(btnAddContainerSize);
         testStepsLog("Clicked on Add Container size button");
     }
@@ -130,8 +138,12 @@ public class WishesAdminPage extends WishesAdmin {
     public static String ContainerSize;
     public void selectContainerSize()
     {
+        generics.moveTo(btnAddHaulMultiplier);
+        testStepsLog("test");
+        generics.pause(5);
+        generics.clickOn(dpContainerSize);
         if (generics.isPresent(firstEnabledOption)) {
-            generics.clickOn(dpContainerSize);
+
             ContainerSize = generics.getText(firstEnabledOption);
             generics.clickOn(firstEnabledOption);
             testStepsLog("Clicked on First ContainerSize : " + ContainerSize);
@@ -142,7 +154,7 @@ public class WishesAdminPage extends WishesAdmin {
         else
         {
             ContainerSize = generics.getText(firstOption);
-            generics.clickOn(btnDelete);
+            generics.clickOn(nooption);
             generics.clickOn(btnDelete);
             generics.pause(2);
         }
@@ -157,25 +169,24 @@ public class WishesAdminPage extends WishesAdmin {
 
     public void clickonAddLoaingTimeButton()
     {
-        JavascriptExecutor je = (JavascriptExecutor) localDriver;
-        je.executeScript("arguments[0].scrollIntoView(true);",btnAddAcceptedLoadingTime);
+        generics.moveTo(btnAddAFees);
         generics.clickOn(btnAddAcceptedLoadingTime);
         testStepsLog("Clicked on Add Loading Time");
     }
     @FindBy(xpath = "//mat-select[@formcontrolname='editedContainerTypeId']")
     public WebElement dpLoadingTime;
 
-    @FindBy(xpath = "//mat-select[@formcontrolname='editedMinutes']")
+    @FindBy(xpath = "//input[@formcontrolname='editedMinutes']")
     public WebElement txtMinutes;
 
     public static String LoadingTime;
     public static int Minutes;
     public void selectLoadingTime()
     {
-        JavascriptExecutor je = (JavascriptExecutor) localDriver;
-        je.executeScript("arguments[0].scrollIntoView(true);",dpLoadingTime);
+        generics.pause(2);
+        generics.clickOn(dpLoadingTime);
         if (generics.isPresent(firstEnabledOption)) {
-            generics.clickOn(dpLoadingTime);
+
             LoadingTime = generics.getText(firstEnabledOption);
             generics.clickOn(firstEnabledOption);
             testStepsLog("Clicked on First Loading TIme : " + LoadingTime);
@@ -188,7 +199,7 @@ public class WishesAdminPage extends WishesAdmin {
         else
         {
             LoadingTime = generics.getText(firstOption);
-            generics.clickOn(btnDelete);
+            generics.clickOn(nooption);
             generics.clickOn(btnDelete);
             generics.pause(2);
         }
@@ -209,7 +220,7 @@ public class WishesAdminPage extends WishesAdmin {
     @FindBy(xpath = "//mat-select[@formcontrolname='editedHaulTypeId']")
     public WebElement dpHaulMultipler;
 
-    @FindBy(xpath = "//mat-select[@formcontrolname='editedMultiplier']")
+    @FindBy(xpath = "//input[@formcontrolname='editedMultiplier']")
     public WebElement txtMultiper;
 
 
@@ -217,14 +228,14 @@ public class WishesAdminPage extends WishesAdmin {
     public static int Multiper;
     public void selectHaulMultipler()
     {
-
+        generics.clickOn(dpHaulMultipler);
         if (generics.isPresent(firstEnabledOption)) {
-            generics.clickOn(dpHaulMultipler);
+
             HaulMultiplier = generics.getText(firstEnabledOption);
             generics.clickOn(firstEnabledOption);
             testStepsLog("Clicked on First HaulMultiplier: " + HaulMultiplier);
             Multiper=generics.getRandomBetween(1,5);
-            generics.type(txtMinutes,String.valueOf(Multiper));
+            generics.type(txtMultiper,String.valueOf(Multiper));
             generics.clickOn(btnDone);
             testStepsLog("HaulMultiplier Added");
             generics.pause(4);
@@ -232,7 +243,7 @@ public class WishesAdminPage extends WishesAdmin {
         else
         {
             HaulMultiplier = generics.getText(firstOption);
-            generics.clickOn(btnDelete);
+            generics.clickOn(nooption);
             generics.clickOn(btnDelete);
             generics.pause(2);
         }
@@ -247,7 +258,7 @@ public class WishesAdminPage extends WishesAdmin {
     public void clickonAddFees()
     {
         JavascriptExecutor je = (JavascriptExecutor) localDriver;
-        je.executeScript("arguments[0].scrollIntoView(true);",btnAddAFees);
+        je.executeScript("window.scrollTo(0, document.body.scrollHeight)");
         generics.clickOn(btnAddAFees);
         testStepsLog("Clicked on Add Fees button");
     }
@@ -259,10 +270,10 @@ public class WishesAdminPage extends WishesAdmin {
 
     public void selectFees()
     {
-        JavascriptExecutor je = (JavascriptExecutor) localDriver;
-        je.executeScript("arguments[0].scrollIntoView(true);",dpServiceFee);
+
+        generics.clickOn(dpServiceFee);
         if (generics.isPresent(firstEnabledOption)) {
-            generics.clickOn(dpLoadingTime);
+
             Fees = generics.getText(firstEnabledOption);
             generics.clickOn(firstEnabledOption);
             testStepsLog("Clicked on First Fees type: " + Fees);
@@ -274,10 +285,27 @@ public class WishesAdminPage extends WishesAdmin {
         else
         {
             LoadingTime = generics.getText(firstOption);
-            generics.clickOn(btnDelete);
+            generics.clickOn(nooption);
             generics.clickOn(btnDelete);
             generics.pause(2);
         }
+    }
+
+    @FindBy(xpath = "//button[contains(text(),'TEMP SERVICE')]")
+    public WebElement btntempServices;
+    @FindBy(xpath = "//button[contains(text(),'TEMP SERVICE')]/i")
+    public WebElement btnTempService;
+
+    public boolean isServiceOrderPageOpen() {
+        return generics.isPresent(btnTempService);
+    }
+
+    public void clickonTempServicebtn() {
+        generics.moveTo(btnTempService);
+        JavascriptExecutor js = (JavascriptExecutor) localDriver;
+        js.executeScript("window.scrollBy(0,-450)", "");
+        generics.scrollToElement(btntempServices);
+        generics.clickOn(btntempServices);
     }
 
 
