@@ -16,7 +16,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class DispatchPO_2 extends Dispatch {
 
@@ -24,9 +26,12 @@ public class DispatchPO_2 extends Dispatch {
     private Generics generics;
 
     private static String orderTitle = "";
-    private static String vehicleName = "";
+    public static String vehicleName = "";
     private static String SiteAddress;
     private static String lblPickUpOrderName;
+
+    private static boolean isUpFound = false;
+    private static int directive = 0;
 
     public DispatchPO_2(WebDriver baseDriver) {
         this.driver = baseDriver;
@@ -51,7 +56,7 @@ public class DispatchPO_2 extends Dispatch {
             "//div[@class='pastDate']//map-common-date-time-view//div")
     List<WebElement> lstPastOrderTitle;
 
-    @FindBy(xpath = "//h3[contains(@class,'error_text')]")
+    @FindBy(xpath = "//common-error//div[contains(@class,'message')]")
     WebElement lblError;
 
     @FindAll(value = {@FindBy(xpath = "//dispatch-order-aside-header//following-sibling::map-common-group-order-list//map-common-order-item/div[not(@class='pastDate')]//div[text()!='ON HOLD']")})
@@ -72,6 +77,10 @@ public class DispatchPO_2 extends Dispatch {
     @FindAll(value = {@FindBy(xpath = "//dispatch-order-aside-header//following-sibling::map-common-group-order-list" +
             "//map-common-order-item//div[text()!='ON HOLD']")})
     List<WebElement> lstTomorrowOrders;
+
+    @FindAll(value = {@FindBy(xpath = "//dispatch-order-aside-header//following-sibling::map-common-group-order-list" +
+            "//map-common-order-item//p")})
+    List<WebElement> lstInProgressOrders;
 
     @FindAll(value = {@FindBy(xpath = "//dispatch-order-aside-header//following-sibling::map-common-group-order-list" +
             "//map-common-order-item//div[text()!='ON HOLD']//ancestor::map-common-order-item//p")})
@@ -106,6 +115,10 @@ public class DispatchPO_2 extends Dispatch {
     @FindAll(value = {@FindBy(xpath = "//button[@role='menuitem']")})
     List<WebElement> lstMenuItem;
 
+    @FindBy(xpath = "//map-common-vehicle-detailed-view//mat-expansion-panel[contains(@class,'mat-expanded')]" +
+            "//mat-icon[@title='Order for this vehicle will be unassigned']")
+    WebElement btnRemoveVehicle;
+
     @FindBy(xpath = "//i[text()='date_range']//following-sibling::span")
     WebElement btnDatePicker;
 
@@ -115,8 +128,26 @@ public class DispatchPO_2 extends Dispatch {
     @FindBy(xpath = "//button//span[@dataname='PUT ON HOLD']")
     WebElement btnOnHold;
 
+    @FindBy(xpath = "//button//span[@dataname='RESCHEDULE']")
+    WebElement btnReschedule;
+
+    @FindBy(xpath = "//button//mat-icon[text()='check']//following-sibling::div[contains(text(),'YES')]")
+    WebElement btnYes;
+
     @FindBy(xpath = "//button//mat-icon[text()='play_circle_outline']")
     WebElement btnStart;
+
+    @FindBy(xpath = "//mat-icon[contains(@class,'container_buttons')]")
+    List<WebElement> btnEditContainer;
+
+    @FindBy(xpath = "//input[@formcontrolname='pickupContainerName']")
+    WebElement txtContainerName;
+
+    @FindAll(value = {@FindBy(xpath = "//mat-radio-button")})
+    List<WebElement> lstRadios;
+
+    @FindBy(xpath = "//form//mat-icon[text()='check']")
+    WebElement btnSaveContainerName;
 
     @FindAll(value = {@FindBy(xpath = "//map-common-list-header[contains(text(),'EMPTY AND RETURN') or contains(text()," +
             "'EXCHANGE')]//ancestor::map-common-order-list//mat-list-item//div[text()!='ON HOLD' and contains(text(),'-')]")})
@@ -177,6 +208,10 @@ public class DispatchPO_2 extends Dispatch {
         generics.clickOn(lstPastOrders.get(0));
     }
 
+    public void selectTodayOrder() {
+        generics.clickOn(lstTodayOrders.get(0));
+    }
+
     public void selectPastERExOrder() {
         generics.clickOn(lstEmptyReturnExchangeUnassignedOrdersPastDate.get(0));
     }
@@ -197,15 +232,41 @@ public class DispatchPO_2 extends Dispatch {
         orderTitle = lstTodayOrderTitle.get(0).getText();
         vehicleName = lblEmptyTruck.getText();
         System.out.println(orderTitle + vehicleName);
-        act.dragAndDrop(lblEmptyTruck, lstTodayOrders.get(0)).build().perform();
+        act.clickAndHold(lblEmptyTruck)
+                .moveToElement(lstTodayOrders.get(0))
+                .release(lstTodayOrders.get(0))
+                .build().perform();
         generics.pause(10);
+    }
+
+    public void addTodayOrderFromMapToTruck(Map<String, List<List<String>>> vehicles) {
+        generics.pause(4);
+        Actions act = new Actions(driver);
+        testStepsLog("Drag and Drop Truck from the map to order.");
+
+        for (Map.Entry<String, List<List<String>>> entry : vehicles.entrySet()) {
+            String vehicle = entry.getKey();
+            List<List<String>> value = entry.getValue();
+            if (!generics.isPresent("//span[contains(@class,'vehicle_id_font') and text()='" + vehicle + "']" +
+                    "//ancestor::map-common-vehicle-item-header//img//following-sibling::span") && value.isEmpty()) {
+                vehicleName = vehicle;
+                generics.scrollToElement(driver.findElement(By.xpath("//map-common-vehicle-item-header//" +
+                        "span[contains(@class,'vehicle_id_font') and text()='" + vehicleName + "']")));
+                generics.scrollToElement(lstTodayOrders.get(0));
+                orderTitle = lstTodayOrderTitle.get(0).getText();
+                System.out.println(orderTitle + vehicleName);
+                act.dragAndDrop(lblEmptyTruck, lstTodayOrders.get(0)).build().perform();
+                generics.pause(10);
+                break;
+            }
+        }
     }
 
     public void addTodayOrderFromMapToTruckWithVehicle() {
         generics.pause(4);
         Actions act = new Actions(driver);
         testStepsLog("Drag and Drop Truck from the map to order.");
-        generics.scrollToElement(lblEmptyTruck);
+        generics.scrollToElement(driver.findElement(By.xpath("//div[@appoverlay='VehicleList']//span[text()='" + vehicleName + "']")));
         generics.scrollToElement(lstTodayOrders.get(0));
         orderTitle = lstTodayOrderTitle.get(0).getText();
         System.out.println(orderTitle);
@@ -279,6 +340,7 @@ public class DispatchPO_2 extends Dispatch {
 
     private void clickOnOrderStatusFilter() {
         testStepsLog("Click on ORDER Status");
+        generics.scrollToElement(btnFilterOpen);
         generics.clickOnJS(btnFilterOpen);
     }
 
@@ -297,7 +359,7 @@ public class DispatchPO_2 extends Dispatch {
         selectOrder();
         generics.clickOn(lblOrderDate);
         generics.clickOn(driver.findElement(By.xpath("//span[@bsdatepickerdaydecorator and text()='" +
-                LocalDate.now().plusDays(1).format(DateTimeFormatter.ofPattern("dd")) + "']")));
+                LocalDate.now().plusDays(1).format(DateTimeFormatter.ofPattern("d")) + "']")));
         generics.clickOnJS(btnProceed);
     }
 
@@ -310,7 +372,7 @@ public class DispatchPO_2 extends Dispatch {
                 driver.findElements(By.xpath("//div[contains(@class,'cdk-overlay-backdrop-showing')]"))));
         btnDatePicker.click();
         generics.clickOn(driver.findElement(By.xpath("//span[contains(@aria-label,'" +
-                LocalDate.now().plusDays(1).format(DateTimeFormatter.ofPattern("MMMM dd, yyyy")) + "')]")));
+                LocalDate.now().plusDays(1).format(DateTimeFormatter.ofPattern("MMMM d, yyyy")) + "')]")));
     }
 
     public boolean verifyAssigningVehicleToInProgressOrder() {
@@ -340,6 +402,9 @@ public class DispatchPO_2 extends Dispatch {
     }
 
     public void openOrderFromVehiclePane() {
+        generics.pause(3);
+        lstAssignedOrders = driver.findElements(By.xpath("//dispatch-vehicle-aside-header//" +
+                "following-sibling::map-common-vehicle-list//div[@id='order-item']//p"));
         for (WebElement e : lstAssignedOrders) {
             System.out.println(e.getText() + "   " + orderTitle);
             if (e.getText().contains(orderTitle)) {
@@ -354,7 +419,7 @@ public class DispatchPO_2 extends Dispatch {
         generics.pause(3);
         testStepsLog("Click on Start button to start order.");
         generics.clickOnJS(btnStart);
-        generics.pause(2);
+        generics.pause(4);
         generics.clickOnJS(btnVehicleBack);
     }
 
@@ -375,13 +440,211 @@ public class DispatchPO_2 extends Dispatch {
         generics.pause(4);
         Actions act = new Actions(driver);
         testStepsLog("Drag and Drop Truck from the map to order.");
-        generics.scrollToElement(lblEmptyTruck);
+        WebElement lblTruck = driver.findElement(By.xpath("//map-common-vehicle-item-header//" +
+                "span[contains(@class,'vehicle_id_font') and text()='" + vehicleName + "']"));
+        generics.scrollToElement(lblTruck);
         generics.scrollToElement(lstEmptyReturnExchangeUnassignedOrdersToday.get(0));
         orderTitle = lstEmptyReturnExchangeUnassignedOrdersTodayTitle.get(0).getText();
         System.out.println(orderTitle);
-        act.dragAndDrop(driver.findElement(By.xpath("//div[@appoverlay='VehicleList']//span[text()='" + vehicleName + "']")),
-                lstEmptyReturnExchangeUnassignedOrdersToday.get(0)).build().perform();
+        act.clickAndHold(lblTruck)
+                .moveToElement(lstEmptyReturnExchangeUnassignedOrdersToday.get(0))
+                .release(lstEmptyReturnExchangeUnassignedOrdersToday.get(0))
+                .build().perform();
         new WebDriverWait(driver, 30).until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//section[contains(@class,'spinner')]")));
     }
 
+    public void addTodayInProgressOrderFromMapToTruck() {
+        generics.pause(4);
+        Actions act = new Actions(driver);
+        testStepsLog("Drag and Drop Truck from the map to order.");
+        generics.scrollToElement(lblEmptyTruck);
+        generics.scrollToElement(lstInProgressOrders.get(0));
+        orderTitle = lstInProgressOrders.get(0).getText();
+        vehicleName = lblEmptyTruck.getText();
+        System.out.println(orderTitle + vehicleName);
+        act.dragAndDrop(lblEmptyTruck, lstInProgressOrders.get(0)).build().perform();
+        generics.pause(10);
+    }
+
+    public boolean isInProgressOrdersNotDisplay() {
+        return driver.findElements(By.xpath("//dispatch-order-aside-header//" +
+                "following-sibling::map-common-group-order-list//map-common-order-item//p")).isEmpty();
+    }
+
+    public boolean verifyOnHoldAssignmentMessage() {
+        return lblError.getText().equalsIgnoreCase("You cannot assign Onhold " +
+                "assignments without reschedule it!");
+    }
+
+    public void addTodayERExOrderFromMapToTruck(Map<String, List<List<String>>> vehicles) {
+        generics.pause(4);
+        Actions act = new Actions(driver);
+        testStepsLog("Drag and Drop Truck from the map to order.");
+
+        for (Map.Entry<String, List<List<String>>> entry : vehicles.entrySet()) {
+            String vehicle = entry.getKey();
+            List<List<String>> value = entry.getValue();
+            if (!generics.isPresent("//span[contains(@class,'vehicle_id_font') and text()='" + vehicle + "']" +
+                    "//ancestor::map-common-vehicle-item-header//img//following-sibling::span") && value.isEmpty()) {
+                vehicleName = vehicle;
+                WebElement lblTruck = driver.findElement(By.xpath("//map-common-vehicle-item-header//" +
+                        "span[contains(@class,'vehicle_id_font') and text()='" + vehicleName + "']"));
+                generics.scrollToElement(lblTruck);
+                generics.scrollToElement(lstEmptyReturnExchangeUnassignedOrdersToday.get(0));
+                orderTitle = lstEmptyReturnExchangeUnassignedOrdersTodayTitle.get(0).getText();
+                System.out.println(orderTitle + vehicleName);
+                //act.dragAndDrop(lblTruck, lstEmptyReturnExchangeUnassignedOrdersToday.get(0)).build().perform();
+                act.clickAndHold(lblTruck)
+                        .moveToElement(lstEmptyReturnExchangeUnassignedOrdersToday.get(0))
+                        .release(lstEmptyReturnExchangeUnassignedOrdersToday.get(0))
+                        .build().perform();
+                generics.pause(10);
+                break;
+            }
+        }
+    }
+
+    public void moveOrderToTopInVehicle() {
+        Actions act = new Actions(driver);
+        WebElement lblTruck = driver.findElement(By.xpath("//map-common-vehicle-item-header//" +
+                "span[contains(@class,'vehicle_id_font') and text()='" + vehicleName + "']"));
+        WebElement moveOrder = driver.findElement(By.xpath("//map-common-vehicle-item//p[text()=' " + orderTitle + " ']"));
+        act.clickAndHold(lblTruck).moveToElement(moveOrder).release(moveOrder).build().perform();
+    }
+
+    public boolean verifyMoveOrderTopToInProgress() {
+        return lblError.getText().equalsIgnoreCase("You cannot move on top of an order with status progress.");
+    }
+
+    public boolean verifyActionRequestDisplay() {
+        return driver.findElement(By.xpath("//span[contains(@class,'vehicle_id_font') and text()='" + DispatchPO_2.vehicleName + "']//" +
+                "ancestor::map-common-vehicle-item//mat-list//p[contains(@class,'action_text')]")).getText().
+                equalsIgnoreCase("ACTION REQUEST");
+    }
+
+    public void addPickUpDirectiveOrderToTruck(Map<Integer, List<String>> orders, Map<String, List<List<String>>> vehicles) {
+        generics.pause(4);
+        Actions act = new Actions(driver);
+        testStepsLog("Drag and Drop Truck from the map to order.");
+
+        for (Map.Entry<String, List<List<String>>> entry : vehicles.entrySet()) {
+            String vehicle = entry.getKey();
+            List<List<String>> value = entry.getValue();
+            if (!generics.isPresent("//span[contains(@class,'vehicle_id_font') and text()='" + vehicle + "']" +
+                    "//ancestor::map-common-vehicle-item-header//img//following-sibling::span") && value.isEmpty()) {
+                vehicleName = vehicle;
+                break;
+            }
+        }
+
+
+        for (Map.Entry<Integer, List<String>> entry : orders.entrySet()) {
+            System.out.println(entry.getValue());
+            WebElement order = driver.findElement(By.xpath("//dispatch-order-aside-header//" +
+                    "following-sibling::map-common-group-order-list//p[contains(text(),'" +
+                    entry.getValue().get(0).split("\n")[0] + "')]"));
+            if (entry.getValue().get(0).split("\n")[2].startsWith("u")) {
+                if (entry.getValue().get(0).split("\n")[3].endsWith(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy"))) ||
+                        entry.getValue().get(0).split("\n")[3].contains("ON HOLD")) {
+
+                    generics.clickOn(order);
+                    generics.clickOnJS(btnReschedule);
+                    generics.clickOn(btnCurrentDate);
+                    generics.clickOnJS(btnProceed);
+                    generics.clickOnJS(btnCloseOrder);
+                }
+
+                WebElement lblTruck = driver.findElement(By.xpath("//map-common-vehicle-item-header//" +
+                        "span[contains(@class,'vehicle_id_font') and text()='" + vehicleName + "']"));
+                generics.scrollToElement(lblTruck);
+                generics.scrollToElement(order);
+                orderTitle = entry.getValue().get(0).split("\n")[0];
+                System.out.println(orderTitle + vehicleName);
+                //act.dragAndDrop(lblTruck, lstEmptyReturnExchangeUnassignedOrdersToday.get(0)).build().perform();
+                act.clickAndHold(lblTruck)
+                        .moveToElement(order)
+                        .release(order)
+                        .build().perform();
+                isUpFound = true;
+                directive = Integer.parseInt(entry.getValue().get(0).split("\n")[2]
+                        .replaceAll("[^0-9.]+", ""));
+                generics.pause(10);
+                break;
+            }
+        }
+    }
+
+    public void addDropDirectiveOrderToTruck(Map<Integer, List<String>> orders, Map<String, List<List<String>>> vehicles) {
+
+        generics.pause(4);
+        Actions act = new Actions(driver);
+        testStepsLog("Drag and Drop Truck from the map to order.");
+
+        for (Map.Entry<Integer, List<String>> entry : orders.entrySet()) {
+            System.out.println(entry.getValue());
+
+            WebElement order = driver.findElement(By.xpath("//dispatch-order-aside-header//" +
+                    "following-sibling::map-common-group-order-list//p[contains(text(),'" +
+                    entry.getValue().get(0).split("\n")[0] + "')]"));
+
+            if (entry.getValue().get(0).split("\n")[2].startsWith("d") &&
+                    !entry.getValue().get(0).split("\n")[2].contains(String.valueOf(directive))) {
+                if (entry.getValue().get(0).split("\n")[3].endsWith(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy"))) ||
+                        entry.getValue().get(0).split("\n")[3].contains("ON HOLD")) {
+                    generics.clickOn(order);
+                    generics.clickOnJS(btnReschedule);
+                    generics.clickOn(btnCurrentDate);
+                    generics.clickOnJS(btnProceed);
+                    generics.clickOnJS(btnCloseOrder);
+                }
+
+                WebElement lblTruck = driver.findElement(By.xpath("//map-common-vehicle-item-header//" +
+                        "span[contains(@class,'vehicle_id_font') and text()='" + vehicleName + "']"));
+                generics.scrollToElement(lblTruck);
+                generics.scrollToElement(order);
+                orderTitle = entry.getValue().get(0).split("\n")[0];
+                System.out.println(orderTitle + vehicleName);
+                //act.dragAndDrop(lblTruck, lstEmptyReturnExchangeUnassignedOrdersToday.get(0)).build().perform();
+                act.clickAndHold(lblTruck)
+                        .moveToElement(order)
+                        .release(order)
+                        .build().perform();
+                generics.pause(10);
+                break;
+            }
+        }
+
+    }
+
+    public void unassignOrder() {
+        generics.pause(3);
+        generics.clickOnJS(btnRemoveVehicle);
+        generics.pause(1);
+        generics.clickOnJS(btnYes);
+        generics.pause(5);
+    }
+
+    public boolean verifyOrderUnAssigned() {
+        generics.pause(3);
+        List<String> lstOrders = new ArrayList<>();
+        System.out.println(orderTitle);
+        for (WebElement webElement : lstTodayAssignedOrderTitle) lstOrders.add(webElement.getText());
+        System.out.println(lstOrders);
+        return !lstOrders.contains(orderTitle);
+    }
+
+    public void enterPickUpContainerName() {
+        generics.pause(1);
+        generics.scrollToElement(btnEditContainer.get(0));
+        generics.clickOnJS(btnEditContainer.get(0));
+        generics.pause(2);
+        if (!lstRadios.get(1).getAttribute("class").contains("mat-radio-disabled"))
+            generics.type(txtContainerName, "Test_" + generics.getRandomBetween(100, 999));
+        generics.clickOnJS(btnSaveContainerName);
+        generics.pause(3);
+    }
+
+    public boolean verifyOrderCantUnassigned() {
+        return btnRemoveVehicle.getAttribute("disabled").equalsIgnoreCase("true");
+    }
 }
