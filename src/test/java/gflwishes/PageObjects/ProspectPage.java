@@ -555,7 +555,7 @@ public class ProspectPage extends Prospect {
         js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
         generics.moveTo(Aggreement);
         generics.clickOn(btnAddnewServices);
-        testStepsLog("Clicked On Add new Service Button");
+        testStepsLog("Clicked On Add new Service Button ");
         generics.pause(3);
     }
 
