@@ -1,5 +1,6 @@
 package gflwishes.testcases;
 
+import gflwishes.PageObjects.ProspectPage;
 import gflwishes.PageObjects.WishesAdminPage;
 import gflwishes.PageObjects.LandingPage;
 import gflwishes.PageObjects.LoginPage;
@@ -30,7 +31,7 @@ public class WishesAdmin extends EnhancedBaseClass
 		LoginPage login = new LoginPage(wishesDriver);
 		LandingPage lp = new LandingPage(wishesDriver);
 		WishesAdminPage ap = new WishesAdminPage(wishesDriver);
-
+		ProspectPage pp = new ProspectPage(wishesDriver);
 
 		login.loginAs(USER_NAME, PASSWORD);
 
@@ -52,15 +53,15 @@ public class WishesAdmin extends EnhancedBaseClass
 		ap.selectHaulMultipler();
 		ap.clickonAddFees();
 		ap.selectFees();
-		lp.OpenServiceOrder();
-		lp.OpenServiceOrder();
+		lp.OpenProspect();
+		ap.OpenProspect();
+		pp.clickonCreateQuote();
 
-		if (ap.isServiceOrderPageOpen()) {
-		success("Service Order page open successfully");
-	} else {
-		failure("Service Order page not open");
-	}
-		ap.clickonTempServicebtn();
+		pp.clickonAddNewServiceButton();
+		//pp.clickonNextButton();
+
+		//pp.clickonAddServiceButton();
+		pp.selectServiceType();
 
 
 		sa.assertAll();

@@ -307,7 +307,37 @@ public class WishesAdminPage extends WishesAdmin {
         generics.scrollToElement(btntempServices);
         generics.clickOn(btntempServices);
     }
+    @FindBy(xpath = "(//table//a)[1]")
+    public WebElement txtProspectname;
 
+    public static String PN;
+    public void OpenProspect()
+    {
+          testStepsLog("Prospect Name : " + PN);
+          generics.clickOn(txtProspectName);
+    }
+
+    @FindBy(xpath = "//button[contains(text(),'PROSPECT')]/i")
+    public WebElement btnAddProspect;
+
+    public void clickonAddProspectButton() {
+        generics.pause(5);
+        generics.scrollToElement(btnAddProspect);
+        generics.clickOn(btnAddProspect);
+        testStepsLog("Clicked ON Add Prospect button");
+        generics.pause(2);
+    }
+    @FindBy(xpath = "//div[text()='Search Customer / Prospect']/following-sibling::div//input")
+    public WebElement txtProspectName;
+
+    public void typeProspectname(int row) {
+        // CustomerName = generics.getRandomCharacters(10);
+               ;
+        generics.clickOn(txtProspectName);
+        generics.type(txtProspectName, PN);
+
+        generics.pause(5);
+    }
 
 
     public boolean searching(String keywords, int column) {
