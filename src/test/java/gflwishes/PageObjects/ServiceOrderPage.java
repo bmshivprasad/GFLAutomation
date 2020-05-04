@@ -873,7 +873,7 @@ public class ServiceOrderPage extends ServiceOrder implements ExcelColumns {
         generics.pause(10);
     }
 
-    @FindBy(xpath = "//input[@formcontrolname='file']")
+    @FindBy(xpath = "//h3[text()='ATTACH FILES']/parent::div/following-sibling::input")
     public WebElement btnFileUpload;
 
     public void UploadFile() {

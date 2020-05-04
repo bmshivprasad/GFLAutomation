@@ -512,6 +512,7 @@ public class CustomerPage extends Customer implements ExcelColumns {
     public static String cd;
 
     public void getCustomerID(int row) {
+
         cd = generics.getText(customerID);
         try {
             SetTestData(cd, row, CUSTOMER_ID);
@@ -520,6 +521,7 @@ public class CustomerPage extends Customer implements ExcelColumns {
             e.printStackTrace();
         }
         testStepsLog("Customer Created ID : " + cd);
+        generics.pause(15);
     }
 
 

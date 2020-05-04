@@ -239,6 +239,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     public WebElement firstOption;
 
     public void selectcustomertype() {
+        generics.pause(2);
         generics.clickOn(dpcustomertype);
         generics.clickOn(firstOption);
         generics.pause(2);
@@ -515,6 +516,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     public WebElement Prospectsuccessmsg;
 
     public boolean isProspectCreatedSuccessful() {
+        generics.pause(3);
         pId = generics.getText(prospectID);
         testStepsLog("Prospect ID = " + pId);
         return generics.isPresent(Prospectsuccessmsg);
@@ -538,10 +540,10 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     public WebElement btnNext;
     public void clickonNextButton() {
 
-        generics.pause(4);
+        generics.pause(7);
+        generics.waitForElementVisible(localDriver.findElement(By.xpath("//span[@title='Clear all']")));
         JavascriptExecutor js = (JavascriptExecutor) localDriver;
         js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
-        generics.pause(4);
         generics.clickOn(btnNext);
         generics.pause(2);
         testStepsLog("Clicked On Next Button");
@@ -550,7 +552,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     @FindBy(xpath = "//button[contains(text(),'ADD SERVICE')]")
     public WebElement btnAddServices;
     public void clickonAddServiceButton() {
-
+        generics.pause(6);
         JavascriptExecutor js = (JavascriptExecutor) localDriver;
         js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
         generics.moveTo(Aggreement);
@@ -581,7 +583,21 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         testStepsLog("Service type selected");
     }
 
-    @FindBy(xpath = "//input[@formcontrolname='containerCount']")
+    @FindBy(xpath = "//button[contains(text(),'Add New Service')]")
+    public WebElement btnAddnewServices;
+
+    public void clickonAddNewServiceButton() {
+
+        generics.pause(6);
+        JavascriptExecutor js = (JavascriptExecutor) localDriver;
+        js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+        generics.moveTo(Aggreement);
+        generics.clickOn(btnAddnewServices);
+        testStepsLog("Clicked On Add new Service Button");
+        generics.pause(3);
+    }
+
+        @FindBy(xpath = "//input[@formcontrolname='containerCount']")
     public WebElement txtContainerCount;
 
     @FindBy(xpath = "//div[text()='DISPOSAL']")
@@ -589,11 +605,17 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
 
     public void typeContainerCount(int row)
     {
-    	generics.pause(2);
-        generics.moveTo(titleDisposal);
-        String CC=excelUtils.getTestData("Prospect", row, 5);
-        generics.type(txtContainerCount,CC);
-        testStepsLog("Container Count : " + CC);
+        try {
+            generics.pause(2);
+            generics.moveTo(titleDisposal);
+            String CC = excelUtils.getTestData("Prospect", row, 5);
+            generics.type(txtContainerCount, CC);
+            testStepsLog("Container Count : " + CC);
+        }
+        catch(Exception e)
+        {
+            testStepsLog("Container count is not editable");
+        }
     }
 
     @FindBy(xpath = "//mat-select[@formcontrolname='containerTypeId']")
@@ -601,7 +623,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
 
     public void SelectContainerType(int row)
     {
-    	generics.pause(2);
+    	generics.pause(6);
         String CT=excelUtils.getTestData("Prospect", row, 6);
         generics.clickOn(dpContainerType);
         WebElement element=localDriver.findElement(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+CT+"')]"));
@@ -686,9 +708,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
 
     public void SelectHaulType(int row)
     {
-    	JavascriptExecutor js = (JavascriptExecutor)localDriver;
-    	js.executeScript("arguments[0].scrollIntoView(true);",txtLocationType);
-  
+
     	generics.pause(2);
         String HT=excelUtils.getTestData("Prospect", row, 11);
         generics.clickOn(dpHaultype);
@@ -717,8 +737,10 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     	generics.pause(6);        
         generics.clickOn(dpdiposibleSite);
         generics.clickOn(firstOption);
-        generics.pause(10);
+
         testStepsLog("Disposible site selected : ");
+        generics.waitForElementVisible(btnCalculate);
+        generics.pause(15);
     }
 
     @FindBy(xpath = "//button[contains(text(),'Calculate')]")
@@ -773,7 +795,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         testStepsLog("Location Type : " + LT);
     }
 
-    @FindBy(xpath = "//button[contains(text(),'ADD SERVICE')]")
+    @FindBy(xpath = "//button[contains(text(),'Add Service Line')]")
     public WebElement AddService;
 
     public void clickonAddService()
@@ -832,11 +854,11 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         generics.pause(5);
         return generics.isPresent(CSASuccess);
     }
-    @FindBy(xpath = "//*[text()='AGREEMENT TERMS AND CONDITIONS']")
+    @FindBy(xpath = "//*[contains(text(),'AGREEMENT TERMS AND CONDITIONS')]")
     public WebElement Aggreement;
 
     public void clickonAgreementsNo() {
-    	generics.moveTo(localDriver.findElement(By.xpath("//td[contains(text(),'"+ProspectName+"')]/../td[contains(.,'Approved')]/..//a")));
+        generics.moveTo(localDriver.findElement(By.xpath("//td[contains(text(),'"+ProspectName+"')]/../td[contains(.,'Approved')]/..//a")));
         generics.clickOn(localDriver.findElement(By.xpath("//td[contains(text(),'"+ProspectName+"')]/../td[contains(.,'Approved')]/..//a")));
         generics.pause(5);
         testStepsLog("Clicked on Approveed Agreement.");
@@ -935,11 +957,13 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     
     @FindBy(xpath = "//button[@id='btnProceed']")
     public WebElement btnSubmit;
-    
+
     public void clickonSubmit() {
-        generics.clickOn(btnSubmit);
-        generics.pause(5);
-        testStepsLog("Clicked on SUBMIT.");
+        if(generics.isPresent(btnSubmit)) {
+            generics.clickOn(btnSubmit);
+            generics.pause(5);
+            testStepsLog("Clicked on SUBMIT.");
+        }
     }
     
     @FindBy(xpath = "//button[contains(text(),'SUBMIT TO CDE')]")
@@ -977,10 +1001,8 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     
     public boolean isTicketDetailsOpen() {
     	
-    	JavascriptExecutor je = (JavascriptExecutor) localDriver;
-        je.executeScript("arguments[0].scrollIntoView(true);",Orderformnotes);
-        
-    	generics.pause(3);
+
+        generics.pause(8);
         return generics.isPresent(Ticketdetailspage);
             
     }
@@ -990,13 +1012,13 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     public static String Servicelineitem;
 
     public void typeServiceLineItem() {
-    	Servicelineitem = "12345";
+        Servicelineitem = "12345";
         generics.clickOn(txtServicelineitem);
         generics.type(txtServicelineitem, Servicelineitem);
         testStepsLog("Service Line Item inserted.");
     }
     
-    @FindBy(xpath ="//mat-checkbox[@id='mat-checkbox-43']")
+    @FindBy(xpath ="//mat-checkbox[@formcontrolname='isChecked'][1]")
     public WebElement chkAgreement;
 
     public void SelectDocumentsReviewed() {
@@ -1056,23 +1078,25 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
     
     @FindBy(xpath ="//input[@formcontrolname=\"customerErpId\"]")
     public WebElement txtTruxcustomerno;
-    public static String Truxcustomerno;
+    public static int Truxcustomerno;
 
     public void typeTruxCustomerNo() {
-    	Truxcustomerno = "12";
+        JavascriptExecutor je = (JavascriptExecutor) localDriver;
+        je.executeScript("arguments[0].scrollIntoView(true);",Orderformnotes);
+        Truxcustomerno = generics.getRandomBetween(1, 99999);
         generics.clickOn(txtTruxcustomerno);
-        generics.type(txtTruxcustomerno, Truxcustomerno);
+        generics.type(txtTruxcustomerno, String.valueOf(Truxcustomerno));
         testStepsLog("Trux Customer No. inserted.");
     }
     
     @FindBy(xpath ="//input[@formcontrolname=\"siteErpId\"]")
     public WebElement txtSiteNo;
-    public static String Siteno;
+    public static int Siteno;
 
     public void typeSiteNo() {
-    	Siteno = "10";
+        Siteno = generics.getRandomBetween(1, 99999);
         generics.clickOn(txtSiteNo);
-        generics.type(txtSiteNo, Siteno);
+        generics.type(txtSiteNo, String.valueOf(Siteno));
         testStepsLog("Site No. inserted.");
     }
 
@@ -1693,6 +1717,14 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         testStepsLog("Container size selected : " + ContainerSize);
     }
 
+    public void selectContainerSize10Yard() {
+        generics.clickOn(dpContainerSize);
+        String ContainerSize = "10 yrd";
+        WebElement element = localDriver.findElement(By.xpath("//span[contains(text(),'" + ContainerSize + "')]"));
+        element.click();
+        testStepsLog("Container size selected : " + ContainerSize);
+    }
+
     @FindBy(xpath = "//mat-select[@formcontrolname='haulTypeId']")
     public WebElement dpHaulType;
 
@@ -2086,16 +2118,14 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         return generics.isPresent(SuccessMessageofSaveService);
     }
 
-    @FindBy(xpath = "//button[contains(text(),' APPROVE')]")
+    @FindBy(xpath = "//button[contains(text(),'APPROVE')]")
     public WebElement btnApproved;
 
-    public void clickonApprovebutton() {
-        try {
-            generics.scrollToElement(btnApproved);
+    public void clickonApprovebutton()
+    {
+        if(generics.isPresent(btnApproved)) {
             generics.clickOn(btnApproved);
             testStepsLog("Clicked on Approved button");
-        } catch (Exception ignored) {
-
         }
     }
 
@@ -2106,6 +2136,17 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         generics.clickOn(txtApproval);
         generics.type(txtApproval, generics.getRandomCharacters(10));
         testStepsLog("Reason inserted : ");
+    }
+
+    @FindBy(xpath = "//input[@formcontrolname='searchValue']")
+    public WebElement Searchbox;
+
+    public void searchProspect()
+    {
+        generics.pause(3);
+        generics.type(Searchbox,ProspectName+Keys.ENTER);
+        generics.pause(4);
+
     }
 
     @FindBy(xpath = "(//button[contains(text(),' APPROVE')])[2]")
@@ -2214,7 +2255,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         generics.pause(10);
     }
 
-    @FindBy(xpath = "//input[@formcontrolname='file']")
+    @FindBy(xpath = "//h3[text()='ATTACH FILES']/parent::div/following-sibling::input")
     public WebElement btnFileUpload;
 
     public void UploadFile() {
@@ -2596,5 +2637,6 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
             e.printStackTrace();
         }
         testStepsLog("Prospect Created ID  : " + pId);
+        generics.pause(20);
     }
 }
