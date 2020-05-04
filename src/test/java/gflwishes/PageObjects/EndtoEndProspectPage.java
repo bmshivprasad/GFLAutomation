@@ -1717,6 +1717,14 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         testStepsLog("Container size selected : " + ContainerSize);
     }
 
+    public void selectContainerSize10Yard() {
+        generics.clickOn(dpContainerSize);
+        String ContainerSize = "10 yrd";
+        WebElement element = localDriver.findElement(By.xpath("//span[contains(text(),'" + ContainerSize + "')]"));
+        element.click();
+        testStepsLog("Container size selected : " + ContainerSize);
+    }
+
     @FindBy(xpath = "//mat-select[@formcontrolname='haulTypeId']")
     public WebElement dpHaulType;
 
@@ -2247,7 +2255,7 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
         generics.pause(10);
     }
 
-    @FindBy(xpath = "//input[@formcontrolname='file']")
+    @FindBy(xpath = "//h3[text()='ATTACH FILES']/parent::div/following-sibling::input")
     public WebElement btnFileUpload;
 
     public void UploadFile() {
@@ -2629,5 +2637,6 @@ public class EndtoEndProspectPage extends Prospect implements ExcelColumns {
             e.printStackTrace();
         }
         testStepsLog("Prospect Created ID  : " + pId);
+        generics.pause(20);
     }
 }

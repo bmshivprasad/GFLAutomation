@@ -104,7 +104,7 @@ public class EndToEndProspect extends EndToEndBaseClass {
                 pp.typePhoneNumber();
                 pp.typeExtention();
                 pp.typeSiteName(i);
-                pp.selectBusinessUnit();
+                //pp.selectBusinessUnit();
                 pp.selectBusinessType();
 
                 pp.selectAddressline1ofSite(i);
@@ -266,7 +266,7 @@ public class EndToEndProspect extends EndToEndBaseClass {
                     }
 
                     cp.selectMaterial(i);
-                    cp.selectContainerSize(i);
+                    cp.selectContainerSize10Yard();
                     cp.selectHaulType(i);
                     if (cp.isServiceSectionDisplayed()) {
                         success("Services Details Section displayed on Haul Type selection");

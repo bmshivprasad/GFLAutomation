@@ -56,10 +56,10 @@ public class WishesAdmin extends EnhancedBaseClass
 		lp.OpenServiceOrder();
 
 		if (ap.isServiceOrderPageOpen()) {
-			success("Service Order page open successfully");
-		} else {
-			failure("Service Order page not open");
-		}
+		success("Service Order page open successfully");
+	} else {
+		failure("Service Order page not open");
+	}
 		ap.clickonTempServicebtn();
 
 

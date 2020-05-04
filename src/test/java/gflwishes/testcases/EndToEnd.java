@@ -14,7 +14,7 @@ public class EndToEnd extends EndToEndBaseClass {
     }
 
     @Test
-    public void TC03FM_Create_Vehicle_Functionality() {
+    public void TC501FM_Create_Vehicle_Functionality() {
 
         testCaseLog("TC03_Create_Vehicle_Functionality");
 
@@ -43,7 +43,7 @@ public class EndToEnd extends EndToEndBaseClass {
     }
 
     @Test
-    public void TC001WS_Verify_Create_new_Customer_Functionality() {
+    public void TC002WS_Verify_Create_new_Customer_Functionality() {
 
         testCaseLog("TC001_TC002_TC003_Verify_Create_new_Customer_Functionality");
 
@@ -98,7 +98,7 @@ public class EndToEnd extends EndToEndBaseClass {
                 cp.typePhoneNumber();
                 cp.typeExtention();
                 cp.typeSiteName(i);
-                cp.selectBusinessUnit();
+                //cp.selectBusinessUnit();
                 cp.selectBusinessType();
                 cp.typePoNumber();
                 cp.DeSelectsiteAddressesSameAsCompanyAddresses();
@@ -117,6 +117,7 @@ public class EndToEnd extends EndToEndBaseClass {
                     failure("Customer not Added successfully");
                 }
                 cp.getCustomerID(i);
+
                 excelUtils.UpdateExternalSiteID("EndtoEnd", i);
             } catch (Exception e) {
                 testStepsLog("Customer not created for " + i);
@@ -127,7 +128,7 @@ public class EndToEnd extends EndToEndBaseClass {
     }
 
     @Test
-    public void TC002WS_Verify_Create_Service_order_Functionality() {
+    public void TC003WS_Verify_Create_Service_order_Functionality() {
 
         testCaseLog("TC0011_Verify_Create_Service_order_Functionality");
 
@@ -230,13 +231,13 @@ public class EndToEnd extends EndToEndBaseClass {
     }
 
     @Test
-    public void TC003FM_Verify_User_can_complete_pickup_order() {
+    public void TC004FM_Verify_User_can_complete_pickup_order() {
 
         testCaseLog("Verify_User_can_complete_pickup_order");
 
         LoginPage login = new LoginPage(fleetMapperDriver);
         DispatchPO dispatchPO = new DispatchPO(fleetMapperDriver);
-
+        //login.loginAs(USER_NAME, PASSWORD);
         dispatchPO.openDispatcher();
 
         if (dispatchPO.verifyDispatchPage()) {
@@ -332,7 +333,7 @@ public class EndToEnd extends EndToEndBaseClass {
     }
 
     @Test
-    public void TC004WS_Verify_All_deatails_in_wishes_if_service_order_status_Change_from_FM() {
+    public void TC005WS_Verify_All_deatails_in_wishes_if_service_order_status_Change_from_FM() {
 
         testCaseLog("TC005_Verify_All_deatails_in_wishes_if_service_order_status_Change_from_FM");
 
