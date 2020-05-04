@@ -538,8 +538,5 @@ public class DispatchPO extends Dispatch implements ExcelColumns {
         generics.clickOn(btnProceed);
     }
 
-    public boolean verifyOnHoldAssignmentMessage() {
-        return lblError.getText().equalsIgnoreCase("You cannot assign Onhold " +
-                "assignments without reschedule it!");
-    }
+
 }
