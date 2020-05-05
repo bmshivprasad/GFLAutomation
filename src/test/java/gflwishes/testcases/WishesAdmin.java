@@ -23,8 +23,7 @@ public class WishesAdmin extends EnhancedBaseClass
 	    }
 
 	@Test
-	public void TC001WS_Verify_Adding()
-	{
+	public void TC001WS_Verify_Adding() {
 
 		testCaseLog("TC001WS_Verify_Create_Prospect_Functionality_with_ServiceType_FrontEnd");
 
@@ -58,10 +57,47 @@ public class WishesAdmin extends EnhancedBaseClass
 		pp.clickonCreateQuote();
 
 		pp.clickonAddNewServiceButton();
-		//pp.clickonNextButton();
 
-		//pp.clickonAddServiceButton();
 		pp.selectServiceType();
+		if (ap.isAddedContainerSizeDisplayed())
+		{
+			success("Added container size displayed");
+		}
+		else
+		{
+			failure("Added container size not displayed");
+		}
+
+		if (ap.isAddedMaterialDisplayed())
+		{
+			success("Added Material displayed");
+		}
+		else
+		{
+			failure("Added Material not displayed");
+		}
+
+		if (ap.isAddedHaultypeDisplayed())
+		{
+			success("Added Haul type displayed");
+		}
+		else
+		{
+			failure("Added Haul type not displayed");
+		}
+
+		if (ap.isAddedFeesDisplayed())
+		{
+			success("Added Fee displayed");
+		}
+		else
+		{
+			failure("Added Fee not displayed");
+		}
+
+
+
+
 
 
 		sa.assertAll();

@@ -69,7 +69,7 @@ public class WishesAdminPage extends WishesAdmin {
 
     public void clickonAddAcceptedMaterialButton()
     {
-        generics.pause(3);
+        generics.pause(6);
         //JavascriptExecutor je = (JavascriptExecutor) localDriver;
         //je.executeScript("arguments[0].scrollIntoView(true);",btnAddAcceptedMaterials);
         generics.clickOn(btnAddAcceptedMaterials);
@@ -308,13 +308,14 @@ public class WishesAdminPage extends WishesAdmin {
         generics.clickOn(btntempServices);
     }
     @FindBy(xpath = "(//table//a)[1]")
-    public WebElement txtProspectname;
+    public WebElement lnkprospect;
 
     public static String PN;
     public void OpenProspect()
     {
+         PN=generics.getText(lnkprospect);
           testStepsLog("Prospect Name : " + PN);
-          generics.clickOn(txtProspectName);
+          generics.clickOn(lnkprospect);
     }
 
     @FindBy(xpath = "//button[contains(text(),'PROSPECT')]/i")
@@ -337,6 +338,87 @@ public class WishesAdminPage extends WishesAdmin {
         generics.type(txtProspectName, PN);
 
         generics.pause(5);
+    }
+
+
+
+    @FindBy(xpath = "//mat-select[@formcontrolname='containerSizeId']")
+    public WebElement dpContainerSize2;
+
+    @FindBy(xpath = "//mat-select[@formcontrolname='serviceTypeMaterialId']")
+    public WebElement dpserviceTypeMeterial;
+
+    @FindBy(xpath = "//mat-select[@formcontrolname='haulTypeId']")
+    public WebElement dpHaultype;
+
+    @FindBy(xpath = "//button[contains(text(),'Calculate')]")
+    public WebElement btnCalculate;
+
+    @FindBy(xpath = "//span[contains(text(),'Select') and contains(@class,'option')]")
+    public WebElement select;
+
+
+    public boolean isAddedMaterialDisplayed()
+    {
+        generics.pause(2);
+        generics.moveTo(btnCalculate);
+        generics.clickOn(dpserviceTypeMeterial);
+
+        List<WebElement> elemnent=localDriver.findElements(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+Material+"')]"));
+        if(elemnent.size()>0)
+        {
+            generics.clickOn(select);
+            return true;
+        }
+        else
+        {
+            generics.clickOn(select);
+            return false;
+        }
+    }
+    public boolean isAddedContainerSizeDisplayed()
+    {
+        generics.pause(5);
+        generics.clickOn(dpContainerSize2);
+
+        List<WebElement> elemnent=localDriver.findElements(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+ContainerSize+"')]"));
+        if(elemnent.size()>0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public boolean isAddedHaultypeDisplayed()
+    {
+        generics.pause(2);
+        generics.clickOn(dpHaultype);
+        generics.clickOn(dpHaultype);
+        List<WebElement> elemnent=localDriver.findElements(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+HaulMultiplier+"')]"));
+        if(elemnent.size()>0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public boolean isAddedFeesDisplayed()
+    {
+        generics.pause(2);
+
+        List<WebElement> elemnent=localDriver.findElements(By.xpath("//mat-label[contains(text(),'"+Fees+"')]"));
+        if(elemnent.size()>0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
 

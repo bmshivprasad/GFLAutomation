@@ -237,16 +237,18 @@ public class EndToEnd extends EndToEndBaseClass {
 
         LoginPage login = new LoginPage(fleetMapperDriver);
         DispatchPO dispatchPO = new DispatchPO(fleetMapperDriver);
+        //ServiceOrderPage cp = new ServiceOrderPage(wishesDriver);
         //login.loginAs(USER_NAME, PASSWORD);
         dispatchPO.openDispatcher();
-
+        int rows = ExcelUtils.getRowsExcel(getClass().getSimpleName());
+        System.out.println("Rows = " + rows);
         if (dispatchPO.verifyDispatchPage()) {
             success("User can see the dispatch page.");
         } else {
             failure("ERROR : Dispatch page is not display.");
         }
 
-        for (int count = 1; count < ExcelUtils.getRowsExcel(getClass().getSimpleName()) - 1; count++) {
+        for (int count = 1; count < rows; count++) {
 
             try {
                 if (dispatchPO.isPaymentDone(count)) {
@@ -324,10 +326,10 @@ public class EndToEnd extends EndToEndBaseClass {
                             dispatchPO.enterDropOffContainerName();
                             break;
                     }
-                    dispatchPO.setFlag(count, true);
+                    dispatchPO.setFlag(count, false);
                 }
             } catch (Exception ignored) {
-                dispatchPO.setFlag(count, false);
+                dispatchPO.setFlag(count, true);
             }
         }
     }

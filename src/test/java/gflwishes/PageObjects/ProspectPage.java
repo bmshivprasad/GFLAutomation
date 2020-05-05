@@ -602,7 +602,8 @@ public class ProspectPage extends Prospect {
 
     public void selectServiceType()
     {
-        generics.pause(2);
+        generics.waitForElementVisible(dpServiceType);
+        generics.pause(8);
         generics.clickOn(dpServiceType);
         generics.clickOn(optionRollOff);
         testStepsLog("Service type selected");
