@@ -101,7 +101,7 @@ public class WishesAdminPage extends WishesAdmin {
     public void selectMaterial() {
         JavascriptExecutor je = (JavascriptExecutor) localDriver;
         je.executeScript("arguments[0].scrollIntoView(true);", btnAddAcceptedMaterials);
-        testStepsLog("test");
+
         generics.pause(2);
         generics.clickOn(dpMaterial);
         if (generics.isPresent(firstEnabledOption)) {
@@ -127,7 +127,6 @@ public class WishesAdminPage extends WishesAdmin {
     public void clickonAddContainerSizeButton()
     {
         generics.moveTo(tabRollOff);
-        testStepsLog("moved");
         generics.clickOn(btnAddContainerSize);
         testStepsLog("Clicked on Add Container size button");
     }
@@ -139,7 +138,7 @@ public class WishesAdminPage extends WishesAdmin {
     public void selectContainerSize()
     {
         generics.moveTo(btnAddHaulMultiplier);
-        testStepsLog("test");
+
         generics.pause(5);
         generics.clickOn(dpContainerSize);
         if (generics.isPresent(firstEnabledOption)) {
@@ -384,6 +383,7 @@ public class WishesAdminPage extends WishesAdmin {
         List<WebElement> elemnent=localDriver.findElements(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+ContainerSize+"')]"));
         if(elemnent.size()>0)
         {
+            generics.clickOn(select);
             return true;
         }
         else
@@ -395,10 +395,11 @@ public class WishesAdminPage extends WishesAdmin {
     {
         generics.pause(2);
         generics.clickOn(dpHaultype);
-        generics.clickOn(dpHaultype);
+
         List<WebElement> elemnent=localDriver.findElements(By.xpath("//span[@class='mat-option-text' and contains(text(),'"+HaulMultiplier+"')]"));
         if(elemnent.size()>0)
         {
+            generics.clickOn(select);
             return true;
         }
         else
@@ -413,12 +414,137 @@ public class WishesAdminPage extends WishesAdmin {
         List<WebElement> elemnent=localDriver.findElements(By.xpath("//mat-label[contains(text(),'"+Fees+"')]"));
         if(elemnent.size()>0)
         {
+
             return true;
         }
         else
         {
             return false;
         }
+    }
+
+    @FindBy(xpath = "//th[text()='Material Name']/ancestor::table/tbody//tr[1]/td[2]/span")
+    public WebElement firstMaterial;
+
+    @FindBy(xpath = "//th[text()='Material Name']/ancestor::table/tbody//tr[1]/td/button[2]/i")
+    public WebElement EditAndDoneButtonMaterial;
+
+    @FindBy(xpath = "//div[contains(text(),'Material has been updated successfully')]")
+    public WebElement msgMaterialEdit;
+
+    public void clickonEditbuttonMaterial()
+    {
+        generics.moveTo(firstMaterial);
+        generics.clickOn(EditAndDoneButtonMaterial);
+        testStepsLog("Clicked on Edit Icon of first material");
+
+    }
+    public boolean isMaterialEdited()
+    {
+        if(generics.isPresent(msgMaterialEdit))
+            return true;
+        else
+            return false;
+    }
+
+    @FindBy(xpath = "//th[text()='Container Size']/ancestor::table/tbody//tr[1]/td[2]/span")
+    public WebElement firstContainer;
+
+    @FindBy(xpath = "//th[text()='Container Size']/ancestor::table/tbody//tr[1]/td/button[2]/i")
+    public WebElement EditAndDoneButtonContainer;
+
+    @FindBy(xpath = "//div[contains(text(),'Container size has been updated successfully')]")
+    public WebElement msgContainerEdit;
+
+    public void clickonEditbuttonContainer()
+    {
+        generics.moveTo(firstContainer);
+        generics.clickOn(EditAndDoneButtonContainer);
+        testStepsLog("Clicked on Edit Icon of first ContainerSize");
+
+    }
+    public boolean isConainerSizeEdited()
+    {
+        generics.pause(6);
+        if(generics.isPresent(msgContainerEdit))
+            return true;
+        else
+            return false;
+    }
+
+    @FindBy(xpath = "//th[text()='Type Of Bin']/ancestor::table/tbody//tr[1]/td[2]/span")
+    public WebElement firstBin;
+
+    @FindBy(xpath = "//div[contains(text(),'Loading time has been updated successfully')]")
+    public WebElement msgLoadingTimeEdit;
+
+    @FindBy(xpath = "//th[text()='Type Of Bin']/ancestor::table/tbody//tr[1]/td/button[2]/i")
+    public WebElement EditAndDoneButtonLoading;
+
+    public void clickonEditbuttonLoadingTime()
+    {
+        generics.moveTo(firstBin);
+        generics.clickOn(EditAndDoneButtonLoading);
+        testStepsLog("Clicked on Edit Icon of first Loading Time");
+
+    }
+    public boolean isTimeEdited()
+    {
+        generics.pause(6);
+        if(generics.isPresent(msgLoadingTimeEdit))
+            return true;
+        else
+            return false;
+    }
+
+    @FindBy(xpath = "//th[text()='Type of Haul']/ancestor::table/tbody//tr[1]/td[2]/span")
+    public WebElement firstHaul;
+
+    @FindBy(xpath = "//div[contains(text(),'Haul type has been updated successfully')]")
+    public WebElement msgHaultypeEdit;
+
+    @FindBy(xpath = "//th[text()='Type of Haul']/ancestor::table/tbody//tr[1]/td/button[2]/i")
+    public WebElement EditAndDoneButtonHaul;
+
+    public void clickonEditbuttonHaulType()
+    {
+        generics.moveTo(firstHaul);
+        generics.clickOn(EditAndDoneButtonHaul);
+        testStepsLog("Clicked on Edit Icon of first Type Haul");
+
+    }
+    public boolean isHaultypeEdited()
+    {
+        generics.pause(6);
+        if(generics.isPresent(msgHaultypeEdit))
+            return true;
+        else
+            return false;
+    }
+
+    @FindBy(xpath = "//th[text()='Fee']/ancestor::table/tbody//tr[1]/td[2]/span")
+    public WebElement firstFee;
+
+    @FindBy(xpath = "//div[contains(text(),'Fees have been updated successfully')]")
+    public WebElement msgFeeEdit;
+
+    @FindBy(xpath = "//th[text()='Fee']/ancestor::table/tbody//tr[1]/td/button[2]/i")
+    public WebElement EditAndDoneButtonFee;
+
+    public void clickonEditbuttonFee()
+    {
+        generics.moveTo(firstFee);
+        generics.clickOn(EditAndDoneButtonFee);
+        testStepsLog("Clicked on Edit Icon of first Fee");
+
+    }
+    public boolean isFeeEdited()
+    {
+        generics.pause(8);
+        if(generics.isPresent(msgFeeEdit))
+            return true;
+        else
+            return false;
     }
 
 
