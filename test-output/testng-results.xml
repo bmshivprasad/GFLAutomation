@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2020-05-08T14:23:18 EDT" name="Default suite" finished-at="2020-05-08T14:23:56 EDT" duration-ms="38679">
+    <groups>
+    </groups>
+    <test started-at="2020-05-08T14:23:18 EDT" name="Default test" finished-at="2020-05-08T14:23:56 EDT" duration-ms="38679">
+      <class name="gflwishes.testcases.cleanfill">
+        <test-method is-config="true" signature="startReport(org.testng.ITestContext)[pri:0, instance:gflwishes.testcases.cleanfill@4944252c]" started-at="2020-05-08T14:23:17 EDT" name="startReport" finished-at="2020-05-08T14:23:18 EDT" duration-ms="322" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@5555ffcf]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- startReport -->
+        <test-method is-config="true" signature="setUp(java.lang.reflect.Method)[pri:0, instance:gflwishes.testcases.cleanfill@4944252c]" started-at="2020-05-08T14:23:18 EDT" name="setUp" finished-at="2020-05-08T14:23:27 EDT" duration-ms="9386" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void gflwishes.testcases.cleanfill.TC01_Create_Batches() throws java.io.IOException,java.lang.InterruptedException]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method signature="TC01_Create_Batches()[pri:0, instance:gflwishes.testcases.cleanfill@4944252c]" started-at="2020-05-08T14:23:27 EDT" name="TC01_Create_Batches" finished-at="2020-05-08T14:23:55 EDT" duration-ms="28380" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC01_Create_Batches -->
+        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:gflwishes.testcases.cleanfill@4944252c]" started-at="2020-05-08T14:23:55 EDT" name="tearDown" finished-at="2020-05-08T14:23:56 EDT" duration-ms="881" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=TC01_Create_Batches status=SUCCESS method=cleanfill.TC01_Create_Batches()[pri:0, instance:gflwishes.testcases.cleanfill@4944252c] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="endReport()[pri:0, instance:gflwishes.testcases.cleanfill@4944252c]" started-at="2020-05-08T14:23:56 EDT" name="endReport" finished-at="2020-05-08T14:23:57 EDT" duration-ms="468" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- endReport -->
+      </class> <!-- gflwishes.testcases.cleanfill -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
