@@ -90,7 +90,7 @@ public class cleanfill extends EnhancedBaseClass {
         cf.pastlink();
         cf.comments();
         cf.submitbatchrequest();
-        Thread.sleep(2000);
+        //Thread.sleep(2000);
         }
 
 }
