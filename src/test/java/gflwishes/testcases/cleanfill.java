@@ -38,7 +38,7 @@ public class cleanfill extends EnhancedBaseClass {
         //login.loginAs(USER_NAME, PASSWORD);
         cf.loginAs(USER_NAME, PASSWORD);
         cf.clickonbatche();
-        cf.dismisspopup();
+       // cf.dismisspopup();
         cf.clickonbatchcreate();
         cf.enterbatchdate();
         cf.selecteststartDate();
@@ -90,7 +90,7 @@ public class cleanfill extends EnhancedBaseClass {
         cf.pastlink();
         cf.comments();
         cf.submitbatchrequest();
-        Thread.sleep(2000);
+        //Thread.sleep(2000);
         }
 
 }
